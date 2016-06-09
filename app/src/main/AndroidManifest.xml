@@ -13,7 +13,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".BootCompletedIntentReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -37,6 +36,7 @@
         <activity android:name=".Dcvsfun" />
         <activity android:name=".Dcvsgames" />
         <activity android:name=".Dcvsinternet" />
+        <activity android:name=".DCVSRadio"></activity>
     </application>
 
 </manifest>

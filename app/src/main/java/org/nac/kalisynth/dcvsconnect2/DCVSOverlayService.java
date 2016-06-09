@@ -24,8 +24,16 @@ import android.widget.RelativeLayout;
 
 public class DCVSOverlayService extends Service {
 
-    LinearLayout DCVSView;
+    public static LinearLayout DCVSView;
     RelativeLayout RDCVSView;
+
+    public static Boolean chatv = true;
+    public Boolean helpv = true;
+    public static Boolean funv = true;
+    public Boolean homev = false;
+
+    public static Button chatButton;
+    public static Button funButton;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -44,25 +52,25 @@ public class DCVSOverlayService extends Service {
         //RDCVSView = new RelativeLayout(this);
 
         //Home Button style
-        Button homeButton = new Button(this);
+        final Button homeButton = new Button(this);
         homeButton.setId(R.id.homebtnid);
         homeButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rechomebtn));
         //End Home
 
         //Chat Button Style
-        Button chatButton = new Button (this);
+        chatButton = new Button (this);
         chatButton.setId(R.id.chatbtnid);
         chatButton.setBackground(ContextCompat.getDrawable(this, R.drawable.recchatbtn));
         //End Chat
 
         //Fun Button Style
-        Button funButton = new Button(this);
+        funButton = new Button(this);
         funButton.setBackground(ContextCompat.getDrawable(this, R.drawable.recfun));
         funButton.setId(R.id.funbtnid);
         //End Fun
 
         //Help Button Style
-        Button helpButton = new Button(this);
+        final Button helpButton = new Button(this);
         helpButton.setId(R.id.helpbtnid);
         helpButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rechelpbtn));
         //End Help
@@ -98,7 +106,7 @@ public class DCVSOverlayService extends Service {
         params_chat.addRule(RelativeLayout.ALIGN_END, R.id.helpbtnid);
 
         //Add buttons to the overview layout
-        DCVSView.addView(homeButton, params_home);
+        //DCVSView.addView(homeButton, params_home);
         DCVSView.addView(chatButton, params_chat);
         DCVSView.addView(funButton, params_fun);
         DCVSView.addView(helpButton, params_help);
@@ -121,6 +129,20 @@ public class DCVSOverlayService extends Service {
         helpButton.setOnClickListener(new View.OnClickListener(){
           @Override
             public void onClick(View view){
+               if (!homev){
+                  DCVSView.addView(homeButton, params_home);
+                  homev = true;
+              }else if(!funv){
+                  DCVSView.addView(funButton, params_fun);
+                  funv = true;
+              }else if(!chatv){
+                  DCVSView.addView(chatButton, params_chat);
+                  chatv = true;
+              }else{
+
+               }
+              helpv = false;
+              DCVSView.removeView(helpButton);
               gohelp(view);
           }
         });
@@ -128,6 +150,20 @@ public class DCVSOverlayService extends Service {
         homeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                if (!helpv){
+                    DCVSView.addView(helpButton, params_help);
+                    helpv = true;
+                } else if(!chatv){
+                    DCVSView.addView(chatButton, params_chat);
+                    chatv = true;
+                }else if(!funv){
+                    DCVSView.addView(funButton, params_fun);
+                    funv = true;
+                }else{
+
+                }
+                homev = false;
+                DCVSView.removeView(homeButton);
                 goHome(view);
             }
         });
@@ -135,6 +171,20 @@ public class DCVSOverlayService extends Service {
         chatButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                if (!homev){
+                    DCVSView.addView(homeButton, params_home);
+                    homev = true;}
+                else if (!helpv){
+                    DCVSView.addView(helpButton, params_help);
+                    helpv = true;
+                }else if(!funv){
+                    DCVSView.addView(funButton, params_fun);
+                    funv = true;
+                }else{
+
+                }
+                DCVSView.removeView(chatButton);
+                chatv = false;
                 goChat(view);
             }
         });
@@ -142,6 +192,20 @@ public class DCVSOverlayService extends Service {
         funButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                if (!homev){
+                    DCVSView.addView(homeButton, params_home);
+                    homev = true;}
+                else if (!helpv){
+                    DCVSView.addView(helpButton, params_help);
+                    helpv = true;
+                }else if(!chatv){
+                    DCVSView.addView(chatButton, params_chat);
+                    chatv = true;
+                }else{
+
+                }
+                funv = false;
+                DCVSView.removeView(funButton);
                 goFun(view);
             }
         });
@@ -237,6 +301,10 @@ public class DCVSOverlayService extends Service {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1, mBuilder.build());
     //Offline Notification Draw
+    }
+
+    public Boolean getChatv(){
+        return chatv;
     }
 
 

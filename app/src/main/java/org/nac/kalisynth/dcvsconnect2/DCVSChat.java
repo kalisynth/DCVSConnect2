@@ -49,6 +49,8 @@ public class DCVSChat extends AppCompatActivity {
     }
     //Open Skype
     public void skypeonclick(View v){
+        DCVSOverlayService.DCVSView.addView(DCVSOverlayService.chatButton);
+        DCVSOverlayService.chatv = true;
         Intent skypeIntent;
         PackageManager skypeManager = getPackageManager();
         skypeIntent = skypeManager.getLaunchIntentForPackage("com.skype.raider");

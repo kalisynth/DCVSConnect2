@@ -54,5 +54,9 @@
     <string name="SpeedDialSeven"> </string>
     <string name="SpeedDialEight"> </string>
     <string name="SpeedDialNine"> </string>
+    <string name="PlayBTN">PLAY</string>
+    <string name="PauseBTN">PAUSE</string>
+    <string name="NACRadio">NAC Radio</string>
+    <string name="DCVSRadio">DCVS Radio</string>
 
 </resources>
