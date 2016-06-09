@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">DCVSConnect</string>
+    <!--Main Screen -->
+    <string name="HomeBTNCD">Home Button</string>
+    <string name="FunBTNCD">Entertainment Button</string>
+    <string name="HelpBTNCD">Help Button</string>
+    <string name="ChatBTNCD">Chat Button</string>
+    <string name="HomeBTN">HOME</string>
+    <string name="FunBTN">FUN</string>
+    <string name="ChatBTN">CHAT</string>
+    <string name="HelpBTN">HELP</string>
+    <!--internet Screen-->
+    <string name="WebBTN1">NAC Website</string>
+    <string name="WebBTN2">Google Website</string>
+    <string name="WebBTN3">Google Maps</string>
+    <string name="WebBTN4">ABC News</string>
+    <string name="WebBTN5">Seven News</string>
+    <string name="WebBTN6">Seniors News Website</string>
+    <!--Game Screen-->
+    <string name="GameBTN1" translatable="false">Backgammon Game</string>
+    <string name="GameBTN2" translatable="false">Chess Game</string>
+    <string name="GameBTN3" translatable="false">Euchre Game</string>
+    <string name="GameBTN4" translatable="false">Four in a Row Game</string>
+    <string name="GameBTN5" translatable="false">Solitare Game</string>
+    <string name="GameBTN6" translatable="false">Sudoku Game</string>
+    <!--Fun Screen-->
+    <string name="GameSBTN">Games Screen</string>
+    <string name="InternetBTN">Internet Screen</string>
+    <string name="RadioBTN">Radio Button</string>
+    <!--Help Screen -->
+    <string name="HelpGuideBTN">Help Guide App</string>
+    <string name="QuickSupportBTN">Quick Support App</string>
+    <!--Chat Screen-->
+    <string name="SpeedDial1">Call Volunteer One</string>
+    <string name="SpeedDial2">Call Volunteer Two</string>
+    <string name="SpeedDial3">Call Volunteer Three</string>
+    <string name="SpeedDial4">Call DCVS Office</string>
+    <string name="SpeedDial5"> </string>
+    <string name="SpeedDial6"> </string>
+    <string name="SpeedDial7"> </string>
+    <string name="SpeedDial8"> </string>
+    <string name="SpeedDial9"> </string>
+    <string name="SpeedDialNN">No Number</string>
+    <string name="SkypeBTN">Skype App</string>
+    <string name="EditSwitch">EDIT | ADD</string>
+    <string name="EditSwitchCD">Edit Switch</string>
+    <!--Speed Dial -->
+    <string name="SpeedDialOne" translatable="false">volunteer1dcvs</string>
+    <string name="SpeedDialTwo" translatable="false">volunteer2dcvs</string>
+    <string name="SpeedDialThree" translatable="false">volunteer3dcvs</string>
+    <string name="SpeedDialFour" translatable="false">dcvsoffice</string>
+    <string name="SpeedDialFive"> </string>
+    <string name="SpeedDialSix"> </string>
+    <string name="SpeedDialSeven"> </string>
+    <string name="SpeedDialEight"> </string>
+    <string name="SpeedDialNine"> </string>
+
+</resources>

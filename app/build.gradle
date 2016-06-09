@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        defaultsign {
+            keyAlias 'defaultkeys'
+            keyPassword 'araminta'
+            storeFile file('C:/Users/Cade2/Documents/Development/Android/androidkeys.jks')
+            storePassword 'araminta'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "org.nac.kalisynth.dcvsconnect2"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.1"
+    }
+    buildTypes {
+        DCVSConnect2 {
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+}

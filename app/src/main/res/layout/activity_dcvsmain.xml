@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/dcvsoverlaymain"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#00ffffff">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="false"
+        android:src="@drawable/rechomebtn"
+        android:background="#00ffffff"
+        android:contentDescription="@string/HomeBTNCD" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chatButton"
+        android:layout_alignBottom="@+id/homeButton"
+        android:layout_toEndOf="@+id/homeButton"
+        android:contentDescription="@string/ChatBTNCD"
+        android:src="@drawable/recchatbtn"
+        android:background="#00ffffff" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/funButton"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/chatButton"
+        android:contentDescription="@string/FunBTNCD"
+        android:src="@drawable/recfun"
+        android:background="#00ffffff" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/helpButton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_toEndOf="@id/funButton"
+        android:contentDescription="@string/HelpBTNCD"
+        android:src="@drawable/rechelpbtn"
+        android:background="#00ffffff" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_below="@+id/helpButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="137dp" />
+
+</RelativeLayout>

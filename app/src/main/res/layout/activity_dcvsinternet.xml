@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.nac.kalisynth.dcvsconnect2.Dcvsinternet"
+    android:background="@drawable/webscreen">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="246dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN1"
+            android:background="@drawable/dcvsnacbtn"
+            android:contentDescription="@string/WebBTN1"
+            android:onClick="onNACClick" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN2"
+            android:background="@drawable/dcvsgooglebtn"
+            android:contentDescription="@string/WebBTN2"
+            android:onClick="onGoogleClick" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN3"
+            android:background="@drawable/dcvsgmapsbtn"
+            android:onClick="mapsonclick"
+            android:contentDescription="@string/WebBTN3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginBottom="233dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN4"
+            android:background="@drawable/dcvsabcbtn"
+            android:contentDescription="@string/WebBTN4" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN5"
+            android:background="@drawable/dcvssevenbtn"
+            android:contentDescription="@string/WebBTN5" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WebBTN6"
+            android:background="@drawable/dcvsseniorsbtn"
+            android:contentDescription="@string/WebBTN6" />
+    </LinearLayout>
+</RelativeLayout>
