@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
@@ -61,9 +60,9 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
     }
 
     public void onClickPlay(View v){
-        launchVLC("http://thassos.cdnstream.com:5049/live");
+        launchVLC("http://thassos.cdnstream.com:5046/stream");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_play);
+        mBuilder.setSmallIcon(R.drawable.ic_stat_play);
         mBuilder.setContentTitle("DCVS Radio");
         mBuilder.setContentText("Radio is Playing");
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -112,7 +111,7 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
     public void onClickPauseBad(View v){
         launchVLC("file:///storage/emulated/0/Download/1sec.mp3");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_pause);
+        mBuilder.setSmallIcon(R.drawable.ic_stat_pause);
         mBuilder.setContentTitle("DCVS Radio");
         mBuilder.setContentText("Radio is Paused");
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -176,7 +175,7 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
 
     public void playnotify() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_play);
+        mBuilder.setSmallIcon(R.drawable.playbutton);
         mBuilder.setContentTitle("DCVS Radio");
         mBuilder.setContentText("Radio is Playing");
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

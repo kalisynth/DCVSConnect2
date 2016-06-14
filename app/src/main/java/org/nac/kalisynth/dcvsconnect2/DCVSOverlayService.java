@@ -1,39 +1,49 @@
 package org.nac.kalisynth.dcvsconnect2;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
-import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 public class DCVSOverlayService extends Service {
-
+    //Main Layout View
     public static LinearLayout DCVSView;
-    RelativeLayout RDCVSView;
 
+    //Layout Params
+    private WindowManager.LayoutParams params;
+    private LinearLayout.LayoutParams params_home;
+    private LinearLayout.LayoutParams params_chat;
+    private LinearLayout.LayoutParams params_fun;
+    private LinearLayout.LayoutParams params_help;
+
+    //Window Manager
+    private WindowManager wm;
+
+    //Booleans for if button is visible
     public static Boolean chatv = true;
-    public Boolean helpv = true;
+    private Boolean helpv = true;
     public static Boolean funv = true;
-    public Boolean homev = false;
+    private Boolean homev = false;
 
+    //Buttons
     public static Button chatButton;
     public static Button funButton;
+    private static Button helpButton;
+    private static Button homeButton;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,72 +57,59 @@ public class DCVSOverlayService extends Service {
         //Linear Layout
         DCVSView = new LinearLayout(this);
         DCVSView.setBackgroundColor(0x00D4FF00);
+        DCVSView.setOrientation(LinearLayout.VERTICAL);
 
         //Relative Layout
         //RDCVSView = new RelativeLayout(this);
 
         //Home Button style
-        final Button homeButton = new Button(this);
-        homeButton.setId(R.id.homebtnid);
-        homeButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rechomebtn));
-        //End Home
+        homeButton = new Button(this);
+        homeButton.setBackground(ContextCompat.getDrawable(this, R.drawable.homesml));
+        //Home Button Layout
+        params_home = new LinearLayout.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+        );
+        params_home.setMargins(5,0,0,5);
 
         //Chat Button Style
         chatButton = new Button (this);
-        chatButton.setId(R.id.chatbtnid);
-        chatButton.setBackground(ContextCompat.getDrawable(this, R.drawable.recchatbtn));
-        //End Chat
+        chatButton.setBackground(ContextCompat.getDrawable(this, R.drawable.chatbig));
+        //Chat Button Layout
+        params_chat = new LinearLayout.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+        );
+        params_chat.setMargins(5,0,0,5);
+        //adds chat button to the layout
+        DCVSView.addView(chatButton, params_chat);
 
         //Fun Button Style
         funButton = new Button(this);
-        funButton.setBackground(ContextCompat.getDrawable(this, R.drawable.recfun));
-        funButton.setId(R.id.funbtnid);
-        //End Fun
+        funButton.setBackground(ContextCompat.getDrawable(this, R.drawable.funbig));
+        //Fun Button Layout
+        params_fun = new LinearLayout.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+        );
+        params_fun.setMargins(5,0,0,5);
+        //adds fun button to the layout
+        DCVSView.addView(funButton, params_fun);
 
         //Help Button Style
-        final Button helpButton = new Button(this);
-        helpButton.setId(R.id.helpbtnid);
-        helpButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rechelpbtn));
-        //End Help
-
-        //Home Button Layout
-        final RelativeLayout.LayoutParams params_home = new RelativeLayout.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-                );
-
-        params_home.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-
-        //Chat Button Layout
-        final RelativeLayout.LayoutParams params_chat = new RelativeLayout.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-        );
-        params_chat.addRule(RelativeLayout.ALIGN_RIGHT, R.id.homebtnid);
-        params_chat.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-
-        //Fun Button Layout
-        final RelativeLayout.LayoutParams params_fun = new RelativeLayout.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-        );
-        params_fun.addRule(RelativeLayout.ALIGN_END, R.id.chatbtnid);
-
+        helpButton = new Button(this);
+        helpButton.setBackground(ContextCompat.getDrawable(this, R.drawable.helpbig));
         //Help Button Layout
-        final RelativeLayout.LayoutParams params_help = new RelativeLayout.LayoutParams(
+        params_help = new LinearLayout.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT
         );
-        params_chat.addRule(RelativeLayout.ALIGN_END, R.id.helpbtnid);
-
-        //Add buttons to the overview layout
-        //DCVSView.addView(homeButton, params_home);
-        DCVSView.addView(chatButton, params_chat);
-        DCVSView.addView(funButton, params_fun);
+        params_help.setMargins(5,0,0,5);
+        //adds help button to the layout
         DCVSView.addView(helpButton, params_help);
 
         //Window Manager for the Layout
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+        params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
@@ -120,104 +117,55 @@ public class DCVSOverlayService extends Service {
                         WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                 PixelFormat.TRANSLUCENT);
         //Window Manager Layout Style
-        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+        params.gravity = Gravity.END | Gravity.CENTER_HORIZONTAL;
 
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        //wm.updateViewLayout(RDCVSView, params);
+        wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         wm.addView(DCVSView, params);
 
         helpButton.setOnClickListener(new View.OnClickListener(){
           @Override
             public void onClick(View view){
-               if (!homev){
-                  DCVSView.addView(homeButton, params_home);
-                  homev = true;
-              }else if(!funv){
-                  DCVSView.addView(funButton, params_fun);
-                  funv = true;
-              }else if(!chatv){
-                  DCVSView.addView(chatButton, params_chat);
-                  chatv = true;
-              }else{
-
-               }
+              buttoncheck();
+              smallbuttons();
               helpv = false;
               DCVSView.removeView(helpButton);
-              gohelp(view);
+              gohelp();
           }
         });
 
         homeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if (!helpv){
-                    DCVSView.addView(helpButton, params_help);
-                    helpv = true;
-                } else if(!chatv){
-                    DCVSView.addView(chatButton, params_chat);
-                    chatv = true;
-                }else if(!funv){
-                    DCVSView.addView(funButton, params_fun);
-                    funv = true;
-                }else{
-
-                }
+                buttoncheck();
+                bigbuttons();
                 homev = false;
                 DCVSView.removeView(homeButton);
-                goHome(view);
+                goHome();
             }
         });
 
         chatButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if (!homev){
-                    DCVSView.addView(homeButton, params_home);
-                    homev = true;}
-                else if (!helpv){
-                    DCVSView.addView(helpButton, params_help);
-                    helpv = true;
-                }else if(!funv){
-                    DCVSView.addView(funButton, params_fun);
-                    funv = true;
-                }else{
-
-                }
+                buttoncheck();
+                smallbuttons();
                 DCVSView.removeView(chatButton);
                 chatv = false;
-                goChat(view);
+                goChat();
             }
         });
 
         funButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if (!homev){
-                    DCVSView.addView(homeButton, params_home);
-                    homev = true;}
-                else if (!helpv){
-                    DCVSView.addView(helpButton, params_help);
-                    helpv = true;
-                }else if(!chatv){
-                    DCVSView.addView(chatButton, params_chat);
-                    chatv = true;
-                }else{
-
-                }
+                buttoncheck();
+                smallbuttons();
                 funv = false;
                 DCVSView.removeView(funButton);
-                goFun(view);
+                goFun();
             }
         });
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.notification);
-        mBuilder.setContentTitle("DCVSConnect");
-        mBuilder.setContentText("DCVS Connect Widget is now Online");
-        mBuilder.setOngoing(true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(2, mBuilder.build());
-        ConnectionCheck();
+        DCVSAppOnNote();
             }
 
     @Override
@@ -231,7 +179,7 @@ public class DCVSOverlayService extends Service {
             cNotificationManager.cancel(1);
         }}
 
-        public void gohelp(View view) {
+        public void gohelp() {
             //Button funButton = (Button) findViewById(R.id.funbtnid);
             ConnectionCheck();
             Intent helpIntent =  new Intent(Intent.ACTION_VIEW);
@@ -240,7 +188,7 @@ public class DCVSOverlayService extends Service {
             startActivity(helpIntent);
         }
 
-    public void goHome(View view){
+    public void goHome(){
         //Home Intent
         ConnectionCheck();
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
@@ -249,7 +197,7 @@ public class DCVSOverlayService extends Service {
         startActivity(homeIntent);
     }
 
-    public void goFun(View view){
+    public void goFun(){
         //Fun intent
         ConnectionCheck();
         Intent funIntent =  new Intent(Intent.ACTION_VIEW);
@@ -258,7 +206,7 @@ public class DCVSOverlayService extends Service {
         startActivity(funIntent);
     }
 
-    public void goChat(View view){
+    public void goChat(){
         //chat intent
         ConnectionCheck();
         Intent chatIntent =  new Intent(Intent.ACTION_VIEW);
@@ -272,7 +220,7 @@ public class DCVSOverlayService extends Service {
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         //Network[] info = check.getAllNetworks();
-        NetworkInfo[] info = check.getAllNetworkInfo();
+        //NetworkInfo[] info = check.getAllNetworkInfo();
 
         if(check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED){
             OnlineInternetNotification();
@@ -303,11 +251,83 @@ public class DCVSOverlayService extends Service {
     //Offline Notification Draw
     }
 
-    public Boolean getChatv(){
-        return chatv;
+    public void DCVSAppOnNote(){
+        String dn = getName();
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.ic_stat_dcson);
+        mBuilder.setContentTitle("DCVSConnect");
+        mBuilder.setContentText("DCVS Connect is Online, " + "Tablet Name: " + dn);
+        mBuilder.setOngoing(true);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(2, mBuilder.build());
+        ConnectionCheck();
+        //shows the app is running
     }
 
+    //make the buttons bigger
+    public void bigbuttons(){
+        //delay so change to big buttons is smoother
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                chatButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.chatbig));
+                funButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.funbig));
+                helpButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.helpbig));
+
+                params.gravity = Gravity.END | Gravity.CENTER_HORIZONTAL;
+                DCVSView.setOrientation(LinearLayout.VERTICAL);
+                wm.updateViewLayout(DCVSView, params);
+            }}, 500);
+    }
+
+    //make buttons smaller
+    public void smallbuttons(){
+        chatButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.chatsml));
+        helpButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.helpsml));
+        funButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.funsml));
+        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+        DCVSView.setOrientation(LinearLayout.HORIZONTAL);
+        wm.updateViewLayout(DCVSView, params);
+    }
+
+    //button visibility control
+    public void buttoncheck(){
+        if (!homev){
+            DCVSView.addView(homeButton, params_home);
+            homev = true;
+        }else if(!funv){
+            DCVSView.addView(funButton, params_fun);
+            funv = true;
+        }else if(!chatv){
+            DCVSView.addView(chatButton, params_chat);
+            chatv = true;
+        }else if(!helpv){
+            DCVSView.addView(helpButton, params_help);
+            helpv = true;
+        }else {
+
+        }
+    }
+
+    public static Account getAccount(AccountManager accountManager){
+        Account[] accounts = accountManager.getAccountsByType("com.google");
+        Account account;
+        if (accounts.length > 0){
+            account = accounts[0];
+        } else {
+            account = null;
+        }
+        return account;
+    }
+
+    public String getName(){
+        Account account = getAccount(AccountManager.get(this));
+        String accountName = account.name;
+        String fullName = accountName.substring(0,accountName.lastIndexOf("@"));
+        return fullName;
+    }
 
     }
 
-//Todo Change button to blue when clicked on and then change back when not clicked and make buttons big on the home page
+//Todo Bigger Buttons

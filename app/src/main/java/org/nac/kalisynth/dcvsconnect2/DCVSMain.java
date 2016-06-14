@@ -2,13 +2,8 @@ package org.nac.kalisynth.dcvsconnect2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PixelFormat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 public class DCVSMain extends Activity {
 

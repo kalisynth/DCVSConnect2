@@ -1,14 +1,7 @@
 <resources>
     <string name="app_name">DCVSConnect</string>
     <!--Main Screen -->
-    <string name="HomeBTNCD">Home Button</string>
-    <string name="FunBTNCD">Entertainment Button</string>
-    <string name="HelpBTNCD">Help Button</string>
-    <string name="ChatBTNCD">Chat Button</string>
-    <string name="HomeBTN">HOME</string>
-    <string name="FunBTN">FUN</string>
-    <string name="ChatBTN">CHAT</string>
-    <string name="HelpBTN">HELP</string>
+    <string name="HomeScreen">Home Screen Background</string>
     <!--internet Screen-->
     <string name="WebBTN1">NAC Website</string>
     <string name="WebBTN2">Google Website</string>
@@ -31,10 +24,10 @@
     <string name="HelpGuideBTN">Help Guide App</string>
     <string name="QuickSupportBTN">Quick Support App</string>
     <!--Chat Screen-->
-    <string name="SpeedDial1">Call Volunteer One</string>
-    <string name="SpeedDial2">Call Volunteer Two</string>
-    <string name="SpeedDial3">Call Volunteer Three</string>
-    <string name="SpeedDial4">Call DCVS Office</string>
+    <string name="SpeedDial1">Volunteer One</string>
+    <string name="SpeedDial2">Volunteer Two</string>
+    <string name="SpeedDial3">Volunteer Three</string>
+    <string name="SpeedDial4">DCVS Office</string>
     <string name="SpeedDial5"> </string>
     <string name="SpeedDial6"> </string>
     <string name="SpeedDial7"> </string>
@@ -57,6 +50,5 @@
     <string name="PlayBTN">PLAY</string>
     <string name="PauseBTN">PAUSE</string>
     <string name="NACRadio">NAC Radio</string>
-    <string name="DCVSRadio">DCVS Radio</string>
 
 </resources>

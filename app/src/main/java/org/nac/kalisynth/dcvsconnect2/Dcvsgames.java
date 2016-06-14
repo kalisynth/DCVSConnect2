@@ -14,6 +14,9 @@ public class Dcvsgames extends AppCompatActivity {
         setContentView(R.layout.activity_dcvsgames);
     }
 
+    //Opens a game, if speeddial works then will come back and change this to also be
+    // a speed dial thing
+
     public void euchreonclick(View v){
         Intent euchreIntent;
         PackageManager euchreManager = getPackageManager();

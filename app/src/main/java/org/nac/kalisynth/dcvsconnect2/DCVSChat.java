@@ -1,22 +1,22 @@
 package org.nac.kalisynth.dcvsconnect2;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class DCVSChat extends AppCompatActivity {
+
+    //for the speed dial testing
     public static final String ChatPrefences = "ChatPrefs";
     public static final String speeddial5skype = " ";
     public static final String speeddial5name = " ";
@@ -24,7 +24,7 @@ public class DCVSChat extends AppCompatActivity {
 
     boolean EditEnabled = false;
     //Check Skype is installed
-    public boolean isSkypeClientInstalled(Context skypeCall) {
+    private boolean isSkypeClientInstalled(Context skypeCall) {
         PackageManager myPackageMgr = skypeCall.getPackageManager();
         try {
             myPackageMgr.getPackageInfo("com.skype.raider", PackageManager.GET_ACTIVITIES);
@@ -35,7 +35,7 @@ public class DCVSChat extends AppCompatActivity {
         return (true);
     }
 
-    public void goToMarket(Context skypeinstalled) {
+    private void goToMarket(Context skypeinstalled) {
         Uri marketUri = Uri.parse("market://details?id=com.skype.raider");
         Intent myIntent = new Intent(Intent.ACTION_VIEW, marketUri);
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -46,6 +46,9 @@ public class DCVSChat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvschat);
+        String skypename = getName();
+        TextView stext = (TextView)findViewById(R.id.skypename);
+        stext.setText("Your Skype Name is " + skypename);
     }
     //Open Skype
     public void skypeonclick(View v){
@@ -69,7 +72,7 @@ public class DCVSChat extends AppCompatActivity {
     }*/
 
     //Use skype to call a username based on method called
-    public void skypedcvs1call(Context skypeCalldcvsv1, String mySkypeDCVSv1){
+    private void skypedcvs1call(Context skypeCalldcvsv1, String mySkypeDCVSv1){
         if (!isSkypeClientInstalled(skypeCalldcvsv1)) {
             goToMarket(skypeCalldcvsv1);
             return;
@@ -77,10 +80,8 @@ public class DCVSChat extends AppCompatActivity {
 
         Uri skypeURI = Uri.parse(mySkypeDCVSv1);
         Intent skypedcvs1Intent = new Intent(Intent.ACTION_VIEW, skypeURI);
-
         skypedcvs1Intent.setComponent(new ComponentName("com.skype.raider", "com.skype.raider.Main"));
         skypedcvs1Intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         skypeCalldcvsv1.startActivity(skypedcvs1Intent);
 
     }
@@ -333,6 +334,24 @@ public class DCVSChat extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private static Account getAccount(AccountManager accountManager){
+        Account[] accounts = accountManager.getAccountsByType("com.google");
+        Account account;
+        if (accounts.length > 0){
+            account = accounts[0];
+        } else {
+            account = null;
+        }
+        return account;
+    }
+
+    private String getName(){
+        Account account = getAccount(AccountManager.get(this));
+        String accountName = account.name;
+        String fullName = accountName.substring(0,accountName.lastIndexOf("@"));
+        return fullName;
     }
 
 }

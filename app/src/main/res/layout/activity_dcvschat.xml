@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.DCVSChat"
     android:background="@drawable/chatscreen"
-    android:contentDescription="@string/EditSwitchCD">
+    android:contentDescription="@string/EditSwitchCD"
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -24,32 +26,38 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDial1"
             android:id="@+id/SpeedDialOne"
             android:onClick="speeddial1onclick"
             android:background="@drawable/sdbg"
             android:contentDescription="@string/SpeedDial1"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:textColor="#000000" />
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDial2"
             android:id="@+id/SpeedDialTwo"
             android:background="@drawable/sdbg"
             android:contentDescription="@string/SpeedDial2"
             android:onClick="speeddial2onclick"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDial3"
             android:id="@+id/SpeedDialThree"
             android:contentDescription="@string/SpeedDial3"
             android:onClick="speeddial3onclick"
             android:background="@drawable/sdbg"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:textColor="#000000"/>
 
     </LinearLayout>
 
@@ -60,8 +68,8 @@
         android:background="@drawable/dcvsrectskype"
         android:onClick="skypeonclick"
         android:contentDescription="@string/SkypeBTN"
-        android:layout_below="@+id/linearLayout7"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/linearLayout3"
+        android:layout_toEndOf="@+id/linearLayout6" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -75,30 +83,38 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDial4"
             android:id="@+id/SpeedDialFour"
             android:background="@drawable/sdbg"
             android:contentDescription="@string/SpeedDial4"
             android:onClick="speeddial4onclick"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDialNN"
             android:id="@+id/SpeedDialFive"
             android:layout_marginEnd="10dp"
             android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial5" />
+            android:contentDescription="@string/SpeedDial5"
+            android:visibility="invisible"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDialNN"
             android:id="@+id/SpeedDialSix"
             android:layout_marginEnd="10dp"
             android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial6" />
+            android:contentDescription="@string/SpeedDial6"
+            android:visibility="invisible"
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,29 +129,38 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDialNN"
             android:id="@+id/SpeedDialSeven"
             android:layout_marginEnd="10dp"
             android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial7" />
+            android:contentDescription="@string/SpeedDial7"
+            android:visibility="invisible"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDialNN"
             android:id="@+id/SpeedDialEight"
             android:background="@drawable/sdncbg"
             android:layout_marginEnd="10dp"
-            android:contentDescription="@string/SpeedDial8" />
+            android:contentDescription="@string/SpeedDial8"
+            android:visibility="invisible"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="150dp"
             android:layout_height="150dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/SpeedDialNN"
             android:id="@+id/SpeedDialNine"
             android:background="@drawable/sdncbg"
             android:layout_marginEnd="10dp"
-            android:contentDescription="@string/SpeedDial9" />
+            android:contentDescription="@string/SpeedDial9"
+            android:visibility="invisible"
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <Switch
@@ -144,6 +169,15 @@
         android:text="@string/EditSwitch"
         android:id="@+id/editswitch"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/skypename"
+        android:layout_below="@+id/linearLayout7"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

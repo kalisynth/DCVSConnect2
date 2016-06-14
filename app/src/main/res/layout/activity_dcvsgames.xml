@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.Dcvsgames"
-    android:background="@drawable/gamesscreen">
+    android:background="@drawable/gamesscreen"
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:orientation="vertical"

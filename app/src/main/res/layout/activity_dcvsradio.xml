@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:id="@+id/pauseBTN"
         android:onClick="onClickPauseBad"
-        android:background="@drawable/ic_pause"
+        android:background="@drawable/pausebtn"
         android:layout_alignTop="@+id/playBTN"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="180dp" />
@@ -23,7 +23,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/playBTN"
-        android:background="@drawable/ic_play"
+        android:background="@drawable/playbutton"
         android:layout_marginStart="216dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
