@@ -182,9 +182,11 @@ public class DCVSOverlayService extends Service {
         public void gohelp() {
             //Button funButton = (Button) findViewById(R.id.funbtnid);
             ConnectionCheck();
-            Intent helpIntent =  new Intent(Intent.ACTION_VIEW);
+            /*Intent helpIntent =  new Intent(Intent.ACTION_VIEW);
             helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            helpIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSHelp");
+            helpIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSHelp");*/
+            Intent helpIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSHelp.class);
+            helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(helpIntent);
         }
 
@@ -200,18 +202,22 @@ public class DCVSOverlayService extends Service {
     public void goFun(){
         //Fun intent
         ConnectionCheck();
-        Intent funIntent =  new Intent(Intent.ACTION_VIEW);
+        /*Intent funIntent =  new Intent(Intent.ACTION_VIEW);
         funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        funIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.Dcvsfun");
+        funIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.Dcvsfun");*/
+        Intent funIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.Dcvsfun.class);
+        funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(funIntent);
     }
 
     public void goChat(){
         //chat intent
         ConnectionCheck();
-        Intent chatIntent =  new Intent(Intent.ACTION_VIEW);
+        Intent chatIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSChat.class);
         chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        chatIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSChat");
+        /*Intent chatIntent =  new Intent(Intent.ACTION_VIEW);
+        chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        chatIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSChat");*/
         startActivity(chatIntent);
     }
 
@@ -222,11 +228,19 @@ public class DCVSOverlayService extends Service {
         //Network[] info = check.getAllNetworks();
         //NetworkInfo[] info = check.getAllNetworkInfo();
 
-        if(check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED){
+        if(check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null){
             OnlineInternetNotification();
         }
         else
             OfflineNotification();
+    }
+
+    public void connectioncheck2(){
+        ConnectivityManager connection = (ConnectivityManager)
+                this.getSystemService(this.CONNECTIVITY_SERVICE);
+        if(connection !=null){
+            NetworkInfo[] info = connection.getAllNetworkInfo();
+        }
     }
 
     public void OnlineInternetNotification(){

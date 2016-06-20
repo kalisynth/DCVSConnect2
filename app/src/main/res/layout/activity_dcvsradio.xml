@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/NACRadio"
-        android:id="@+id/textView"
+        android:id="@+id/radiostationtxt"
         android:layout_marginBottom="138dp"
         android:layout_above="@+id/pauseBTN"
         android:layout_centerHorizontal="true" />

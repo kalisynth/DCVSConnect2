@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.TextView;
 
 //import org.videolan.libvlc.LibVLC;
 //import org.videolan.libvlc.MediaPlayer;
@@ -27,6 +28,16 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvsradio);
+
+        TextView radiostation =(TextView)findViewById(R.id.radiostationtxt);
+
+        if (BuildConfig.RadioStation.equals("DCVS")){
+            radiostation.setText(getString(R.string.DCVSRadioStation));
+        } else if (BuildConfig.RadioStation.equals("Local")){
+            radiostation.setText(getString(R.string.NACRadiostation));
+        }
+
+
     }
 
     private void launchVLC(String url)
@@ -60,10 +71,20 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
     }
 
     public void onClickPlay(View v){
-        launchVLC("http://thassos.cdnstream.com:5046/stream");
+        if (BuildConfig.RadioStation.equals("DCVS")){
+            launchVLC("http://thassos.cdnstream.com:5046/stream");
+        } else if (BuildConfig.RadioStation.equals("Local")){
+            launchVLC("http://thassos.cdnstream.com:5049/live");
+        }
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.ic_stat_play);
-        mBuilder.setContentTitle("DCVS Radio");
+        if (BuildConfig.RadioStation.equals("DCVS")){
+            mBuilder.setContentTitle("DCVS Radio");
+        }else if (BuildConfig.RadioStation.equals("Local")){
+            mBuilder.setContentTitle("NAC Radio");
+        }
+
         mBuilder.setContentText("Radio is Playing");
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(3, mBuilder.build());

@@ -50,5 +50,9 @@
     <string name="PlayBTN">PLAY</string>
     <string name="PauseBTN">PAUSE</string>
     <string name="NACRadio">NAC Radio</string>
+    <!-- Radio Stations -->
+    <string name="NACRadiostation">Nundah Activity Centre Radiostation</string>
+    <string name="DCVSRadioStation">DCVS Radiostation Golden Memories</string>
+
 
 </resources>

@@ -22,6 +22,18 @@ android {
         DCVSConnect2 {
         }
     }
+    productFlavors {
+        DCVS {
+            applicationId "org.nac.kalisynth.dcvsconnect2.dcvs"
+            versionName "1.3-DCVS"
+            buildConfigField "String", "RadioStation", "\"DCVS\""
+        }
+        Local {
+            applicationId "org.nac.kalisynth.dcvsconnect2.local"
+            versionName "1.3-Local"
+            buildConfigField "String", "RadioStation", "\"Local\""
+        }
+    }
 }
 
 dependencies {
