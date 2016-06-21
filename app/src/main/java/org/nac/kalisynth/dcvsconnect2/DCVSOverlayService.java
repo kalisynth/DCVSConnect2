@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -44,6 +45,8 @@ public class DCVSOverlayService extends Service {
     public static Button funButton;
     private static Button helpButton;
     private static Button homeButton;
+
+    MediaPlayer mp = null;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -182,6 +185,7 @@ public class DCVSOverlayService extends Service {
         public void gohelp() {
             //Button funButton = (Button) findViewById(R.id.funbtnid);
             ConnectionCheck();
+            buttonclicksound();
             /*Intent helpIntent =  new Intent(Intent.ACTION_VIEW);
             helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             helpIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSHelp");*/
@@ -193,6 +197,7 @@ public class DCVSOverlayService extends Service {
     public void goHome(){
         //Home Intent
         ConnectionCheck();
+        buttonclicksound();
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -202,6 +207,7 @@ public class DCVSOverlayService extends Service {
     public void goFun(){
         //Fun intent
         ConnectionCheck();
+        buttonclicksound();
         /*Intent funIntent =  new Intent(Intent.ACTION_VIEW);
         funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         funIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.Dcvsfun");*/
@@ -213,6 +219,7 @@ public class DCVSOverlayService extends Service {
     public void goChat(){
         //chat intent
         ConnectionCheck();
+        buttonclicksound();
         Intent chatIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSChat.class);
         chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         /*Intent chatIntent =  new Intent(Intent.ACTION_VIEW);
@@ -342,6 +349,13 @@ public class DCVSOverlayService extends Service {
         return fullName;
     }
 
+    public void buttonclicksound(){
+        mp = MediaPlayer.create(this, R.raw.bp2);
+        mp.start();
     }
 
-//Todo Bigger Buttons
+    }
+
+//Todo Bigger Buttons, sounds
+
+//attribution button press sound Recorded by Marianne Gagnon

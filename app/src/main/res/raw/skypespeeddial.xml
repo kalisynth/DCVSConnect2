@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<speed_dial_info>
+	<speeddial id="1">
+		<slot>1</slot>
+		<skype_name>volunteer1dcvs</skype_name>
+		<person_name>Volunteer One</person_name>
+	</speeddial>
+	
+	<speeddial id="2">
+		<slot>2</slot>
+		<skype_name>volunteer2dcvs</skype_name>
+		<person_name>Volunteer Two</person_name>
+	</speeddial>
+	
+	<speeddial id="3">
+		<slot>3</slot>
+		<skype_name>volunteer3dcvs</skype_name>
+		<person_name>Volunteer Three</person_name>
+	</speeddial>
+	
+	<speeddial id="4">
+		<slot>4</slot>
+		<skype_name>dcvsoffice</skype_name>
+		<person_name>Office DCVS</person_name>
+	</speeddial>
+	
+	<speeddial id="5">
+		<slot>5</slot>
+		<skype_name>five</skype_name>
+		<person_name>five</person_name>
+	</speeddial>
+	
+	<speeddial id="6">
+		<slot>6</slot>
+		<skype_name>six</skype_name>
+		<person_name>six</person_name>
+	</speeddial>
+	
+	<speeddial id="7">
+		<slot>7</slot>
+		<skype_name>seven</skype_name>
+		<person_name>seven</person_name>
+	</speeddial>
+	
+	<speeddial id="8">
+		<slot>8</slot>
+		<skype_name>eight</skype_name>
+		<person_name>eight</person_name>
+	</speeddial>
+	
+	<speeddial id="9">
+		<slot>9</slot>
+		<skype_name>nine</skype_name>
+		<person_name>nine</person_name>
+	</speeddial>
+	
+</speed_dial_info>

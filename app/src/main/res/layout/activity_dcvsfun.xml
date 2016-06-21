@@ -37,7 +37,7 @@
         android:id="@+id/radioBTN"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/nacradioicon"
+        android:background="@drawable/dcvsradio"
         android:onClick="radioonclick"
         android:contentDescription="@string/RadioBTN" />
 </RelativeLayout>

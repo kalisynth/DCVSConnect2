@@ -35,6 +35,8 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
             radiostation.setText(getString(R.string.DCVSRadioStation));
         } else if (BuildConfig.RadioStation.equals("Local")){
             radiostation.setText(getString(R.string.NACRadiostation));
+        } else {
+
         }
 
 
