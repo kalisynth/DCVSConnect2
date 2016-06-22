@@ -9,7 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.Dcvsfun"
     android:background="@drawable/funscreen"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    android:id="@+id/funlayout">
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -35,9 +36,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/radioBTN"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/dcvsradio"
         android:onClick="radioonclick"
-        android:contentDescription="@string/RadioBTN" />
+        android:contentDescription="@string/RadioBTN"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/internetBTN"
+        android:layout_marginEnd="55dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/livestreambtn"
+        android:background="@drawable/dcvsnaclivestream"
+        android:layout_alignTop="@+id/radioBTN"
+        android:layout_toEndOf="@+id/gamesBTN"
+        android:layout_marginStart="89dp"
+        android:onClick="onStreamClick" />
 </RelativeLayout>

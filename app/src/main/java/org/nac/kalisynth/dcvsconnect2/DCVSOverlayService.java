@@ -350,7 +350,7 @@ public class DCVSOverlayService extends Service {
     }
 
     public void buttonclicksound(){
-        mp = MediaPlayer.create(this, R.raw.bp2);
+        mp = MediaPlayer.create(this, R.raw.btnpush);
         mp.start();
     }
 

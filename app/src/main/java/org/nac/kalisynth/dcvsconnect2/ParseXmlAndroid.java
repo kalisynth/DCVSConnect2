@@ -2,6 +2,7 @@ package org.nac.kalisynth.dcvsconnect2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,5 +19,12 @@ public class ParseXmlAndroid extends AppCompatActivity {
 
         final TextView output = (TextView) findViewById(R.id.output);
         final Button xmlparsebtn = (Button) findViewById(R.id.xmlparse);
+
+        xmlparsebtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+            }
+        });
     }
+
 }

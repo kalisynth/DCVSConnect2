@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/WebBTN6"
             android:background="@drawable/dcvsseniorsbtn"
-            android:contentDescription="@string/WebBTN6" />
+            android:contentDescription="@string/WebBTN6"
+            android:onClick="onSeniorClick" />
     </LinearLayout>
 </RelativeLayout>
