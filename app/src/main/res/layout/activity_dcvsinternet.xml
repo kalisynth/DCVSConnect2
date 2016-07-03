@@ -58,14 +58,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/WebBTN4"
             android:background="@drawable/dcvsabcbtn"
-            android:contentDescription="@string/WebBTN4" />
+            android:contentDescription="@string/WebBTN4"
+            android:onClick="onABCClick" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/WebBTN5"
             android:background="@drawable/dcvssevenbtn"
-            android:contentDescription="@string/WebBTN5" />
+            android:contentDescription="@string/WebBTN5"
+            android:onClick="onSevenClick" />
 
         <ImageButton
             android:layout_width="wrap_content"

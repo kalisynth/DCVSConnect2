@@ -18,7 +18,7 @@
         android:id="@+id/gamesBTN"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/dcvsrectgames"
+        android:background="@drawable/gamesdcvs"
         android:onClick="gamesonclick"
         android:contentDescription="@string/GameSBTN" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/internetBTN"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/dcvsrectinternet"
+        android:background="@drawable/internetdcvs"
         android:onClick="internetonClick"
         android:contentDescription="@string/InternetBTN" />
 
@@ -36,20 +36,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/radioBTN"
-        android:background="@drawable/dcvsradio"
+        android:background="@drawable/dcvsnradio"
         android:onClick="radioonclick"
         android:contentDescription="@string/RadioBTN"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/internetBTN"
-        android:layout_marginEnd="55dp" />
+        android:layout_marginStart="133dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/livestreambtn"
-        android:background="@drawable/dcvsnaclivestream"
-        android:layout_alignTop="@+id/radioBTN"
-        android:layout_toEndOf="@+id/gamesBTN"
-        android:layout_marginStart="89dp"
-        android:onClick="onStreamClick" />
+        android:background="@drawable/livestreamdcvs"
+        android:layout_marginStart="271dp"
+        android:onClick="onStreamClick"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

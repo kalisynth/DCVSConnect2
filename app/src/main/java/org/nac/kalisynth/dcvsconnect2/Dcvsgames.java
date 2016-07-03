@@ -38,7 +38,7 @@ public class Dcvsgames extends AppCompatActivity {
     public void backgammononclick(View v) {
         Intent backgamIntent;
         PackageManager backagamManager = getPackageManager();
-        backgamIntent = backagamManager.getLaunchIntentForPackage("uk.co.aifactory.solitaire");
+        backgamIntent = backagamManager.getLaunchIntentForPackage("uk.co.aifactory.backgammon");
         backgamIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         startActivity(backgamIntent);
         finish();

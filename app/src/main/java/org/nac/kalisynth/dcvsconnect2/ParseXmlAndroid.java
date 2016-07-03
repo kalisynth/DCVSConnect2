@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.xml.sax.InputSource;
+
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.util.List;
 
 public class ParseXmlAndroid extends AppCompatActivity {
@@ -20,11 +24,15 @@ public class ParseXmlAndroid extends AppCompatActivity {
         final TextView output = (TextView) findViewById(R.id.output);
         final Button xmlparsebtn = (Button) findViewById(R.id.xmlparse);
 
-        xmlparsebtn.setOnClickListener(new View.OnClickListener(){
+        /*xmlparsebtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                try{
+                    InputSource is=new InputSource(getResources().openRawResource(R.raw.skypespeeddial));
+                    XMLParser
+                }
 
             }
-        });
+        });*/
     }
 
 }

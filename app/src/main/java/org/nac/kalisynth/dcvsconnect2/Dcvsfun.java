@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class Dcvsfun extends AppCompatActivity {
@@ -17,26 +18,27 @@ public class Dcvsfun extends AppCompatActivity {
     public static RelativeLayout FunView;
     ImageButton streambutton;
     ImageButton radiobutton;
+    LinearLayout.LayoutParams params_radio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvsfun);
-
+        //layout variables for the Fun Screen
         FunView = (RelativeLayout) findViewById(R.id.funlayout);
         streambutton = (ImageButton) findViewById(R.id.livestreambtn);
         radiobutton = (ImageButton) findViewById(R.id.radioBTN);
 
+        //Check build config for what version of the app it is, DCVS will hide the stream button and change the radio button, local will just change the radio button
         if (BuildConfig.RadioStation.equals("DCVS")){
             //change streaming to invisible
-            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsradio));
+            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsradio2));
             FunView.removeView(streambutton);
         } else if (BuildConfig.RadioStation.equals("Local")){
             //change stream to visible
-            //FunView.addView(streambutton);
-            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsnacradiobtn));
+            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsnradio));
         } else {
-
+            //for future builds
         }
     }
 

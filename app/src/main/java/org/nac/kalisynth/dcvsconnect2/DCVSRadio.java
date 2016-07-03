@@ -74,9 +74,10 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
 
     public void onClickPlay(View v){
         if (BuildConfig.RadioStation.equals("DCVS")){
-            launchVLC("http://thassos.cdnstream.com:5046/stream");
+            launchVLC("http://bit.ly/dcvsradio");
         } else if (BuildConfig.RadioStation.equals("Local")){
-            launchVLC("http://thassos.cdnstream.com:5049/live");
+            //launchVLC("http://bit.ly/naclocalradio");
+            launchVLC("http://bit.ly/dcvsradio");
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
@@ -96,7 +97,7 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
             public void run(){
                 startActivity(new Intent(DCVSRadio.this, DCVSRadio.class)); finish();
             }
-        },3000);
+        },5000);
         /*
         Intent radioIntent = new Intent();
         radioIntent.setAction(Intent.ACTION_VIEW);

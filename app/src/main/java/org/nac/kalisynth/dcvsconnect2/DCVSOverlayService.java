@@ -30,6 +30,7 @@ public class DCVSOverlayService extends Service {
     private LinearLayout.LayoutParams params_chat;
     private LinearLayout.LayoutParams params_fun;
     private LinearLayout.LayoutParams params_help;
+    private LinearLayout.LayoutParams params_show;
 
     //Window Manager
     private WindowManager wm;
@@ -39,12 +40,14 @@ public class DCVSOverlayService extends Service {
     private Boolean helpv = true;
     public static Boolean funv = true;
     private Boolean homev = false;
+    private Boolean showv = true;
 
     //Buttons
     public static Button chatButton;
     public static Button funButton;
     private static Button helpButton;
     private static Button homeButton;
+    private static Button showButton;
 
     MediaPlayer mp = null;
 
@@ -111,6 +114,13 @@ public class DCVSOverlayService extends Service {
         //adds help button to the layout
         DCVSView.addView(helpButton, params_help);
 
+        showButton = new Button(this);
+        showButton.setBackground(ContextCompat.getDrawable(this, R.drawable.show));
+        params_show = new LinearLayout.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        DCVSView.addView(showButton, params_show);
+
         //Window Manager for the Layout
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -166,6 +176,17 @@ public class DCVSOverlayService extends Service {
                 funv = false;
                 DCVSView.removeView(funButton);
                 goFun();
+            }
+        });
+
+        showButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if (showv){
+                    Hide();
+                } else if (!showv){
+                    Show();
+                }
             }
         });
         DCVSAppOnNote();
@@ -228,18 +249,47 @@ public class DCVSOverlayService extends Service {
         startActivity(chatIntent);
     }
 
-    public void ConnectionCheck(){
-        ConnectivityManager check = (ConnectivityManager)
-                this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        //Network[] info = check.getAllNetworks();
-        //NetworkInfo[] info = check.getAllNetworkInfo();
-
-        if(check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null){
-            OnlineInternetNotification();
+    public void Show(){
+        if (homev){
+            DCVSView.addView(homeButton, params_home);
         }
-        else
-            OfflineNotification();
+        if (chatv){
+            DCVSView.addView(chatButton, params_chat);
+        }
+        if (helpv){
+            DCVSView.addView(helpButton, params_help);
+        }
+        if (funv) {
+            DCVSView.addView(funButton, params_fun);
+        }
+        showv = true;
+        showButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.show));
+    }
+
+    public void Hide(){
+        DCVSView.removeView(homeButton);
+        DCVSView.removeView(chatButton);
+        DCVSView.removeView(funButton);
+        DCVSView.removeView(helpButton);
+        showv = false;
+        showButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.hide));
+    }
+
+    public void ConnectionCheck(){
+        if (BuildConfig.RadioStation.equals("Wifi")){
+            WifiNotification();
+        } else {
+            ConnectivityManager check = (ConnectivityManager)
+                    this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            //Network[] info = check.getAllNetworks();
+            //NetworkInfo[] info = check.getAllNetworkInfo();
+
+            if (check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null) {
+                OnlineInternetNotification();
+            } else
+                OfflineNotification();
+        }
     }
 
     public void connectioncheck2(){
@@ -270,6 +320,16 @@ public class DCVSOverlayService extends Service {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1, mBuilder.build());
     //Offline Notification Draw
+    }
+
+    public void WifiNotification(){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.wificonnected);
+        mBuilder.setContentTitle("Wifi");
+        mBuilder.setContentText("This is a Wifi Only Tablet");
+        mBuilder.setOngoing(true);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, mBuilder.build());
     }
 
     public void DCVSAppOnNote(){

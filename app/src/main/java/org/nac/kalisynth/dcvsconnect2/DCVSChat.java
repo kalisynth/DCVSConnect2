@@ -354,4 +354,10 @@ public class DCVSChat extends AppCompatActivity {
         return fullName;
     }
 
+    /*private void hangup(){
+        if (skype.ActiveCalls.count > 0){
+            
+        }
+    }*/
+
 }
