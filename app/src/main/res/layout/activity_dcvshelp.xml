@@ -30,4 +30,22 @@
         android:background="@drawable/dcvsrectquicksupport"
         android:contentDescription="@string/QuickSupportBTN"
         android:onClick="quicksupportclick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SkypeVersion"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/skypecheck"
+        android:onClick="skypeversionclick"
+        android:layout_alignParentEnd="false" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/missingappslist"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="75dp" />
 </RelativeLayout>

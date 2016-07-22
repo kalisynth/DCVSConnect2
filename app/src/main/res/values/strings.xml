@@ -38,21 +38,33 @@
     <string name="EditSwitch">EDIT | ADD</string>
     <string name="EditSwitchCD">Edit Switch</string>
     <!--Speed Dial -->
-    <string name="SpeedDialOne" translatable="false">volunteer1dcvs</string>
-    <string name="SpeedDialTwo" translatable="false">volunteer2dcvs</string>
-    <string name="SpeedDialThree" translatable="false">volunteer3dcvs</string>
-    <string name="SpeedDialFour" translatable="false">dcvsoffice</string>
-    <string name="SpeedDialFive"> </string>
-    <string name="SpeedDialSix"> </string>
-    <string name="SpeedDialSeven"> </string>
-    <string name="SpeedDialEight"> </string>
+    <string name="SpeedDialOne" translatable="false">Dial 1</string>
+    <string name="SpeedDialTwo" translatable="false">Dial 2</string>
+    <string name="SpeedDialThree" translatable="false">Dial 3</string>
+    <string name="SpeedDialFour" translatable="false">Dial 4</string>
+    <string name="SpeedDialFive">Dial 5</string>
+    <string name="SpeedDialSix">Dial 6</string>
+    <string name="SpeedDialSeven">Dial 7</string>
+    <string name="SpeedDialEight">Dial 8</string>
     <string name="SpeedDialNine"> </string>
+    <string name="dcvscontacts">DCVS Contact List</string>
+    <string name="ffcontactlist">Friends and Family Contacts</string>
+    <string name="sgcontactlist">Social Groups</string>
+
     <string name="PlayBTN">PLAY</string>
     <string name="PauseBTN">PAUSE</string>
     <string name="NACRadio">NAC Radio</string>
     <!-- Radio Stations -->
     <string name="NACRadiostation">Nundah Activity Centre Radiostation</string>
     <string name="DCVSRadioStation">DCVS Radiostation Golden Memories</string>
+    <!-- Build Names -->
+    <string name="BVDCVS">DCVS</string>
+    <string name="BVLocal">NAC</string>
+    <string name="BVWifi">Wifi NAC</string>
 
+    <string name="connection_error">Unable to load content. Check your network connection</string>
+    <string name="xml_error">Error Parsing XML</string>
+
+    <string name="Update_Speed_Dial">Update Speed Dial Pad</string>
 
 </resources>

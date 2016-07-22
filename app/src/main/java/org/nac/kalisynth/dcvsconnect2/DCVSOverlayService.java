@@ -2,6 +2,7 @@ package org.nac.kalisynth.dcvsconnect2;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
@@ -10,30 +11,50 @@ import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 
 public class DCVSOverlayService extends Service {
     //Main Layout View
     public static LinearLayout DCVSView;
+    public static RelativeLayout reminderview;
 
     //Layout Params
     private WindowManager.LayoutParams params;
+    private WindowManager.LayoutParams rparams;
     private LinearLayout.LayoutParams params_home;
     private LinearLayout.LayoutParams params_chat;
     private LinearLayout.LayoutParams params_fun;
     private LinearLayout.LayoutParams params_help;
     private LinearLayout.LayoutParams params_show;
+    private RelativeLayout.LayoutParams params_reminder;
 
     //Window Manager
     private WindowManager wm;
+    private WindowManager rwm;
 
     //Booleans for if button is visible
     public static Boolean chatv = true;
@@ -41,6 +62,7 @@ public class DCVSOverlayService extends Service {
     public static Boolean funv = true;
     private Boolean homev = false;
     private Boolean showv = true;
+    private Boolean reminderv = true;
 
     //Buttons
     public static Button chatButton;
@@ -48,6 +70,13 @@ public class DCVSOverlayService extends Service {
     private static Button helpButton;
     private static Button homeButton;
     private static Button showButton;
+    private TextView remindertxt;
+
+
+    public static String bv;
+
+    public final static int REQUEST_CODE = -1010101;
+    private static final String URL = "http://tim.nactech.org/skypespeeddial.xml";
 
     MediaPlayer mp = null;
 
@@ -60,6 +89,14 @@ public class DCVSOverlayService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        if (BuildConfig.RadioStation.equals("DCVS")){
+            bv = getResources().getString(R.string.BVDCVS);
+        } else if(BuildConfig.RadioStation.equals("Local")){
+            bv = getResources().getString(R.string.BVLocal);
+        } else {
+            bv = getResources().getString(R.string.BVWifi);
+        }
+
         //Linear Layout
         DCVSView = new LinearLayout(this);
         DCVSView.setBackgroundColor(0x00D4FF00);
@@ -67,6 +104,7 @@ public class DCVSOverlayService extends Service {
 
         //Relative Layout
         //RDCVSView = new RelativeLayout(this);
+        reminderview = new RelativeLayout(this);
 
         //Home Button style
         homeButton = new Button(this);
@@ -121,6 +159,16 @@ public class DCVSOverlayService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT);
         DCVSView.addView(showButton, params_show);
 
+        remindertxt = new TextView(this);
+        params_reminder = new RelativeLayout.LayoutParams(
+                500,
+                500
+        );
+
+        remindertxt.setGravity(Gravity.CENTER);
+        params_reminder.addRule(RelativeLayout.CENTER_IN_PARENT);
+        reminderview.addView(remindertxt, params_reminder);
+
         //Window Manager for the Layout
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -132,8 +180,18 @@ public class DCVSOverlayService extends Service {
         //Window Manager Layout Style
         params.gravity = Gravity.END | Gravity.CENTER_HORIZONTAL;
 
+        rparams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                PixelFormat.TRANSLUCENT);
+        rparams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        rwm = (WindowManager) getSystemService(WINDOW_SERVICE);
         wm.addView(DCVSView, params);
+        rwm.addView(reminderview, rparams);
 
         helpButton.setOnClickListener(new View.OnClickListener(){
           @Override
@@ -151,7 +209,9 @@ public class DCVSOverlayService extends Service {
             public void onClick(View view){
                 buttoncheck();
                 bigbuttons();
+                showreminder();
                 homev = false;
+                reminderv = true;
                 DCVSView.removeView(homeButton);
                 goHome();
             }
@@ -163,6 +223,7 @@ public class DCVSOverlayService extends Service {
                 buttoncheck();
                 smallbuttons();
                 DCVSView.removeView(chatButton);
+                removereminder();
                 chatv = false;
                 goChat();
             }
@@ -174,6 +235,7 @@ public class DCVSOverlayService extends Service {
                 buttoncheck();
                 smallbuttons();
                 funv = false;
+                removereminder();
                 DCVSView.removeView(funButton);
                 goFun();
             }
@@ -192,6 +254,13 @@ public class DCVSOverlayService extends Service {
         DCVSAppOnNote();
             }
 
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_CODE){
+
+        }
+    }*/
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -201,7 +270,12 @@ public class DCVSOverlayService extends Service {
             NotificationManager cNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             cNotificationManager.cancel(2);
             cNotificationManager.cancel(1);
-        }}
+        }
+        if(reminderview!=null){
+            WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+            wm.removeView(reminderview);
+        }
+    }
 
         public void gohelp() {
             //Button funButton = (Button) findViewById(R.id.funbtnid);
@@ -262,6 +336,9 @@ public class DCVSOverlayService extends Service {
         if (funv) {
             DCVSView.addView(funButton, params_fun);
         }
+        if (reminderv){
+            reminderview.addView(remindertxt, params_reminder);
+        }
         showv = true;
         showButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.show));
     }
@@ -271,6 +348,7 @@ public class DCVSOverlayService extends Service {
         DCVSView.removeView(chatButton);
         DCVSView.removeView(funButton);
         DCVSView.removeView(helpButton);
+        reminderview.removeView(remindertxt);
         showv = false;
         showButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.hide));
     }
@@ -337,7 +415,7 @@ public class DCVSOverlayService extends Service {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.ic_stat_dcson);
         mBuilder.setContentTitle("DCVSConnect");
-        mBuilder.setContentText("DCVS Connect is Online, " + "Tablet Name: " + dn);
+        mBuilder.setContentText("DCVS Connect is Online, " + bv + " V1.4" + " Tablet Name: " + dn);
         mBuilder.setOngoing(true);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(2, mBuilder.build());
@@ -386,8 +464,9 @@ public class DCVSOverlayService extends Service {
         }else if(!helpv){
             DCVSView.addView(helpButton, params_help);
             helpv = true;
-        }else {
-
+        }else if(!reminderv) {
+            reminderview.addView(remindertxt, params_reminder);
+            reminderv = true;
         }
     }
 
@@ -412,6 +491,92 @@ public class DCVSOverlayService extends Service {
     public void buttonclicksound(){
         mp = MediaPlayer.create(this, R.raw.btnpush);
         mp.start();
+    }
+
+    /*@TargetApi(23)
+    public void checkDrawOverlayPermission(){
+        if(!Settings.canDrawOverlays(this)){
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, REQUEST_CODE);
+        }
+    }*/
+
+    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return loadXmlFromNetwork(urls[0]);
+            } catch (IOException e) {
+                return getResources().getString(R.string.connection_error);
+            } catch (XmlPullParserException e) {
+                return getResources().getString(R.string.xml_error);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            /*setContentView(R.layout.activity_parse_xml_android);
+            WebView myWebView = (WebView) findViewById(R.id.webview);
+            myWebView.loadData(result, "text/html", null);*/
+            remindertxt.setText(result);
+            remindertxt.setTextColor(0xFF000000);
+            remindertxt.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.speechbubble));
+        }
+    }
+
+    private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+        xmlcalendar feedXmlParser = new xmlcalendar();
+        List<xmlcalendar.Entry> entries = null;
+        String url = null;
+        StringBuilder skypedetails = new StringBuilder();
+        try {
+            stream = this.getResources().openRawResource(R.raw.calender);
+            entries = feedXmlParser.parse(stream);
+        } finally {
+            if (stream != null){
+                stream.close();
+            }
+        }
+
+        for (xmlcalendar.Entry entry : entries) {
+            skypedetails.append("Hello, Just a reminder that you have a ");
+            skypedetails.append(entry.title);
+            skypedetails.append(" on ");
+            skypedetails.append(entry.date);
+            skypedetails.append(" also ");
+            skypedetails.append(entry.notes);
+        }
+        return skypedetails.toString();
+    }
+
+    private InputStream downloadUrl(String urlString) throws IOException{
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        conn.connect();
+        InputStream stream = conn.getInputStream();
+        return stream;
+    }
+
+    public void removereminder(){
+        if(reminderv) {
+            reminderview.removeView(remindertxt);
+        }
+        rwm.updateViewLayout(reminderview, rparams);
+    }
+
+    public void showreminder(){
+        if(!reminderv) {
+            reminderview.addView(remindertxt, params_reminder);
+        }
+        rwm.updateViewLayout(reminderview, rparams);
+        new DownloadXmlTask().execute(URL);
     }
 
     }

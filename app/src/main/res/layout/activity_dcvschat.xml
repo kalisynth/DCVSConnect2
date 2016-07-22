@@ -9,57 +9,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.DCVSChat"
-    android:background="@drawable/chatscreen"
+    android:background="@drawable/speeddialbg"
     android:contentDescription="@string/EditSwitchCD"
     tools:ignore="Overdraw">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="49dp"
-        android:id="@+id/linearLayout3"
-        android:background="#fdf55d"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/linearLayout6">
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDial1"
-            android:id="@+id/SpeedDialOne"
-            android:onClick="speeddial1onclick"
-            android:background="@drawable/sdbg"
-            android:contentDescription="@string/SpeedDial1"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000000" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDial2"
-            android:id="@+id/SpeedDialTwo"
-            android:background="@drawable/sdbg"
-            android:contentDescription="@string/SpeedDial2"
-            android:onClick="speeddial2onclick"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000000"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDial3"
-            android:id="@+id/SpeedDialThree"
-            android:contentDescription="@string/SpeedDial3"
-            android:onClick="speeddial3onclick"
-            android:background="@drawable/sdbg"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000000"/>
-
-    </LinearLayout>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -68,116 +20,162 @@
         android:background="@drawable/dcvsrectskype"
         android:onClick="skypeonclick"
         android:contentDescription="@string/SkypeBTN"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_toEndOf="@+id/linearLayout6" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_centerHorizontal="true"
-        android:background="#fdf55d"
-        android:id="@+id/linearLayout6">
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDial4"
-            android:id="@+id/SpeedDialFour"
-            android:background="@drawable/sdbg"
-            android:contentDescription="@string/SpeedDial4"
-            android:onClick="speeddial4onclick"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000000"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDialNN"
-            android:id="@+id/SpeedDialFive"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial5"
-            android:visibility="invisible"
-            android:textColor="#000000"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDialNN"
-            android:id="@+id/SpeedDialSix"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial6"
-            android:visibility="invisible"
-            android:textColor="#000000"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout6"
-        android:layout_centerHorizontal="true"
-        android:background="#fdf55d"
-        android:id="@+id/linearLayout7">
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDialNN"
-            android:id="@+id/SpeedDialSeven"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/sdncbg"
-            android:contentDescription="@string/SpeedDial7"
-            android:visibility="invisible"
-            android:textColor="#000000"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDialNN"
-            android:id="@+id/SpeedDialEight"
-            android:background="@drawable/sdncbg"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/SpeedDial8"
-            android:visibility="invisible"
-            android:textColor="#000000"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/SpeedDialNN"
-            android:id="@+id/SpeedDialNine"
-            android:background="@drawable/sdncbg"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/SpeedDial9"
-            android:visibility="invisible"
-            android:textColor="#000000"/>
-    </LinearLayout>
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/EditSwitch"
-        android:id="@+id/editswitch"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:visibility="invisible" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="250dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/skypename"
-        android:layout_below="@+id/linearLayout7"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Update_Speed_Dial"
+        android:id="@+id/updatebtn"
+        android:contentDescription="@string/Update_Speed_Dial"
+        android:onClick="onUpdateClick"
+        android:layout_above="@+id/skypename"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SkypeList"
+        android:layout_above="@+id/SkypeBTN"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dcvscontacts"
+        android:background="@drawable/dcvssd"
+        android:contentDescription="@string/dcvscontacts"
+        android:onClick="onDCVSCClick"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/ffcontacts" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ffcontacts"
+        android:background="@drawable/ffsd"
+        android:contentDescription="@string/ffcontactlist"
+        android:onClick="onFFCClick"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sgcontacts"
+        android:background="@drawable/sgsd"
+        android:contentDescription="@string/sgcontactlist"
+        android:nestedScrollingEnabled="false"
+        android:onClick="onSGClick"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/ffcontacts" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="5"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s7"
+            android:background="@drawable/sd7"
+            android:contentDescription="@string/SpeedDialSeven"
+            android:layout_below="@+id/s6"
+            android:layout_alignEnd="@+id/sgcontacts"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s4"
+            android:background="@drawable/sd4"
+            android:contentDescription="@string/SpeedDialFour"
+            android:layout_above="@+id/s3"
+            android:layout_alignStart="@+id/s2"
+            android:layout_row="0"
+            android:layout_column="1" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s6"
+            android:background="@drawable/sd6"
+            android:contentDescription="@string/SpeedDialSix"
+            android:layout_below="@+id/s5"
+            android:layout_alignStart="@+id/s8"
+            android:layout_row="0"
+            android:layout_column="2" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s8"
+            android:background="@drawable/sd8"
+            android:contentDescription="@string/SpeedDialEight"
+            android:layout_below="@+id/s7"
+            android:layout_toEndOf="@+id/ffcontacts"
+            android:layout_row="1"
+            android:layout_column="0" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s3"
+            android:background="@drawable/sd3"
+            android:contentDescription="@string/SpeedDialThree"
+            android:layout_above="@+id/SkypeBTN"
+            android:layout_toStartOf="@+id/ffcontacts"
+            android:layout_row="1"
+            android:layout_column="2" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s2"
+            android:background="@drawable/sd2"
+            android:contentDescription="@string/SpeedDialTwo"
+            android:layout_below="@+id/s7"
+            android:layout_toStartOf="@+id/s1"
+            android:layout_row="3"
+            android:layout_column="0" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s5"
+            android:background="@drawable/sd5"
+            android:contentDescription="@string/SpeedDialFive"
+            android:layout_above="@+id/s4"
+            android:layout_alignStart="@+id/skypename"
+            android:layout_row="3"
+            android:layout_column="1" />
+
+        <ImageButton
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/s1"
+            android:background="@drawable/sd1"
+            android:contentDescription="@string/SpeedDialOne"
+            android:layout_alignBottom="@+id/SkypeBTN"
+            android:layout_alignStart="@+id/s5"
+            android:layout_row="3"
+            android:layout_column="2" />
+    </GridLayout>
 
 </RelativeLayout>

@@ -45,9 +45,9 @@ public class XMLParser extends DefaultHandler {
         }
         else if(localname.equalsIgnoreCase("slot")){
             skypeValues.setslot(Integer.parseInt(builder.toString()));
-        }else if(localname.equalsIgnoreCase("skypename")){
+        }else if(localname.equalsIgnoreCase("skype_name")){
             skypeValues.setskypename(builder.toString());
-        }else if(localname.equalsIgnoreCase("personname")){
+        }else if(localname.equalsIgnoreCase("person_name")){
             skypeValues.setpersonname(builder.toString());
         }
 

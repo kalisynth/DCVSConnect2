@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skype>
+	<speeddial>
+		<slot>1</slot>
+		<skype_name>limetreedcvs</skype_name>
+		<person_name>lime</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>2</slot>
+		<skype_name></skype_name>
+		<person_name>friend2</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>3</slot>
+		<skype_name></skype_name>
+		<person_name>friend3</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>4</slot>
+		<skype_name></skype_name>
+		<person_name>friend4</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>5</slot>
+		<skype_name></skype_name>
+		<person_name>friend5</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>6</slot>
+		<skype_name></skype_name>
+		<person_name>friend6</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>7</slot>
+		<skype_name></skype_name>
+		<person_name>friend7</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>8</slot>
+		<skype_name></skype_name>
+		<person_name>friend8</person_name>
+	</speeddial>
+	
+	<speeddial>
+		<slot>9</slot>
+		<skype_name></skype_name>
+		<person_name>friend9</person_name>
+	</speeddial>
+	
+</skype>
