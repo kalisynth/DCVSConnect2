@@ -76,8 +76,8 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
         if (BuildConfig.RadioStation.equals("DCVS")){
             launchVLC("http://bit.ly/dcvsradio");
         } else {
-            launchVLC("http://bit.ly/naclocalradio");
-            //launchVLC("http://bit.ly/dcvsradio");
+            //launchVLC("http://bit.ly/naclocalradio");
+            launchVLC("http://bit.ly/dcvsradio");
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);

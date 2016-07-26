@@ -31,7 +31,7 @@ public class DCVSHelp extends AppCompatActivity {
     public void quicksupportclick(View v){
         Intent quicksupportIntent;
         PackageManager quicksupportmanager = getPackageManager();
-        quicksupportIntent = quicksupportmanager.getLaunchIntentForPackage("com.teamviewer.quicksupport.samsung");
+        quicksupportIntent = quicksupportmanager.getLaunchIntentForPackage("com.rsupport.mobizen.cn.k.sec");
         quicksupportIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         startActivity(quicksupportIntent);
         finish();
