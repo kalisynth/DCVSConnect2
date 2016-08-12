@@ -82,6 +82,11 @@ public class DCVSChat extends AppCompatActivity {
 
     private static final String URL = "http://tim.nactech.org/skypespeeddial.xml";
 
+    Button s1;
+    Button s2;
+    Button s3;
+    Button s4;
+
     boolean EditEnabled = false;
     //Check Skype is installed
     private boolean isSkypeClientInstalled(Context skypeCall) {
@@ -108,7 +113,9 @@ public class DCVSChat extends AppCompatActivity {
         setContentView(R.layout.activity_dcvschat);
         String skypename = getName();
         TextView stext = (TextView)findViewById(R.id.skypename);
-        stext.setText("Your Skype Name is " + skypename);
+        if (skypename != null) {
+            stext.setText("Your Skype Name is " + skypename);
+        }
     }
     //Open Skype
     public void skypeonclick(View v){
@@ -171,7 +178,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this, "skype:" + sd1sname + "?call&video=true");
+                        skypedcvs1call(DCVSChat.this, "skype:volunteer1dcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -192,7 +199,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this,"skype:" + sd2sname + "?call&video=true");
+                        skypedcvs1call(DCVSChat.this,"skype:volunteer2dcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -213,7 +220,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this,"skype:" + sd3sname + "?call&video=true");
+                        skypedcvs1call(DCVSChat.this,"skype:volunteer3dcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -234,7 +241,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this,"skype:" + sd4sname + "?call&video=true");
+                        skypedcvs1call(DCVSChat.this,"skype:officedcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -279,7 +286,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this,"skype:" + sd6sname + "?call&video=true");
+                        skypedcvs1call(DCVSChat.this,"skype:volunteer1dcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -333,26 +340,6 @@ public class DCVSChat extends AppCompatActivity {
                 .show();
     }
 
-    private void SpeedDialNine() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder
-                .setMessage("Are you sure?")
-                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Yes-code
-                        skypedcvs1call(DCVSChat.this,"skype:" + sd9sname + "?call&video=true");
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,int id) {
-                        dialog.cancel();
-                    }
-                })
-                .show();
-    }
 
     private static Account getAccount(AccountManager accountManager){
         Account[] accounts = accountManager.getAccountsByType("com.google");
@@ -374,7 +361,7 @@ public class DCVSChat extends AppCompatActivity {
 
     //Todo https://drive.google.com/file/d/0B4EdgIslSa6EYVlHOGgzekZCbkk/view?usp=sharing
 
-    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
+    /*private class DownloadXmlTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -389,9 +376,9 @@ public class DCVSChat extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           /* setContentView(R.layout.activity_parse_xml_android);
+           *//* setContentView(R.layout.activity_parse_xml_android);
             WebView myWebView = (WebView) findViewById(R.id.webview);
-            myWebView.loadData(result, "text/html", null);*/
+            myWebView.loadData(result, "text/html", null);*//*
             TextView contactlist = (TextView)findViewById(R.id.SkypeList);
             contactlist.setText(result);
             if(sd1c){
@@ -566,5 +553,5 @@ public class DCVSChat extends AppCompatActivity {
     public void onSGClick(View v){
         contactlist = "SG";
         updatexml();
-    }
+    }*/
 }

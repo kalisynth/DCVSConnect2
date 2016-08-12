@@ -10,9 +10,6 @@ import android.widget.ListView;
 
 public class DCVSHelp extends AppCompatActivity {
 
-    private ListView lv;
-    
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,26 +25,11 @@ public class DCVSHelp extends AppCompatActivity {
         finish();
     }
 
-    public void quicksupportclick(View v){
-        Intent quicksupportIntent;
-        PackageManager quicksupportmanager = getPackageManager();
-        quicksupportIntent = quicksupportmanager.getLaunchIntentForPackage("com.rsupport.mobizen.cn.k.sec");
-        quicksupportIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        startActivity(quicksupportIntent);
-        finish();
-    }
-
     public void skypeversionclick(View v){
         Uri marketUri = Uri.parse("market://details?id=com.skype.raider");
         Intent myIntent = new Intent(Intent.ACTION_VIEW, marketUri);
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(myIntent);
-    }
-
-    public void applist(){
-        if (!skypeinstalled()){
-
-        }
     }
 
     public boolean skypeinstalled(){

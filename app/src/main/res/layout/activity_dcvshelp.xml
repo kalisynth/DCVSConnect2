@@ -9,43 +9,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.DCVSHelp"
     android:background="@drawable/helpscreen"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    android:contentDescription="@string/SkypeCheck">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/HelpGBTN"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
         android:background="@drawable/dcvsrecthelpguide"
         android:contentDescription="@string/HelpGuideBTN"
-        android:onClick="helpguideonclick" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/QuickSupportBTN"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/dcvsrectquicksupport"
-        android:contentDescription="@string/QuickSupportBTN"
-        android:onClick="quicksupportclick" />
+        android:onClick="helpguideonclick"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/SkypeVersion"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/skypecheck"
         android:onClick="skypeversionclick"
-        android:layout_alignParentEnd="false" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/missingappslist"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="75dp" />
 </RelativeLayout>
