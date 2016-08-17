@@ -25,6 +25,15 @@ public class DCVSHelp extends AppCompatActivity {
         finish();
     }
 
+    public void dcvscheatonclick(View v){
+        Intent cheatguideintent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.dcvscheat.class);
+        startActivity(cheatguideintent);
+
+        /*Intent helpIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSHelp.class);
+        helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(helpIntent);*/
+    }
+
     public void skypeversionclick(View v){
         Uri marketUri = Uri.parse("market://details?id=com.skype.raider");
         Intent myIntent = new Intent(Intent.ACTION_VIEW, marketUri);

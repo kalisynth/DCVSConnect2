@@ -1,0 +1,44 @@
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position: absolute;
+}
+
+/*Create a horizontal list with spacing*/
+li {
+	display:inline-block;
+	float: left;
+	margin-right: 1px;
+}
+
+body {
+	background-image: url("img/bg.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.content {
+	position: absolute;
+	right: 100px;
+	color: white;
+	text-align: justify;
+}
+
+#info {
+	position:absolute;
+	left:500px;
+}
+
+#infoimg {
+	height:150px;
+	width:150px;
+}
+
+#wtb1 {
+	color: black;
+}
+
+#wtb2 {
+	color: black;
+}

@@ -23,6 +23,7 @@
     <!--Help Screen -->
     <string name="HelpGuideBTN">Help Guide App</string>
     <string name="SkypeCheck">Check Version of Skype</string>
+    <string name="DCVSCheatsheet">DCVS App Cheat Sheet</string>
     <!--Chat Screen-->
     <string name="SpeedDial1">Volunteer One</string>
     <string name="SpeedDial2">Volunteer Two</string>

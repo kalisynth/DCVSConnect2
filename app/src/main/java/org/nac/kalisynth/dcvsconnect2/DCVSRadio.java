@@ -133,7 +133,7 @@ public class DCVSRadio extends AppCompatActivity implements MediaController.Medi
 }*/
 
     public void onClickPauseBad(View v){
-        launchVLC("file:///storage/emulated/0/Download/1sec.mp3");
+        launchVLC("file:///android_asset/1sec.mp3");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.ic_stat_pause);
         mBuilder.setContentTitle("DCVS Radio");

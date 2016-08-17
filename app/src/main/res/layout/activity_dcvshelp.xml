@@ -19,7 +19,7 @@
         android:background="@drawable/dcvsrecthelpguide"
         android:contentDescription="@string/HelpGuideBTN"
         android:onClick="helpguideonclick"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -28,7 +28,18 @@
         android:id="@+id/SkypeVersion"
         android:background="@drawable/skypecheck"
         android:onClick="skypeversionclick"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:id="@+id/button"
+        android:onClick="dcvscheatonclick"
+        android:contentDescription="@string/DCVSCheatsheet"
+        android:background="@drawable/dcsbtn"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="108dp" />
 
 </RelativeLayout>
