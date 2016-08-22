@@ -44,7 +44,11 @@
         <activity android:name=".Dcvsinternet" />
         <activity android:name=".DCVSRadio" />
         <activity android:name=".ParseXmlAndroid" />
-        <activity android:name=".dcvscheat"></activity>
+        <activity android:name=".dcvscheat" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".options"></activity>
     </application>
 
 </manifest>

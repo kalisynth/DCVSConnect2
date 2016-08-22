@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
 public class DCVSHelp extends AppCompatActivity {
 
@@ -26,12 +25,17 @@ public class DCVSHelp extends AppCompatActivity {
     }
 
     public void dcvscheatonclick(View v){
-        Intent cheatguideintent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.dcvscheat.class);
+        Intent cheatguideintent = new Intent(getApplicationContext(), dcvscheat.class);
         startActivity(cheatguideintent);
 
         /*Intent helpIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSHelp.class);
         helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(helpIntent);*/
+    }
+
+    public void dcvssettingsonclick(View v){
+        Intent dsi = new Intent(getApplicationContext(), options.class);
+        startActivity(dsi);
     }
 
     public void skypeversionclick(View v){
