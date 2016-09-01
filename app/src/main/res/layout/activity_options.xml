@@ -12,63 +12,261 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shared Preference "
+        android:text="@string/optionmenutitle"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
+        android:textSize="35sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tutorials Point"
-        android:id="@+id/textView2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/optionsappshort"
+        android:id="@+id/textView4"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:textSize="35dp"
-        android:textColor="#ff16ff01" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="67dp"
-        android:hint="Name"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignParentLeft="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/optionsgames"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_toEndOf="@+id/textView6"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Pass" />
+        android:layout_marginTop="100dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText3"
-        android:layout_below="@+id/editText2"
-        android:layout_alignParentLeft="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/optionsinternet"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView5"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Email" />
+        android:layout_marginTop="100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/optionsskype"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="100dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:text="@string/optionsgames1"
+        android:id="@+id/og1btn"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsgames2"
+        android:id="@+id/og2btn"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_toEndOf="@+id/og1btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsgames3"
+        android:id="@+id/og3btn"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_toEndOf="@+id/og2btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsgames4"
+        android:id="@+id/og4btn"
+        android:layout_below="@id/og1btn"
+        android:layout_toEndOf="@+id/textView5" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsgames5"
+        android:id="@+id/og5btn"
+        android:layout_below="@id/og2btn"
+        android:layout_toEndOf="@+id/og4btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsgames6"
+        android:id="@+id/og6btn"
+        android:layout_below="@id/og3btn"
+        android:layout_toEndOf="@+id/og5btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb1"
+        android:id="@+id/ow1btn"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb2"
+        android:id="@+id/ow2btn"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/ow1btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb3"
+        android:id="@+id/ow3btn"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/ow2btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb4"
+        android:id="@+id/ow4btn"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/ow3btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb5"
+        android:id="@+id/ow5btn"
+        android:layout_below="@+id/ow1btn"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb6"
+        android:id="@+id/ow6btn"
+        android:layout_below="@+id/ow2btn"
+        android:layout_toEndOf="@+id/ow5btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb7"
+        android:id="@+id/ow7btn"
+        android:layout_below="@+id/ow3btn"
+        android:layout_toEndOf="@+id/ow6btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsweb8"
+        android:id="@+id/ow8btn"
+        android:layout_below="@+id/ow4btn"
+        android:layout_toEndOf="@+id/ow7btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype4"
+        android:id="@+id/os4btn"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype5"
+        android:id="@+id/os5btn"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toEndOf="@+id/os4btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype6"
+        android:id="@+id/os6btn"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toEndOf="@+id/os5btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype7"
+        android:id="@+id/os7btn"
+        android:layout_below="@+id/os4btn"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype8"
+        android:id="@+id/os8btn"
+        android:layout_below="@+id/os5btn"
+        android:layout_toEndOf="@+id/os7btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsskype9"
+        android:id="@+id/os9btn"
+        android:layout_below="@+id/os6btn"
+        android:layout_toEndOf="@+id/os8btn" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsstartbtn"
+        android:id="@+id/runtoggle"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsstartbtn"
+        android:id="@+id/toggletext"
+        android:layout_toLeftOf="@+id/runtoggle"
+        android:layout_alignBottom="@+id/runtoggle"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsapvtext"
+        android:id="@+id/optionsapvtext"
+        android:layout_above="@+id/checkupdatebtn"
+        android:layout_toStartOf="@+id/checkupdatebtn"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CurrentVersion"
+        android:id="@+id/optionsvertext"
+        android:layout_toEndOf="@id/optionsapvtext"
+        android:layout_alignBottom="@id/optionsapvtext"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optionsapvbtntext"
+        android:id="@+id/checkupdatebtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

@@ -71,7 +71,49 @@
     <string name="CurrentVersion"> V1.4 Release </string>
     <string name="title_activity_settings">Settings</string>
 
+    <!-- Options Menu -->
     <string name="optionsmenu">Options</string>
+    <string name="optionmenutitle">DCVS App Settings</string>
+    <string name="optionsappshort">Application Shortcuts</string>
+    <string name="optionsgames">Games - </string>
+    <string name="optionsinternet">Internet - </string>
+    <string name="optionsskype">Skype - </string>
+    <string name="optionsrun">Run on Skype </string>
+    <string name="optionsapv">App Version</string>
+    <string name="optionscheckupdate">Check for Update</string>
+
+    <!-- Options Games -->
+    <string name="optionsgames1">1</string>
+    <string name="optionsgames2">2</string>
+    <string name="optionsgames3">3</string>
+    <string name="optionsgames4">4</string>
+    <string name="optionsgames5">5</string>
+    <string name="optionsgames6">6</string>
+
+    <!-- Options Internet -->
+    <string name="optionsweb1">1</string>
+    <string name="optionsweb2">2</string>
+    <string name="optionsweb3">3</string>
+    <string name="optionsweb4">4</string>
+    <string name="optionsweb5">5</string>
+    <string name="optionsweb6">6</string>
+    <string name="optionsweb7">7</string>
+    <string name="optionsweb8">8</string>
+
+    <!-- Options Skype -->
+    <string name="optionsskype4">4</string>
+    <string name="optionsskype5">5</string>
+    <string name="optionsskype6">6</string>
+    <string name="optionsskype7">7</string>
+    <string name="optionsskype8">8</string>
+    <string name="optionsskype9">9</string>
+
+    <!-- Options Toggle -->
+    <string name="optionsstartbtn">Run on Startup</string>
+
+    <!-- Options Version -->
+    <string name="optionsapvtext">App Version: </string>
+    <string name="optionsapvbtntext">Check for Update</string>
 
     <!-- Strings related to Settings -->
 
