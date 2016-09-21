@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="id" name="buttonid" />
-    <item type="id" name="homebtnid" />
-    <item type="id" name="chatbtnid" />
-    <item type="id" name="funbtnid" />
-    <item type="id" name="helpbtnid" />
 
 </resources>

@@ -8,35 +8,35 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.Dcvsfun"
-    android:background="@drawable/funscreen"
+    android:background="@drawable/dcvs_ui_playscreen"
     tools:ignore="Overdraw"
     android:id="@+id/funlayout">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gamesBTN"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/gamesdcvs"
         android:onClick="gamesonclick"
-        android:contentDescription="@string/GameSBTN" />
+        android:contentDescription="@string/GameSBTN"
+        android:id="@+id/fungamesbtn" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/internetBTN"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/internetdcvs"
+        android:background="@drawable/internet"
         android:onClick="internetonClick"
-        android:contentDescription="@string/InternetBTN" />
+        android:contentDescription="@string/InternetBTN"
+        android:id="@+id/funinternetbtn"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/radioBTN" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/radioBTN"
-        android:background="@drawable/dcvsnradio"
+        android:background="@drawable/button_radio_mini_app"
         android:onClick="radioonclick"
         android:contentDescription="@string/RadioBTN"
         android:layout_marginStart="133dp"
@@ -47,7 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/livestreambtn"
-        android:background="@drawable/livestreamdcvs"
+        android:contentDescription="@string/LivestreamBtn"
+        android:background="@drawable/button_stream_mini_app"
         android:layout_marginStart="271dp"
         android:onClick="onStreamClick"
         android:layout_centerHorizontal="true"

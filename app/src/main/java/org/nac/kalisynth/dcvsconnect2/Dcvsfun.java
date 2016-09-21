@@ -3,21 +3,16 @@ package org.nac.kalisynth.dcvsconnect2;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class Dcvsfun extends AppCompatActivity {
 
-    MediaPlayer mp = null;
-    public static RelativeLayout FunView;
-    ImageButton streambutton;
-    ImageButton radiobutton;
     LinearLayout.LayoutParams params_radio;
 
     @Override
@@ -25,21 +20,21 @@ public class Dcvsfun extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvsfun);
         //layout variables for the Fun Screen
-        FunView = (RelativeLayout) findViewById(R.id.funlayout);
-        streambutton = (ImageButton) findViewById(R.id.livestreambtn);
-        radiobutton = (ImageButton) findViewById(R.id.radioBTN);
+        RelativeLayout funView = (RelativeLayout) findViewById(R.id.funlayout);
+        ImageButton streambutton = (ImageButton) findViewById(R.id.livestreambtn);
+        ImageButton radiobutton = (ImageButton) findViewById(R.id.radioBTN);
 
-        //Check build config for what version of the app it is, DCVS will hide the stream button and change the radio button, local will just change the radio button
+        /*//Check build config for what version of the app it is, DCVS will hide the stream button and change the radio button, local will just change the radio button
         if (BuildConfig.RadioStation.equals("DCVS")){
             //change streaming to invisible
-            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsradio2));
-            FunView.removeView(streambutton);
+            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_radio_mini_app));
+            funView.removeView(streambutton);
         } else if (BuildConfig.RadioStation.equals("Local")){
             //change stream to visible
-            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.dcvsnradio));
+            radiobutton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_radio_mini_app));
         } else {
             //for future builds
-        }
+        }*/
     }
 
     public void gamesonclick(View v) {
@@ -75,8 +70,8 @@ public class Dcvsfun extends AppCompatActivity {
         finish();
     }
 
-    public void buttonclicksound(){
-        mp = MediaPlayer.create(this, R.raw.btnpush);
+    private void buttonclicksound(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.btnpush);
         mp.start();
     }
 

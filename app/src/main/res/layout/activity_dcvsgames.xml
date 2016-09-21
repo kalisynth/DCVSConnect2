@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.Dcvsgames"
-    android:background="@drawable/gamesscreen"
+    android:background="@drawable/dcvs_ui_playscreen"
     tools:ignore="Overdraw">
 
     <LinearLayout
@@ -24,7 +24,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN1"
             android:background="@drawable/dcvsbackgammonbtn"
             android:contentDescription="@string/GameBTN1"
             android:onClick="backgammononclick" />
@@ -32,7 +31,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN2"
             android:background="@drawable/dcvschessbtn"
             android:onClick="chessonclick"
             android:contentDescription="@string/GameBTN2" />
@@ -43,7 +41,6 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout4"
         android:layout_marginStart="99dp"
         android:layout_alignTop="@+id/linearLayout5"
         android:layout_toEndOf="@+id/linearLayout5">
@@ -51,7 +48,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN4"
             android:background="@drawable/dcvssolitarebtn"
             android:onClick="solitareonclick"
             android:contentDescription="@string/GameBTN5" />
@@ -59,7 +55,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN5"
             android:background="@drawable/dcvs4inarowbtn"
             android:contentDescription="@string/GameBTN4"
             android:onClick="finaronclick" />
@@ -77,7 +72,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN3"
             android:background="@drawable/dcvseuchrebtn"
             android:contentDescription="@string/GameBTN3"
             android:onClick="euchreonclick" />
@@ -85,7 +79,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/GameBTN6"
             android:background="@drawable/dcvssudokubtn"
             android:contentDescription="@string/GameBTN6"
             android:onClick="sudokuonclick" />

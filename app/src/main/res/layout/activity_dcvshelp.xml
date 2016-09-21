@@ -8,49 +8,39 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.DCVSHelp"
-    android:background="@drawable/helpscreen"
+    android:background="@drawable/dcvs_ui_help_screen"
     tools:ignore="Overdraw"
     android:contentDescription="@string/SkypeCheck">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/HelpGBTN"
-        android:background="@drawable/dcvsrecthelpguide"
+        android:background="@drawable/buttonhelpguide"
         android:contentDescription="@string/HelpGuideBTN"
         android:onClick="helpguideonclick"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imageButton" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/SkypeVersion"
-        android:background="@drawable/skypecheck"
+        android:background="@drawable/buttonskypecheck"
         android:onClick="skypeversionclick"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
+        android:contentDescription="@string/SkypeCheck"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:id="@+id/button"
-        android:onClick="dcvscheatonclick"
-        android:contentDescription="@string/DCVSCheatsheet"
-        android:background="@drawable/dcsbtn"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="108dp" />
-
-    <Button
+        android:text="gotoassist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:background="@drawable/settings"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="117dp"
-        android:contentDescription="@string/optionsmenu"
-        android:onClick="dcvssettingsonclick" />
+        android:onClick="fastsupportclick"
+        android:id="@+id/gtabtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="177dp"
+        android:layout_marginTop="55dp" />
 
 </RelativeLayout>

@@ -9,26 +9,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.nac.kalisynth.dcvsconnect2.DCVSChat"
-    android:background="@drawable/speeddialbg"
+    android:background="@drawable/dcvs_uichat_screen"
     android:contentDescription="@string/EditSwitchCD"
     tools:ignore="Overdraw">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/SkypeBTN"
-        android:background="@drawable/dcvsrectskype"
+        android:background="@drawable/buttonopenskype"
         android:onClick="skypeonclick"
         android:contentDescription="@string/SkypeBTN"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="250dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/skypename"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
         android:layout_centerHorizontal="true" />
 
     <GridLayout
@@ -36,43 +36,40 @@
         android:layout_height="wrap_content"
         android:columnCount="3"
         android:rowCount="3"
-        android:layout_centerInParent="true">
+        android:layout_below="@+id/skypename"
+        android:layout_centerHorizontal="true">
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/s3"
-            android:background="@drawable/dcvsv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttoncall3"
             android:contentDescription="@string/SpeedDialThree"
             android:onClick="speeddial3onclick"
             android:layout_row="1"
             android:layout_column="0" />
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/s4"
-            android:background="@drawable/dcvsdo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttoncalldcvs"
             android:contentDescription="@string/SpeedDialFour"
             android:onClick="speeddial4onclick"
             android:layout_row="1"
             android:layout_column="1" />
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/s2"
-            android:background="@drawable/dcvsv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttoncallvol2"
             android:contentDescription="@string/SpeedDialTwo"
             android:onClick="speeddial2onclick"
             android:layout_row="0"
             android:layout_column="1" />
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/s1"
-            android:background="@drawable/dcvsv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonskypevol1"
             android:contentDescription="@string/SpeedDialOne"
             android:onClick="speeddial1onclick"
             android:layout_row="0"
