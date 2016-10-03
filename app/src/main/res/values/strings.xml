@@ -3,12 +3,13 @@
     <!--Main Screen -->
     <string name="HomeScreen">Home Screen Background</string>
     <!--internet Screen-->
-    <string name="WebBTN1">NAC Website</string>
-    <string name="WebBTN2">Google Website</string>
-    <string name="WebBTN3">Google Maps</string>
+    <string name="WebBTN1">NAC</string>
+    <string name="WebBTN2">Google</string>
+    <string name="WebBTN3">Maps</string>
     <string name="WebBTN4">ABC News</string>
     <string name="WebBTN5">Seven News</string>
-    <string name="WebBTN6">Seniors News Website</string>
+    <string name="WebBTN6">Senior News</string>
+
     <!--Game Screen-->
     <string name="GameBTN1" translatable="false">Backgammon Game</string>
     <string name="GameBTN2" translatable="false">Chess Game</string>

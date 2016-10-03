@@ -28,14 +28,20 @@
         <activity android:name=".DCVSMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
             android:name=".DCVSOverlayService"
-            android:exported="false" />
+            android:exported="false">
+        </service>
+
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <activity android:name=".DCVSHelp" />
         <activity android:name=".DCVSChat" />

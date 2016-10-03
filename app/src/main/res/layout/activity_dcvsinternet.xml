@@ -11,64 +11,79 @@
     android:background="@drawable/dcvs_ui_internet_screen"
     tools:ignore="Overdraw">
 
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/iWebView"
+        android:layout_toEndOf="@+id/seniorbtnlayout"/>
+
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/seniorbtnlayout">
+
+        <Button
+            android:text="@string/WebBTN1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/nacwbtn"
+            android:textSize="20sp"/>
+
+        <Button
+            android:text="@string/WebBTN6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/seniorowbtn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/newswlayout">
+
+        <Button
+            android:text="@string/WebBTN4"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/abcnwbtn"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/WebBTN5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sevennwbtn"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="246dp">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <ImageButton
+        <Button
+            android:text="@string/WebBTN2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/dcvsnacbtn"
-            android:contentDescription="@string/WebBTN1"
-            android:onClick="onNACClick" />
+            android:layout_weight="1"
+            android:id="@+id/googlewbtn" />
 
-        <ImageButton
+        <Button
+            android:text="@string/WebBTN3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/dcvsgooglebtn"
-            android:contentDescription="@string/WebBTN2"
-            android:onClick="onGoogleClick" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dcvsgmapsbtn"
-            android:onClick="mapsonclick"
-            android:contentDescription="@string/WebBTN3" />
+            android:id="@+id/mapwbtn"
+            android:layout_weight="1" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginBottom="233dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dcvsabcbtn"
-            android:contentDescription="@string/WebBTN4"
-            android:onClick="onABCClick" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dcvssevenbtn"
-            android:contentDescription="@string/WebBTN5"
-            android:onClick="onSevenClick" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dcvsseniorsbtn"
-            android:contentDescription="@string/WebBTN6"
-            android:onClick="onSeniorClick" />
-    </LinearLayout>
 </RelativeLayout>

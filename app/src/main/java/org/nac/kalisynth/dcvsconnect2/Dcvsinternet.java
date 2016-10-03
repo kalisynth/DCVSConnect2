@@ -6,16 +6,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Dcvsinternet extends AppCompatActivity {
+    @BindView(R.id.iWebView) WebView iWebView;
+    String webdest = "http://nac.org.au";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvsinternet);
+        ButterKnife.bind(this);
+        iWebView.getSettings().setJavaScriptEnabled(true);
+        iWebView.getSettings().setBuiltInZoomControls(true);
+        iWebView.setWebViewClient(new MyApplicationWebView());
     }
 
-    public void mapsonclick(View v) {
+    @OnClick(R.id.mapwbtn)
+        public void mapsonclick() {
         Intent googlemIntent;
         PackageManager googleManager = getPackageManager();
         googlemIntent = googleManager.getLaunchIntentForPackage("com.google.android.apps.maps");
@@ -24,38 +36,33 @@ public class Dcvsinternet extends AppCompatActivity {
         finish();
     }
 
-    public void onGoogleClick(View v) {
-        Uri guri = Uri.parse("http://www.google.com");
-        Intent googleIntent = new Intent(Intent.ACTION_VIEW, guri);
-        startActivity(googleIntent);
-        finish();
+    @OnClick(R.id.googlewbtn)
+    public void onGoogleClick() {
+        webdest = "http://google.com/";
+        iWebView.loadUrl(webdest);
     }
 
-    public void onABCClick(View v) {
-        Uri auri = Uri.parse("http://www.abc.net.au/news/");
-        Intent abcIntent = new Intent(Intent.ACTION_VIEW, auri);
-        startActivity(abcIntent);
-        finish();
+    @OnClick(R.id.abcnwbtn)
+    public void onABCClick() {
+        webdest = "http://www.abc.net.au/news/";
+        iWebView.loadUrl(webdest);
     }
 
-    public void onSevenClick(View v) {
-        Uri suri = Uri.parse("https://au.news.yahoo.com/");
-        Intent sevenIntent = new Intent(Intent.ACTION_VIEW, suri);
-        startActivity(sevenIntent);
-        finish();
+    @OnClick(R.id.sevennwbtn)
+    public void onSevenClick() {
+        webdest = "http://au.news.yahoo.com/";
+        iWebView.loadUrl(webdest);
     }
 
-    public void onNACClick(View v) {
-        Uri nuri = Uri.parse("http://www.nac.org.au");
-        Intent NACIntent = new Intent(Intent.ACTION_VIEW, nuri);
-        startActivity(NACIntent);
-        finish();
+    @OnClick(R.id.nacwbtn)
+    public void onNACClick() {
+        webdest = "http://www.nac.org.au";
+        iWebView.loadUrl(webdest);
     }
 
-    public void onSeniorClick(View v) {
-        Uri souri = Uri.parse("http://www.nationalseniors.com.au/");
-        Intent SOIntent = new Intent(Intent.ACTION_VIEW, souri);
-        startActivity(SOIntent);
-        finish();
+    @OnClick(R.id.seniorowbtn)
+    public void onSeniorClick() {
+        webdest = "http://www.nationalseniors.com.au/";
+        iWebView.loadUrl(webdest);
     }
 }

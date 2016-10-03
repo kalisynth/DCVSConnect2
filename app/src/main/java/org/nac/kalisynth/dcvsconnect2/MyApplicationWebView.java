@@ -13,7 +13,7 @@ public class MyApplicationWebView extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if(Uri.parse(url).getHost().endsWith("fastsupport.com")) {
+        if(Uri.parse(url).getHost().startsWith("http://")) {
             return false;
         }
 
