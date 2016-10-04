@@ -1,5 +1,12 @@
 package org.nac.kalisynth.dcvsconnect2;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,15 +18,38 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "FCM Service";
+    private static final String TAG = "MyAndroidFCMService";
+    public String FCMmessage = null;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // TODO: Handle FCM messages here.
-        // If the application is in the foreground handle both data and notification messages here.
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated.
-        Toast.makeText(this, "Message recieved from Firebase", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "From: " + remoteMessage.getFrom());
+        //Log data to Log Cat
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+
+        FCMmessage = remoteMessage.getNotification().getBody();
+        //create notification
+        createNotification(remoteMessage.getNotification().getBody());
+    }
+
+    private void createNotification( String messageBody) {
+        Intent intent = new Intent( this , landingpage.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("FCM_MESSAGE", FCMmessage);
+        PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Android Tutorial Point FCM Tutorial")
+                .setContentText(messageBody)
+                .setAutoCancel( true )
+                .setSound(notificationSoundURI)
+                .setContentIntent(resultIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0, mNotificationBuilder.build());
     }
 }

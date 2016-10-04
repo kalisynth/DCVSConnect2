@@ -23,6 +23,7 @@ public class landingpage extends AppCompatActivity implements Woody.ActivityMoni
     Boolean greeted, farewelled = false;
     TextToSpeech t1;
     String utterId = null;
+    String newString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,16 @@ public class landingpage extends AppCompatActivity implements Woody.ActivityMoni
                }
            }
         });
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                newString = null;
+            } else {
+                newString = extras.getString("FCM_MESSAGE");
+            }
+        } else {
+            newString = (String)savedInstanceState.getSerializable("FCM_MESSAGE");
+        }
     }
 
     @Override
@@ -46,10 +57,10 @@ public class landingpage extends AppCompatActivity implements Woody.ActivityMoni
             SimpleDateFormat df = new SimpleDateFormat("HH");
             String formattedTime = df.format(c.getTime());
             hournow = Integer.parseInt(formattedTime);
-            greeted = true;
-            if (hournow < 12) {
+            if (hournow < 12 && !greeted) {
                 txvMessage.setText("Hello, Good Morning, How are you?");
                 utterId = "hellomorning";
+                greeted = true;
                 String toSpeak = txvMessage.getText().toString();
                 if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
@@ -57,9 +68,20 @@ public class landingpage extends AppCompatActivity implements Woody.ActivityMoni
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                     t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
                 }
-            } else {
+            } else if(hournow >= 12 && !greeted) {
                 txvMessage.setText("Hello, Good Afternoon, How are you?");
                 utterId = "helloafternoon";
+                greeted = true;
+                String toSpeak = txvMessage.getText().toString();
+                if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                    t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
+                }
+            } else if(greeted){
+                txvMessage.setText(newString);
+                utterId = "fcmmsg";
                 String toSpeak = txvMessage.getText().toString();
                 if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
