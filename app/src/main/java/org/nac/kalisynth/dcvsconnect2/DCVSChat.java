@@ -16,8 +16,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class DCVSChat extends AppCompatActivity {
 
+    @BindView(R.id.skypename) TextView skypetxv;
     //Check Skype is installed
     private boolean isSkypeClientInstalled(Context skypeCall) {
         PackageManager myPackageMgr = skypeCall.getPackageManager();
@@ -43,14 +48,15 @@ public class DCVSChat extends AppCompatActivity {
         setContentView(R.layout.activity_dcvschat);
         String skypename = getName();
         String skypenameis = getResources().getString(R.string.skypenameis, skypename);
-        TextView skypenametext = (TextView) findViewById(R.id.skypename);
+        ButterKnife.bind(this);
         if (skypename != null) {
-            skypenametext.setText(skypenameis);
+            skypetxv.setText(skypenameis);
         }
     }
 
     //Open Skype
-    public void skypeonclick(View v){
+    @OnClick(R.id.openskypebtn)
+    public void skypeonclick(){
         DCVSOverlayService.DCVSView.addView(DCVSOverlayService.chatButton);
         DCVSOverlayService.chatv = true;
         Intent skypeIntent;
@@ -77,33 +83,31 @@ public class DCVSChat extends AppCompatActivity {
     }
 
     //Speed Dial 1
-    public void speeddial1onclick(View v){
-        //skypedcvs1call(this, "skype:volunteer1dcvs?call&video=true");
+    @OnClick(R.id.skypebtn1)
+    public void speeddial1onclick(){
         SpeedDialOne();
-                        }
+    }
 
-    public void speeddial2onclick(View v){
-        //skypedcvs1call(this, "skype:volunteer2dcvs?call&video=true");
+    //Speed Dial 2
+    @OnClick(R.id.skypebtn2)
+    public void speeddial2onclick(){
         SpeedDialTwo();
     }
 
-    public void speeddial3onclick(View v){
-        //skypedcvs1call(this, "skype:dcvsoffice?call&video=true");
+    //Speed Dial 3
+    @OnClick(R.id.skypebtn3)
+    public void speeddial3onclick(){
         SpeedDialThree();
     }
 
-    public void speeddial4onclick(View v){
-        //skypedcvs1call(this, "skype:dcvsoffice?call&video=true");
+    //Speed Dial 4
+    @OnClick(R.id.skypebtn4)
+    public void speeddial4onclick(){
         SpeedDialFour();
-    }
-
-    public void skypehelpdeskonclick(View v){
-        skypedcvs1call(this, "skype:helpdeskdcvs?call&video=true");
     }
 
     private void SpeedDialOne() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder
                 .setMessage("Are you sure?")
                 .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
@@ -124,7 +128,6 @@ public class DCVSChat extends AppCompatActivity {
 
     private void SpeedDialTwo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder
                 .setMessage("Are you sure?")
                 .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {

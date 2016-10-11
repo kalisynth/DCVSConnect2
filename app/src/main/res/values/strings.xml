@@ -29,10 +29,11 @@
     <string name="SkypeBTN">Skype App</string>
     <string name="EditSwitchCD">Edit Switch</string>
     <!--Speed Dial -->
-    <string name="SpeedDialOne" translatable="false">Dial 1</string>
-    <string name="SpeedDialTwo" translatable="false">Dial 2</string>
-    <string name="SpeedDialThree" translatable="false">Dial 3</string>
-    <string name="SpeedDialFour" translatable="false">Dial 4</string>
+    <string name="SpeedDialOne" translatable="false">Call Volunteer One</string>
+    <string name="SpeedDialTwo" translatable="false">Call Volunteer Two</string>
+    <string name="SpeedDialThree" translatable="false">Call Volunteer Three</string>
+    <string name="SpeedDialFour" translatable="false">Call DCVS Office</string>
+    <string name="SpeedDialDana">Call Dana</string>
 
     <!-- Radio Stations -->
     <!-- Build Names -->

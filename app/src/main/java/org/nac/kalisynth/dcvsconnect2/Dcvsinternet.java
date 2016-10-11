@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ public class Dcvsinternet extends AppCompatActivity {
         ButterKnife.bind(this);
         iWebView.getSettings().setJavaScriptEnabled(true);
         iWebView.getSettings().setBuiltInZoomControls(true);
-        iWebView.setWebViewClient(new MyApplicationWebView());
+        iWebView.setWebViewClient(new CustomWebViewClient());
     }
 
     @OnClick(R.id.mapwbtn)
@@ -64,5 +65,13 @@ public class Dcvsinternet extends AppCompatActivity {
     public void onSeniorClick() {
         webdest = "http://www.nationalseniors.com.au/";
         iWebView.loadUrl(webdest);
+    }
+
+    private class CustomWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView iWebView, String webdest){
+            iWebView.loadUrl(webdest);
+            return true;
+        }
     }
 }

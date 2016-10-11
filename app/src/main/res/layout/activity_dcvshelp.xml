@@ -31,22 +31,22 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="gotoassist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gtabtn"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="177dp"
-        android:layout_marginTop="55dp" />
+        android:layout_marginTop="55dp"
+        android:background="@drawable/gabtn" />
 
     <Button
-        android:text="fastsupport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/gtabtn"
         android:layout_marginBottom="61dp"
-        android:id="@+id/fastsupportbtn" />
+        android:id="@+id/fastsupportbtn"
+        android:background="@drawable/fsbtn" />
 
 </RelativeLayout>

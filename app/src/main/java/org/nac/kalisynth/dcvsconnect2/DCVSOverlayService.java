@@ -21,6 +21,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class DCVSOverlayService extends Service {
     //Main Layout View
     public static LinearLayout DCVSView;
@@ -62,6 +65,7 @@ public class DCVSOverlayService extends Service {
     //private TextView remindertxt;
 
 
+    String passtext = null;
     private static String bv;
 
     public final static int REQUEST_CODE = -1010101;
@@ -490,9 +494,27 @@ public class DCVSOverlayService extends Service {
         mp.start();
     }
     private void golauncher() {
+        StartupApp();
         Intent golaunch = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.landingpage.class);
         golaunch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        golaunch.putExtra("GREETINGS", passtext);
         startActivity(golaunch);
+    }
+
+    public void StartupApp(){
+        Calendar c;
+        int hournow = 0;
+        Log.i("main", "Constructor fired");
+        c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("HH");
+        String formattedTime = df.format(c.getTime());
+        hournow = Integer.parseInt(formattedTime);
+        if (hournow < 12) {
+            passtext = "Hello, Good Morning, How are you?";
+        } else {
+            passtext = "Hello, Good Afternoon, How are you?";
+        }
+
     }
 }
 
