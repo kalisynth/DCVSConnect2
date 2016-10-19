@@ -27,6 +27,7 @@
     <string name="SkypeCheck">Check Version of Skype</string>
     <!--Chat Screen-->
     <string name="SkypeBTN">Skype App</string>
+    <string name="SkypeOpenBtn">Open Skype</string>
     <string name="EditSwitchCD">Edit Switch</string>
     <!--Speed Dial -->
     <string name="SpeedDialOne" translatable="false">Call Volunteer One</string>

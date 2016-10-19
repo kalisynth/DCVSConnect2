@@ -510,9 +510,9 @@ public class DCVSOverlayService extends Service {
         String formattedTime = df.format(c.getTime());
         hournow = Integer.parseInt(formattedTime);
         if (hournow < 12) {
-            passtext = "Hello, Good Morning, How are you?";
+            passtext = "Hello, My name is ERIC, Good Morning, How are you?";
         } else {
-            passtext = "Hello, Good Afternoon, How are you?";
+            passtext = "Hello, My name is ERIC, Good Afternoon, How are you?";
         }
 
     }

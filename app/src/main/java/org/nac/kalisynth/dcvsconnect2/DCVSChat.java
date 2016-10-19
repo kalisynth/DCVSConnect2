@@ -89,7 +89,7 @@ public class DCVSChat extends AppCompatActivity {
     }
 
     //Speed Dial 2
-    @OnClick(R.id.skypebtn2)
+    @OnClick(R.id.skypebtn4)
     public void speeddial2onclick(){
         SpeedDialTwo();
     }
@@ -101,7 +101,7 @@ public class DCVSChat extends AppCompatActivity {
     }
 
     //Speed Dial 4
-    @OnClick(R.id.skypebtn4)
+    @OnClick(R.id.skypebtn2)
     public void speeddial4onclick(){
         SpeedDialFour();
     }
@@ -114,7 +114,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this, "skype:volunteer1dcvs?call&video=true");
+                        skypedcvs1call(DCVSChat.this, "skype:danadcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -54,16 +54,15 @@ public class landingpage extends AppCompatActivity {
         }
 
         txvMessage.setText(newString);
-        utterId = "createmessage";
+        /*utterId = "createmessage";
         String toSpeak = txvMessage.getText().toString();
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
-        }
+        }*/
         Handler handler2 = new Handler();
-
         Runnable runnable3 = new Runnable(){
             @Override
             public void run(){
@@ -90,14 +89,14 @@ public class landingpage extends AppCompatActivity {
             randnumber();
             randSuggestion();
             txvMessage.setText(suggest);
-            utterId = "suggestMsg";
+            /*utterId = "suggestMsg";
             String toSpeak = txvMessage.getText().toString();
             if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
-            }
+            }*/
             handler.postDelayed(runnableCode, 600000);
         }
         };
@@ -106,7 +105,7 @@ public class landingpage extends AppCompatActivity {
 
     private void randnumber(){
         int min = 0;
-        int max = 4;
+        int max = 5;
         Random rand = new Random();
         randnumber = rand.nextInt(max - min + 1) + min;
     }
@@ -120,6 +119,8 @@ public class landingpage extends AppCompatActivity {
             suggest = "If you would like to talk to one of the DCVS volunteers? you don't have to wait for us to call you, you can tap your finger on the chat button and on the screen that pops up you can tap one of the call buttons, if you dont get through try one of the other buttons, and if those dont work we are probably busy but will get back to you as soon as we can";
         } else if (randnumber == 4){
             suggest = "I hope you are having a nice day";
+        } else if (randnumber == 5){
+            suggest = "if you are having issues with the tablet, its possible that restarting the device could fix this issue, to restart hold down the power button located if you can see the word samsung on the tablet, the power button is on the edge of the top left of the tablet, hold it down till you see a window pop up and then select the power off or restart options";
         }
     }
 
