@@ -5,22 +5,30 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.widget.TextView;
+
+import com.vstechlab.easyfonts.EasyFonts;
+import com.zplesac.connectionbuddy.ConnectionBuddy;
+import com.zplesac.connectionbuddy.cache.ConnectionBuddyCache;
+import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
+import com.zplesac.connectionbuddy.models.ConnectivityEvent;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class landingpage extends AppCompatActivity {
+public class landingpage extends AppCompatActivity implements ConnectivityChangeListener {
     @BindView(R.id.messageboxtext) TextView txvMessage;
-
     int hournow = 0;
     Calendar c;
     TextToSpeech t1;
-    String utterId = null;
     String newString;
     int randnumber = 0;
     String suggest = null;
@@ -32,6 +40,7 @@ public class landingpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landingpage);
         ButterKnife.bind(this);
+        txvMessage.setTypeface(EasyFonts.robotoBold(this));
         t1= new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener(){
            @Override
             public void onInit(int status){
@@ -53,15 +62,11 @@ public class landingpage extends AppCompatActivity {
             newString = (String)savedInstanceState.getSerializable("FCM_MESSAGE");
         }
 
-        txvMessage.setText(newString);
-        /*utterId = "createmessage";
-        String toSpeak = txvMessage.getText().toString();
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-            t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+        if (savedInstanceState != null) {
+            ConnectionBuddyCache.clearLastNetworkState(this);
         }
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
-        }*/
+
+        txvMessage.setText(newString);
         Handler handler2 = new Handler();
         Runnable runnable3 = new Runnable(){
             @Override
@@ -122,6 +127,30 @@ public class landingpage extends AppCompatActivity {
         } else if (randnumber == 5){
             suggest = "if you are having issues with the tablet, its possible that restarting the device could fix this issue, to restart hold down the power button located if you can see the word samsung on the tablet, the power button is on the edge of the top left of the tablet, hold it down till you see a window pop up and then select the power off or restart options";
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Omit the default configuration - we want to obtain the current network connection state
+        // after we register for network connectivity events.
+        ConnectionBuddy.getInstance().registerForConnectivityEvents(this, true, this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ConnectionBuddy.getInstance().unregisterFromConnectivityEvents(this);
+    }
+
+    @Override
+    public void onConnectionChange(ConnectivityEvent event) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.ic_stat_connected);
+        mBuilder.setContentTitle("Connection Status");
+        mBuilder.setContentText("Connection Status " + event.getState() + " Connection Type: "+ event.getType());
+        NotificationManager mNotificationmanager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationmanager.notify(3, mBuilder.build());
     }
 
 }

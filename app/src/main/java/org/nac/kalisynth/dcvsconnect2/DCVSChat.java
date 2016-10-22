@@ -13,8 +13,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.appcompat.BuildConfig;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.vstechlab.easyfonts.EasyFonts;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +26,12 @@ import butterknife.OnClick;
 public class DCVSChat extends AppCompatActivity {
 
     @BindView(R.id.skypename) TextView skypetxv;
+    @BindView(R.id.skypebtn1) Button sb1;
+    @BindView(R.id.skypebtn2) Button sb2;
+    @BindView(R.id.skypebtn3) Button sb3;
+    @BindView(R.id.skypebtn4) Button sb4;
+    @BindView(R.id.openskypebtn) Button osb;
+
     //Check Skype is installed
     private boolean isSkypeClientInstalled(Context skypeCall) {
         PackageManager myPackageMgr = skypeCall.getPackageManager();
@@ -52,6 +61,12 @@ public class DCVSChat extends AppCompatActivity {
         if (skypename != null) {
             skypetxv.setText(skypenameis);
         }
+        skypetxv.setTypeface(EasyFonts.caviarDreamsItalic(this));
+        sb1.setTypeface(EasyFonts.caviarDreamsBold(this));
+        sb2.setTypeface(EasyFonts.cac_champagne(this));
+        sb3.setTypeface(EasyFonts.greenAvocado(this));
+        sb4.setTypeface(EasyFonts.windSong(this));
+        osb.setTypeface(EasyFonts.walkwayUltraBold(this));
     }
 
     //Open Skype
@@ -114,7 +129,7 @@ public class DCVSChat extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
-                        skypedcvs1call(DCVSChat.this, "skype:danadcvs?call&video=true");
+                        skypedcvs1call(DCVSChat.this, "skype:volunteer1dcvs?call&video=true");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

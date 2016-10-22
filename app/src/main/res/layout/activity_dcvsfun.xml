@@ -12,45 +12,65 @@
     tools:ignore="Overdraw"
     android:id="@+id/funlayout">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/gamesdcvs"
-        android:onClick="gamesonclick"
+        android:background="@drawable/greenpinkspiral"
         android:contentDescription="@string/GameSBTN"
-        android:id="@+id/fungamesbtn" />
+        android:id="@+id/fungamesbtn"
+        android:text="@string/gamesstring"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/internet"
-        android:onClick="internetonClick"
-        android:contentDescription="@string/InternetBTN"
-        android:id="@+id/funinternetbtn"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/radioBTN" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:id="@+id/radioBTN"
-        android:background="@drawable/button_radio_mini_app"
-        android:onClick="radioonclick"
+        android:background="@drawable/orange"
         android:contentDescription="@string/RadioBTN"
-        android:layout_marginStart="133dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/radiostring"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:id="@+id/livestreambtn"
         android:contentDescription="@string/LivestreamBtn"
-        android:background="@drawable/button_stream_mini_app"
-        android:layout_marginStart="271dp"
-        android:onClick="onStreamClick"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:background="@drawable/bluepink"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="270dp"
+        android:text="@string/broadcasts"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/greenblue"
+        android:contentDescription="@string/InternetBTN"
+        android:id="@+id/funinternetbtn"
+        android:layout_above="@+id/livestreambtn"
+        android:layout_toEndOf="@+id/fungamesbtn"
+        android:layout_marginStart="146dp"
+        android:text="@string/internetstring"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 </RelativeLayout>

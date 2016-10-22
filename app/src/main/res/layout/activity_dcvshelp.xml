@@ -12,41 +12,100 @@
     tools:ignore="Overdraw"
     android:contentDescription="@string/SkypeCheck">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonhelpguide"
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/bluebtn"
         android:contentDescription="@string/HelpGuideBTN"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/helpguideIB" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/SkypeVIB"
-        android:background="@drawable/buttonskypecheck"
-        android:contentDescription="@string/SkypeCheck"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/helpguideIB"
+        android:text="@string/HelpGuideBTN"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/SkypeVIB"
+        android:background="@drawable/greenblue"
+        android:contentDescription="@string/SkypeCheck"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/SkypeCheck"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:id="@+id/gtabtn"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="177dp"
         android:layout_marginTop="55dp"
-        android:background="@drawable/gabtn" />
+        android:background="@drawable/redyellowgreen"
+        android:text="@string/GTAssist"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/gtabtn"
         android:layout_marginBottom="61dp"
         android:id="@+id/fastsupportbtn"
-        android:background="@drawable/fsbtn" />
+        android:background="@drawable/redbluegreen"
+        android:text="@string/FSupport"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:text="@string/CCheck"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/ccheckbtn"
+        android:background="@drawable/redbluegreen"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/helpguideIB"
+        android:layout_marginStart="140dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gtabtn"
+        android:layout_toEndOf="@+id/ccheckbtn"
+        android:id="@+id/connectiontypetv"
+        android:textSize="15sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/ccheckbtn"
+        android:id="@+id/signalstrengthtv"
+        android:textSize="15sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
 
 </RelativeLayout>

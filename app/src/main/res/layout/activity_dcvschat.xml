@@ -23,9 +23,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:id="@+id/openskypebtn"
-            android:text="@string/SkypeBTN"
+            android:text="@string/SkypeOpenBtn"
             android:gravity="bottom|center"
-            android:paddingBottom="40dp"
+            android:paddingBottom="4dp"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
             android:textColor="#0e1f29"/>
 
     </RelativeLayout>
@@ -64,8 +66,10 @@
             android:layout_column="0"
             android:id="@+id/skypebtn3"
             android:gravity="bottom|center"
-            android:paddingBottom="40dp"
+            android:paddingBottom="4dp"
             android:textColor="#0e1f29"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
             android:text="@string/SpeedDialThree" />
 
         <Button
@@ -78,7 +82,8 @@
             android:textColor="#0e1f29"
             android:id="@+id/skypebtn4"
             android:gravity="bottom|center"
-            android:paddingBottom="40dp"
+            android:paddingBottom="4dp"
+            android:textSize="15sp"
             android:textStyle="normal|bold"
             android:text="@string/SpeedDialFour" />
 
@@ -92,7 +97,9 @@
             android:textColor="#0e1f29"
             android:id="@+id/skypebtn2"
             android:gravity="bottom|center"
-            android:paddingBottom="40dp"
+            android:paddingBottom="4dp"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
             android:text="@string/SpeedDialTwo" />
 
         <Button
@@ -108,7 +115,8 @@
             android:gravity="bottom|center"
             android:layout_marginEnd="250dp"
             android:layout_marginBottom="50dp"
-            android:paddingBottom="40dp"
+            android:paddingBottom="4dp"
+            android:textSize="15sp"
             android:textStyle="normal|bold" />
     </GridLayout>
 

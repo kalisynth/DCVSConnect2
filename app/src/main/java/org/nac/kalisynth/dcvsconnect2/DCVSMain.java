@@ -20,14 +20,4 @@ public class DCVSMain extends Activity {
             startService(intent);
         }
     }
-
-    public void goHome(View v){
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory(Intent.CATEGORY_HOME);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-    }
-
-    /*public void goChat(View v){
-        startActivity(new Intent(DCVSMain.this, ))
-    }*/
 }

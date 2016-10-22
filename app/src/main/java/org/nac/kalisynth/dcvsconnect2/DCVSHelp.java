@@ -7,14 +7,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.zplesac.connectionbuddy.ConnectionBuddy;
+import com.zplesac.connectionbuddy.activities.ConnectionBuddyActivity;
+import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
+import com.zplesac.connectionbuddy.interfaces.NetworkRequestCheckListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DCVSHelp extends AppCompatActivity {
+import static android.R.attr.resource;
+
+public class DCVSHelp extends ConnectionBuddyActivity {
     String fsurl = "http://www.fastsupport.com";
     @BindView(R.id.gtabtn) Button gtab;
+    @BindView(R.id.connectiontypetv) TextView ctv;
+    @BindView(R.id.signalstrengthtv) TextView stv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,4 +91,23 @@ public class DCVSHelp extends AppCompatActivity {
             gtab.setVisibility(View.INVISIBLE);
         }
     }
-}
+
+    @OnClick(R.id.ccheckbtn)
+    public void ccheckbtn(){
+            ConnectionBuddy.getInstance().hasNetworkConnection(new NetworkRequestCheckListener() {
+                @Override
+                public void onResponseObtained() {
+                    Toast.makeText(DCVSHelp.this, "Internet is Working! You are connected by " + ConnectionBuddy.getInstance().getNetworkType() +  " and the signal strength is " + ConnectionBuddy.getInstance().getSignalStrength(), Toast.LENGTH_LONG).show();
+                    String connectiontype = String.format(getString(R.string.ConnectionTypeString), ConnectionBuddy.getInstance().getNetworkType());
+                    String signalstrength = String.format(getString(R.string.SignalStrengthString), ConnectionBuddy.getInstance().getSignalStrength());
+                    ctv.setText(connectiontype);
+                    stv.setText(signalstrength);
+                }
+
+                @Override
+                public void onNoResponse() {
+                    Toast.makeText(DCVSHelp.this, "Internet is not Working!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }

@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
@@ -20,32 +18,24 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DCVSOverlayService extends Service {
     //Main Layout View
     public static LinearLayout DCVSView;
-    public LinearLayout gotoView;
-    //public static RelativeLayout reminderview;
 
     private static final String TAG = DCVSOverlayService.class.getSimpleName();
 
     //Layout Params
     private WindowManager.LayoutParams params;
-    //private WindowManager.LayoutParams rparams;
     private LinearLayout.LayoutParams params_home;
     private LinearLayout.LayoutParams params_chat;
     private LinearLayout.LayoutParams params_fun;
     private LinearLayout.LayoutParams params_help;
-    //private RelativeLayout.LayoutParams params_reminder;
-    //private LinearLayout.LayoutParams params_reboot;
-    private LinearLayout.LayoutParams params_goto;
 
     //Window Manager
     private WindowManager wm;
-    //private WindowManager rwm;
 
     //Booleans for if button is visible
     public static Boolean chatv = true;
@@ -53,8 +43,6 @@ public class DCVSOverlayService extends Service {
     public static Boolean funv = true;
     private Boolean homev = false;
     private Boolean showv = true;
-    /*private Boolean reminderv = false;
-    private String reminders = "false";*/
 
     //Buttons
     public static Button chatButton;
@@ -62,13 +50,9 @@ public class DCVSOverlayService extends Service {
     private static Button helpButton;
     private static Button homeButton;
     private static Button showButton;
-    //private TextView remindertxt;
-
 
     String passtext = null;
     private static String bv;
-
-    public final static int REQUEST_CODE = -1010101;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -88,7 +72,6 @@ public class DCVSOverlayService extends Service {
         }
 
         String dn = getName();
-        //URL = "http://tim.nactech.org/skypespeeddial.xml";
         String URL = "http://tim.nactech.org/" + dn + "/calender.xml";
         Log.d(TAG, URL);
 
@@ -154,16 +137,6 @@ public class DCVSOverlayService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT);
         DCVSView.addView(showButton, params_show);
 
-       /* remindertxt = new TextView(this);
-        params_reminder = new RelativeLayout.LayoutParams(
-                500,
-                500
-        );
-
-        remindertxt.setGravity(Gravity.CENTER);
-        params_reminder.addRule(RelativeLayout.CENTER_IN_PARENT);
-        reminderview.addView(remindertxt, params_reminder);*/
-
         //Window Manager for the Layout
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -172,21 +145,10 @@ public class DCVSOverlayService extends Service {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                 PixelFormat.TRANSLUCENT);
-        //Window Manager Layout Style
         params.gravity = Gravity.END | Gravity.CENTER_HORIZONTAL;
 
-        /*rparams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-                PixelFormat.TRANSLUCENT);
-        rparams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;*/
-
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        //rwm = (WindowManager) getSystemService(WINDOW_SERVICE);
         wm.addView(DCVSView, params);
-        //rwm.addView(reminderview, rparams);
 
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,9 +166,7 @@ public class DCVSOverlayService extends Service {
             public void onClick(View view) {
                 buttoncheck();
                 bigbuttons();
-                //showreminder();
                 homev = false;
-                //reminderv = true;
                 DCVSView.removeView(homeButton);
                 goHome();
             }
@@ -230,7 +190,6 @@ public class DCVSOverlayService extends Service {
                 buttoncheck();
                 smallbuttons();
                 funv = false;
-                //removereminder();
                 DCVSView.removeView(funButton);
                 goFun();
             }
@@ -250,13 +209,6 @@ public class DCVSOverlayService extends Service {
         golauncher();
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == REQUEST_CODE){
-
-        }
-    }*/
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -267,19 +219,11 @@ public class DCVSOverlayService extends Service {
             cNotificationManager.cancel(2);
             cNotificationManager.cancel(1);
         }
-        /*if (reminderview != null) {
-            WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-            wm.removeView(reminderview);
-        }*/
     }
 
     private void gohelp() {
-        //Button funButton = (Button) findViewById(R.id.funbtnid);
-        ConnectionCheck();
+        //Help Intent
         buttonclicksound();
-            /*Intent helpIntent =  new Intent(Intent.ACTION_VIEW);
-            helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            helpIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSHelp");*/
         Intent helpIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSHelp.class);
         helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(helpIntent);
@@ -287,7 +231,6 @@ public class DCVSOverlayService extends Service {
 
     private void goHome() {
         //Home Intent
-        ConnectionCheck();
         buttonclicksound();
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
@@ -298,11 +241,7 @@ public class DCVSOverlayService extends Service {
 
     private void goFun() {
         //Fun intent
-        ConnectionCheck();
         buttonclicksound();
-        /*Intent funIntent =  new Intent(Intent.ACTION_VIEW);
-        funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        funIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.Dcvsfun");*/
         Intent funIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.Dcvsfun.class);
         funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(funIntent);
@@ -310,13 +249,9 @@ public class DCVSOverlayService extends Service {
 
     private void goChat() {
         //chat intent
-        ConnectionCheck();
         buttonclicksound();
         Intent chatIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSChat.class);
         chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        /*Intent chatIntent =  new Intent(Intent.ACTION_VIEW);
-        chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        chatIntent.setClassName("org.nac.kalisynth.dcvsconnect2", "org.nac.kalisynth.dcvsconnect2.DCVSChat");*/
         startActivity(chatIntent);
     }
 
@@ -352,55 +287,6 @@ public class DCVSOverlayService extends Service {
         showButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.hide));
     }
 
-    private void ConnectionCheck() {
-        if (BuildConfig.appVer.equals("Wifi")) {
-            WifiNotification();
-        } else {
-            ConnectivityManager check = (ConnectivityManager)
-                    this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            //Network[] info = check.getAllNetworks();
-            //NetworkInfo[] info = check.getAllNetworkInfo();
-
-            if (check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED || check.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null) {
-                OnlineInternetNotification();
-            } else
-                OfflineNotification();
-        }
-    }
-
-    private void OnlineInternetNotification() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_online);
-        mBuilder.setContentTitle("Connection");
-        mBuilder.setContentText("Internet is Working");
-        mBuilder.setOngoing(true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
-        //Online Notification
-    }
-
-    private void OfflineNotification() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_offline);
-        mBuilder.setContentTitle("Connection");
-        mBuilder.setContentText("Internet is Not Working");
-        mBuilder.setOngoing(true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
-        //Offline Notification Draw
-    }
-
-    private void WifiNotification() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_stat_wifi);
-        mBuilder.setContentTitle("Wifi");
-        mBuilder.setContentText("This is a Wifi Only Tablet");
-        mBuilder.setOngoing(true);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
-    }
-
     private void DCVSAppOnNote() {
         String dn = getName();
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
@@ -410,7 +296,6 @@ public class DCVSOverlayService extends Service {
         mBuilder.setOngoing(true);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(2, mBuilder.build());
-        ConnectionCheck();
         //shows the app is running
     }
 
@@ -462,12 +347,6 @@ public class DCVSOverlayService extends Service {
         } else if (!helpv) {
             DCVSView.addView(helpButton, params_help);
             helpv = true;
-        } /*else if (!reminderv) {
-            reminderview.addView(remindertxt, params_reminder);
-            reminderv = true;
-            reminders = "true";
-        }*/ else {
-
         }
     }
 
@@ -514,7 +393,6 @@ public class DCVSOverlayService extends Service {
         } else {
             passtext = "Hello, My name is ERIC, Good Afternoon, How are you?";
         }
-
     }
 }
 

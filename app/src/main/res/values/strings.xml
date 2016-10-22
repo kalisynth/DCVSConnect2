@@ -20,20 +20,30 @@
     <!--Fun Screen-->
     <string name="GameSBTN">Games Screen</string>
     <string name="InternetBTN">Internet Screen</string>
-    <string name="RadioBTN">Radio Button</string>
+    <string name="RadioBTN">Open Radio</string>
     <string name="LivestreamBtn">NAC Broadcasts</string>
+    <string name="radiostring">Radio</string>
+    <string name="gamesstring">Games</string>
+    <string name="internetstring">Internet</string>
+    <string name="broadcasts">NAC Broadcasts</string>
+
     <!--Help Screen -->
     <string name="HelpGuideBTN">Help Guide App</string>
     <string name="SkypeCheck">Check Version of Skype</string>
+    <string name="CCheck">Check Internet Connection</string>
+    <string name="GTAssist">Go to Assist</string>
+    <string name="FSupport">Fast Support</string>
+    <string name="ConnectionTypeString">Connection Type: %1$s</string>
+    <string name="SignalStrengthString">Signal Strength: %1$s</string>
     <!--Chat Screen-->
     <string name="SkypeBTN">Skype App</string>
     <string name="SkypeOpenBtn">Open Skype</string>
     <string name="EditSwitchCD">Edit Switch</string>
     <!--Speed Dial -->
-    <string name="SpeedDialOne" translatable="false">Call Volunteer One</string>
-    <string name="SpeedDialTwo" translatable="false">Call Volunteer Two</string>
-    <string name="SpeedDialThree" translatable="false">Call Volunteer Three</string>
-    <string name="SpeedDialFour" translatable="false">Call DCVS Office</string>
+    <string name="SpeedDialOne">Volunteer One</string>
+    <string name="SpeedDialTwo">Volunteer Two</string>
+    <string name="SpeedDialThree">Volunteer Three</string>
+    <string name="SpeedDialFour">DCVS Office</string>
     <string name="SpeedDialDana">Call Dana</string>
 
     <!-- Radio Stations -->

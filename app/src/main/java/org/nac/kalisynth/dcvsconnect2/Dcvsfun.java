@@ -7,48 +7,58 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Dcvsfun extends AppCompatActivity {
 
     LinearLayout.LayoutParams params_radio;
+    @BindView(R.id.radioBTN) Button rbtn;
+    @BindView(R.id.funinternetbtn) Button ibtn;
+    @BindView(R.id.livestreambtn) Button sbtn;
+    @BindView(R.id.fungamesbtn) Button gbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dcvsfun);
+        ButterKnife.bind(this);
         //layout variables for the Fun Screen
         RelativeLayout funView = (RelativeLayout) findViewById(R.id.funlayout);
-        ImageButton streambutton = (ImageButton) findViewById(R.id.livestreambtn);
-        ImageButton radiobutton = (ImageButton) findViewById(R.id.radioBTN);
     }
 
     @OnClick(R.id.fungamesbtn)
-    public void gamesonclick(View v) {
+    public void gamesonclick() {
         DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
         DCVSOverlayService.funv = true;
         startActivity(new Intent(Dcvsfun.this, Dcvsgames.class));
         finish();
     }
 
-    public void internetonClick(View v) {
+    @OnClick(R.id.funinternetbtn)
+    public void internetonClick() {
         DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
         DCVSOverlayService.funv = true;
         startActivity(new Intent(Dcvsfun.this, Dcvsinternet.class)); finish();}
 
-    public void radioonclick(View v){
+    @OnClick(R.id.radioBTN)
+    public void radioonclick(){
         DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
         DCVSOverlayService.funv = true;
         startActivity(new Intent(Dcvsfun.this, DCVSRadio.class));
         finish();
     }
 
-    public void onStreamClick(View v) {
-        Uri souri = Uri.parse("http://channelnac.org/view/");
+
+    @OnClick(R.id.livestreambtn)
+    public void onStreamClick() {
+        Uri souri = Uri.parse("https://www.youtube.com/watch?v=0R3sKEM-QeQ");
         buttonclicksound();
         Intent SOIntent = new Intent(Intent.ACTION_VIEW, souri);
         startActivity(SOIntent);
