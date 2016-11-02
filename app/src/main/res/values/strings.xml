@@ -11,12 +11,12 @@
     <string name="WebBTN6">Senior News</string>
 
     <!--Game Screen-->
-    <string name="GameBTN1" translatable="false">Backgammon Game</string>
-    <string name="GameBTN2" translatable="false">Chess Game</string>
-    <string name="GameBTN3" translatable="false">Euchre Game</string>
-    <string name="GameBTN4" translatable="false">Four in a Row Game</string>
-    <string name="GameBTN5" translatable="false">Solitare Game</string>
-    <string name="GameBTN6" translatable="false">Sudoku Game</string>
+    <string name="GameBTN1" translatable="false">Backgammon</string>
+    <string name="GameBTN2" translatable="false">Chess</string>
+    <string name="GameBTN3" translatable="false">Euchre</string>
+    <string name="GameBTN4" translatable="false">Four in a Row</string>
+    <string name="GameBTN5" translatable="false">Solitare</string>
+    <string name="GameBTN6" translatable="false">Sudoku</string>
     <!--Fun Screen-->
     <string name="GameSBTN">Games Screen</string>
     <string name="InternetBTN">Internet Screen</string>
@@ -29,8 +29,8 @@
 
     <!--Help Screen -->
     <string name="HelpGuideBTN">Help Guide App</string>
-    <string name="SkypeCheck">Check Version of Skype</string>
-    <string name="CCheck">Check Internet Connection</string>
+    <string name="SkypeCheck">Update Skype</string>
+    <string name="CCheck">Check Connection</string>
     <string name="GTAssist">Go to Assist</string>
     <string name="FSupport">Fast Support</string>
     <string name="ConnectionTypeString">Connection Type: %1$s</string>
@@ -45,6 +45,7 @@
     <string name="SpeedDialThree">Volunteer Three</string>
     <string name="SpeedDialFour">DCVS Office</string>
     <string name="SpeedDialDana">Call Dana</string>
+    <string name="SpeedDialIUIH">Call IUIH</string>
 
     <!-- Radio Stations -->
     <!-- Build Names -->
@@ -79,8 +80,21 @@
     <string name="radioloadin">Radio is Loading</string>
 
     <string name="aderic">Ad Eric</string>
+    <string name="adericborder">Eric Border</string>
+    <string name="ericgreeting">Hello I am ERIC</string>
 
     <string name="skypenameis">Your Skype is %1$s</string>
 
+    <string name="aboutscreen">About</string>
+    <string name="aboutnac">Nundah Activity Centre</string>
+    <string name="aboutdcvs">Digital Community Visitors Service</string>
+    <string name="aboutapp">App Credits</string>
+    <string name="aboutnactech">NAC Digital Projects Team</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="player_error">Error initializing YouTube player</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
 
 </resources>

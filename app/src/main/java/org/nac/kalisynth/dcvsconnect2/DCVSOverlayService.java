@@ -2,6 +2,7 @@ package org.nac.kalisynth.dcvsconnect2;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
@@ -224,7 +225,7 @@ public class DCVSOverlayService extends Service {
     private void gohelp() {
         //Help Intent
         buttonclicksound();
-        Intent helpIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSHelp.class);
+        Intent helpIntent = new Intent(getApplicationContext(), Help.class);
         helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(helpIntent);
     }
@@ -242,7 +243,7 @@ public class DCVSOverlayService extends Service {
     private void goFun() {
         //Fun intent
         buttonclicksound();
-        Intent funIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.Dcvsfun.class);
+        Intent funIntent = new Intent(getApplicationContext(), FunHub.class);
         funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(funIntent);
     }
@@ -250,7 +251,7 @@ public class DCVSOverlayService extends Service {
     private void goChat() {
         //chat intent
         buttonclicksound();
-        Intent chatIntent = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.DCVSChat.class);
+        Intent chatIntent = new Intent(getApplicationContext(), ChatHub.class);
         chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(chatIntent);
     }
@@ -374,7 +375,7 @@ public class DCVSOverlayService extends Service {
     }
     private void golauncher() {
         StartupApp();
-        Intent golaunch = new Intent(getApplicationContext(), org.nac.kalisynth.dcvsconnect2.landingpage.class);
+        Intent golaunch = new Intent(getApplicationContext(), Home.class);
         golaunch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         golaunch.putExtra("GREETINGS", passtext);
         startActivity(golaunch);
@@ -385,7 +386,7 @@ public class DCVSOverlayService extends Service {
         int hournow = 0;
         Log.i("main", "Constructor fired");
         c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("HH");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("HH");
         String formattedTime = df.format(c.getTime());
         hournow = Integer.parseInt(formattedTime);
         if (hournow < 12) {

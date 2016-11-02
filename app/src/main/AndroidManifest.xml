@@ -12,12 +12,12 @@
 
     <!-- <uses-permission android:name="android.permission.REBOOT" /> -->
     <application
+        android:name=".DCVSConnectMain"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".DcvsConnect"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <receiver android:name=".BootCompletedIntentReceiver">
@@ -26,38 +26,54 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".DCVSMain">
+        <activity android:name=".StartService">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
             android:name=".DCVSOverlayService"
-            android:exported="false">
-        </service>
-
-        <service android:name=".MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
+            android:exported="false" />
         <service
-            android:name=".MyAndroidFirebaseInstanceIDService">
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".MyAndroidFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".DCVSHelp" />
-        <activity android:name=".DCVSChat" />
-        <activity android:name=".Dcvsfun" />
-        <activity android:name=".Dcvsgames" />
-        <activity android:name=".Dcvsinternet" />
-        <activity android:name=".DCVSRadio" />
-        <activity android:name=".landingpage"></activity>
+        <activity
+            android:name=".Help"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".ChatHub"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".FunHub"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".GamesHub"
+            android:parentActivityName=".FunHub" />
+        <activity
+            android:name=".WebHub"
+            android:parentActivityName=".FunHub" />
+        <activity
+            android:name=".Radio"
+            android:parentActivityName=".FunHub" />
+        <activity android:name=".Home" />
+        <activity
+            android:name=".About"
+            android:parentActivityName=".Home" />
     </application>
 
 </manifest>

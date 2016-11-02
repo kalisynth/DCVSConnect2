@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.nac.kalisynth.dcvsconnect2.Help"
+    android:background="@drawable/dcvs_ui_help_screen"
+    tools:ignore="Overdraw"
+    android:contentDescription="@string/SkypeCheck">
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/bluebtn"
+        android:contentDescription="@string/HelpGuideBTN"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/helpguideIB"
+        android:text="@string/HelpGuideBTN"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/SkypeVIB"
+        android:background="@drawable/greenblue"
+        android:contentDescription="@string/SkypeCheck"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/SkypeCheck"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:maxLines="1"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/gtabtn"
+        android:layout_marginBottom="61dp"
+        android:id="@+id/fastsupportbtn"
+        android:background="@drawable/redbluegreen"
+        android:text="@string/FSupport"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gtabtn"
+        android:layout_toEndOf="@+id/ccheckbtn"
+        android:layout_above="@+id/signalstrengthtv"
+        android:id="@+id/connectiontypetv"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/ccheckbtn"
+        android:id="@+id/signalstrengthtv"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:maxLines="1"
+        android:textColor="#0e1f29"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/gtabtn"
+        android:layout_marginEnd="137dp"
+        android:background="@drawable/redyellowgreen"
+        android:text="@string/GTAssist"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"
+        android:layout_above="@+id/signalstrengthtv"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="49dp" />
+
+    <Button
+        android:text="@string/CCheck"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/ccheckbtn"
+        android:background="@drawable/redbluegreen"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="13sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/aboutscreen"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:gravity="bottom|center"
+        android:paddingBottom="40dp"
+        android:textSize="15sp"
+        android:textStyle="normal|bold"
+        android:textColor="#0e1f29"
+        android:id="@+id/aboutbtn"
+        android:background="@drawable/redbluegreen"
+        android:layout_above="@+id/SkypeVIB"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="177dp" />
+
+</RelativeLayout>

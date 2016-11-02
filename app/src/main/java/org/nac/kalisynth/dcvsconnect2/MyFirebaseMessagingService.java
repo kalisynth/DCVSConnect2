@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -32,7 +31,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void createNotification( String messageBody) {
-        Intent intent = new Intent( this , landingpage.class);
+        Intent intent = new Intent( this , Home.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("FCM_MESSAGE", FCMmessage);
         PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,
