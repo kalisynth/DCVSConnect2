@@ -38,7 +38,6 @@
     <!--Chat Screen-->
     <string name="SkypeBTN">Skype App</string>
     <string name="SkypeOpenBtn">Open Skype</string>
-    <string name="EditSwitchCD">Edit Switch</string>
     <!--Speed Dial -->
     <string name="SpeedDialOne">Volunteer One</string>
     <string name="SpeedDialTwo">Volunteer Two</string>
@@ -91,10 +90,9 @@
     <string name="aboutapp">App Credits</string>
     <string name="aboutnactech">NAC Digital Projects Team</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="player_error">Error initializing YouTube player</string>
-    <string name="seek_to">Jump To</string>
-    <string name="seek_to_hint">Seconds</string>
+    <string name="listenbtn">Listen</string>
+    <string name="listening">Listening..</string>
+    <string name="errorlistening">Error Listening Failed</string>
+    <string name="listeningfinished">Finished Listening</string>
 
 </resources>

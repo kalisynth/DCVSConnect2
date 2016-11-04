@@ -55,6 +55,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginTop="50dp"
             android:id="@+id/messageboxtext" />
+
     </RelativeLayout>
 
 

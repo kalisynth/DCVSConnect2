@@ -8,14 +8,23 @@ import java.util.Random;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.blundell.woody.Woody;
+import com.pddstudio.talking.Talk;
+import com.pddstudio.talking.model.SpeechObject;
 import com.zplesac.connectionbuddy.ConnectionBuddy;
 import com.zplesac.connectionbuddy.cache.ConnectionBuddyCache;
 import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
@@ -23,8 +32,9 @@ import com.zplesac.connectionbuddy.models.ConnectivityEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class Home extends AppCompatActivity implements ConnectivityChangeListener {
+public class Home extends AppCompatActivity implements ConnectivityChangeListener, Woody.ActivityMonitorListener{
     @BindView(R.id.messageboxtext) TextView txvMessage;
     int hournow = 0;
     Calendar c;
@@ -76,6 +86,8 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
             }
         };
         handler2.postDelayed(runnable3, 600000);
+
+        Woody.onCreateMonitor(this);
     }
 
     @Override
@@ -122,7 +134,7 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
         } else if (randnumber == 1){
             suggest = "Have you tried one of the games?, there is Backgammon, Solitare, Euchre and more, to find the games, tap your finger on the play button and then on the screen that pops up tap your finger on the games button";
         } else if (randnumber == 2){
-            suggest = "we broadcast from the NAC every thursday, watch the videos by tapping your finger on the Play button then on the NAC BROADCASTS button";
+            suggest = "We broadcast from the NAC every thursday, watch the videos by tapping your finger on the Play button then on the NAC BROADCASTS button";
         } else if (randnumber == 4){
             suggest = "I hope you are having a nice day";
         } else if (randnumber == 5){
@@ -154,4 +166,18 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
         mNotificationmanager.notify(3, mBuilder.build());
     }
 
+    @Override
+    public void onFaceDetected() {
+        DCVSOverlayService.startspeaking();
+    }
+
+    @Override
+    public void onFaceTimedOut() {
+        DCVSOverlayService.startspeaking();
+    }
+
+    @Override
+    public void onFaceDetectionNonRecoverableError() {
+        Log.e("Face Error", "Error face broke");
+    }
 }

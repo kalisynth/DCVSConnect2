@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -50,7 +51,8 @@
             android:layout_height="150dp"
             android:id="@+id/abcnwbtn"
             android:layout_weight="1"
-            android:background="@drawable/abcnews" />
+            android:background="@drawable/abcnews"
+            tools:ignore="InefficientWeight" />
 
         <Button
             android:layout_width="150dp"

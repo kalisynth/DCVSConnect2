@@ -34,21 +34,6 @@ android {
             versionName "1.4-Local"
             buildConfigField "String", "appVer", "\"Local\""
         }
-        WifiOnly {
-            applicationId "org.nac.kalisynth.dcvsconnect2.wifi"
-            versionName "1.4-wifi"
-            buildConfigField "String", "appVer", "\"Wifi\""
-        }
-        IUIHDCVS {
-            applicationId "org.nac.kalisynth.dcvsconnect2.iuihdcvs"
-            versionName "1.4-iuihdcvs"
-            buildConfigField "String", "appVer", "\"iuihdcvs\""
-        }
-        Danadcvs {
-            applicationId "org.nac.kalisynth.dcvsconnect2.danadcvs"
-            versionName "1.4-danadcvs"
-            buildConfigField "String", "appVer", "\"danadcvs\""
-        }
     }
 }
 
@@ -71,6 +56,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile 'com.vstechlab.easyfonts:easyfonts:1.0.0'
     compile 'com.zplesac:connectionbuddy:1.3.0'
+    compile 'com.pddstudio:talk:1.0.0'
+    compile 'com.blundell:woody:1.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

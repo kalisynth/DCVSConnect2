@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,31 +20,41 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.blundell.woody.Woody;
+import com.pddstudio.talking.Talk;
+import com.pddstudio.talking.model.SpeechObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class DCVSOverlayService extends Service {
+import butterknife.BindDrawable;
+import butterknife.ButterKnife;
+
+public class DCVSOverlayService extends Service  implements Talk.Callback{
     //Main Layout View
     public static LinearLayout DCVSView;
 
     private static final String TAG = DCVSOverlayService.class.getSimpleName();
 
     //Layout Params
-    private WindowManager.LayoutParams params;
+    private static WindowManager.LayoutParams params;
     private LinearLayout.LayoutParams params_home;
     private LinearLayout.LayoutParams params_chat;
     private LinearLayout.LayoutParams params_fun;
     private LinearLayout.LayoutParams params_help;
 
     //Window Manager
-    private WindowManager wm;
+    private static WindowManager wm;
 
     //Booleans for if button is visible
     public static Boolean chatv = true;
-    private Boolean helpv = true;
+    private static Boolean helpv = true;
     public static Boolean funv = true;
-    private Boolean homev = false;
-    private Boolean showv = true;
+    private static Boolean homev = false;
+    private static Boolean showv = true;
+    static Boolean mSpeaking = false;
 
     //Buttons
     public static Button chatButton;
@@ -51,9 +62,11 @@ public class DCVSOverlayService extends Service {
     private static Button helpButton;
     private static Button homeButton;
     private static Button showButton;
+    private static Button speakbutton;
 
     String passtext = null;
     private static String bv;
+    @BindDrawable(R.drawable.chatsmall) Drawable chatsmall;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -63,7 +76,6 @@ public class DCVSOverlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         if (BuildConfig.appVer.equals("DCVS")) {
             bv = getResources().getString(R.string.BVDCVS);
         } else if (BuildConfig.appVer.equals("Local")) {
@@ -138,6 +150,10 @@ public class DCVSOverlayService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT);
         DCVSView.addView(showButton, params_show);
 
+        speakbutton = new Button(this);
+        speakbutton.setBackground(ContextCompat.getDrawable(this, R.drawable.speakto));
+        DCVSView.addView(speakbutton, params_show);
+
         //Window Manager for the Layout
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -154,10 +170,6 @@ public class DCVSOverlayService extends Service {
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttoncheck();
-                smallbuttons();
-                helpv = false;
-                DCVSView.removeView(helpButton);
                 gohelp();
             }
         });
@@ -165,10 +177,6 @@ public class DCVSOverlayService extends Service {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttoncheck();
-                bigbuttons();
-                homev = false;
-                DCVSView.removeView(homeButton);
                 goHome();
             }
         });
@@ -176,11 +184,6 @@ public class DCVSOverlayService extends Service {
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttoncheck();
-                smallbuttons();
-                DCVSView.removeView(chatButton);
-                //removereminder();
-                chatv = false;
                 goChat();
             }
         });
@@ -188,10 +191,6 @@ public class DCVSOverlayService extends Service {
         funButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttoncheck();
-                smallbuttons();
-                funv = false;
-                DCVSView.removeView(funButton);
                 goFun();
             }
         });
@@ -208,6 +207,17 @@ public class DCVSOverlayService extends Service {
         });
         DCVSAppOnNote();
         golauncher();
+
+        //Talk enable
+        Talk.init(this, this);
+        Talk.getInstance().addSpeechObjects(helloObject, chatObject, playObject, helpObject, goodbyeObject);
+
+        speakbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startspeaking();
+            }
+        });
     }
 
     @Override
@@ -219,10 +229,15 @@ public class DCVSOverlayService extends Service {
             NotificationManager cNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             cNotificationManager.cancel(2);
             cNotificationManager.cancel(1);
+            Talk.getInstance().stopListening();
         }
     }
 
     private void gohelp() {
+        buttoncheck();
+        smallbuttons();
+        helpv = false;
+        DCVSView.removeView(helpButton);
         //Help Intent
         buttonclicksound();
         Intent helpIntent = new Intent(getApplicationContext(), Help.class);
@@ -231,8 +246,12 @@ public class DCVSOverlayService extends Service {
     }
 
     private void goHome() {
+        buttoncheck();
+        bigbuttons();
+        homev = false;
+        DCVSView.removeView(homeButton);
         //Home Intent
-        buttonclicksound();
+        homesound();
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -241,8 +260,12 @@ public class DCVSOverlayService extends Service {
     }
 
     private void goFun() {
+        buttoncheck();
+        smallbuttons();
+        funv = false;
+        DCVSView.removeView(funButton);
         //Fun intent
-        buttonclicksound();
+        buttonclicksound2();
         Intent funIntent = new Intent(getApplicationContext(), FunHub.class);
         funIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(funIntent);
@@ -250,7 +273,12 @@ public class DCVSOverlayService extends Service {
 
     private void goChat() {
         //chat intent
-        buttonclicksound();
+        buttoncheck();
+        smallbuttons();
+        DCVSView.removeView(chatButton);
+        //removereminder();
+        chatv = false;
+        buttonclicksound3();
         Intent chatIntent = new Intent(getApplicationContext(), ChatHub.class);
         chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(chatIntent);
@@ -319,10 +347,10 @@ public class DCVSOverlayService extends Service {
     }
 
     //make buttons smaller
-    private void smallbuttons() {
-        chatButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.chatsmall));
-        helpButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.button_help_small));
-        funButton.setBackground(ContextCompat.getDrawable(DCVSOverlayService.this, R.drawable.buttonplaysquare));
+    private static void smallbuttons() {
+        chatButton.setBackgroundResource(R.drawable.chatsmall);
+        helpButton.setBackgroundResource(R.drawable.button_help_small);
+        funButton.setBackgroundResource(R.drawable.buttonplaysquare);
         chatButton.setWidth(20);
         chatButton.setHeight(20);
         helpButton.setWidth(20);
@@ -373,6 +401,22 @@ public class DCVSOverlayService extends Service {
         MediaPlayer mp = MediaPlayer.create(this, R.raw.btnpush);
         mp.start();
     }
+
+    private void buttonclicksound2(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.click2);
+        mp.start();
+    }
+
+    private void buttonclicksound3(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.buttonpush);
+        mp.start();
+    }
+
+    private void homesound(){
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.swoosh);
+        mp.start();
+    }
+
     private void golauncher() {
         StartupApp();
         Intent golaunch = new Intent(getApplicationContext(), Home.class);
@@ -393,6 +437,103 @@ public class DCVSOverlayService extends Service {
             passtext = "Hello, My name is ERIC, Good Morning, How are you?";
         } else {
             passtext = "Hello, My name is ERIC, Good Afternoon, How are you?";
+        }
+    }
+
+    @Override
+    public void onStartListening() {
+        Toast.makeText(this, getResources().getString(R.string.listening), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRmsChanged(float rms) {
+
+    }
+
+    @Override
+    public void onFailedListening(int errorCode) {
+        Toast.makeText(DCVSOverlayService.this, "Sorry I missed that, error " + errorCode + " please repeat",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFinishedListening(SpeechObject speechObject) {
+        if(speechObject != null) {
+            speechObject.onSpeechObjectIdentified();
+        }
+    }
+
+    private SpeechObject helloObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            Toast.makeText(DCVSOverlayService.this, "Hello how can I help you?", Toast.LENGTH_SHORT).show();
+            goHome();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "hello eric";
+        }
+    };
+
+    private SpeechObject chatObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            goChat();
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "chat";
+        }
+    };
+
+    private SpeechObject playObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            goChat();
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "play";
+        }
+    };
+
+    private SpeechObject helpObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            gohelp();
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "help";
+        }
+    };
+
+    private SpeechObject goodbyeObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            goHome();
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "goodbye";
+        }
+    };
+
+    public static void startspeaking(){
+        if(!mSpeaking) {
+            Talk.getInstance().startListening();
+            mSpeaking = true;
+        } else {
+            Talk.getInstance().stopListening();
+            mSpeaking = false;
         }
     }
 }
