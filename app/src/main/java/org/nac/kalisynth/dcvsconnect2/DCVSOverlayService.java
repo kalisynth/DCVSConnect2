@@ -13,9 +13,13 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,9 +36,11 @@ import java.util.Calendar;
 import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 
-public class DCVSOverlayService extends Service  implements Talk.Callback{
+public class DCVSOverlayService extends Service implements Talk.Callback{
     //Main Layout View
     public static LinearLayout DCVSView;
+
+    private VelocityTracker mVTracker = null;
 
     private static final String TAG = DCVSOverlayService.class.getSimpleName();
 

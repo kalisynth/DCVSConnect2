@@ -2,6 +2,7 @@
 
 package org.nac.kalisynth.dcvsconnect2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class About extends AppCompatActivity implements Woody.ActivityMonitorListener, Talk.Callback{
+public class About extends AppCompatActivity implements Talk.Callback{
 
     @BindView(R.id.aboutwebview) WebView aWebView;
     String webdest = "http://www.digitalcvs.org/index.php/About/";
@@ -29,6 +30,7 @@ public class About extends AppCompatActivity implements Woody.ActivityMonitorLis
     String speech;
     String utterid;
     Boolean mSpeaking = false;
+    Boolean mOnAboutPage = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,8 @@ public class About extends AppCompatActivity implements Woody.ActivityMonitorLis
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
         aWebView.setWebViewClient(new AboutWebViewClient());
-        Woody.onCreateMonitor(this);
         Talk.init(this, this);
-        Talk.getInstance().addSpeechObjects(whatObject, homeObject, playObject, chatObject, helpObject, dcvsObject, appcreditsObject, nactechObject, nacObject);
+        Talk.getInstance().addSpeechObjects(dcvsObject, appcreditsObject, nactechObject, nacObject);
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -85,26 +86,6 @@ public class About extends AppCompatActivity implements Woody.ActivityMonitorLis
     }
 
     @Override
-    public void onFaceDetected() {
-        if(!t1.isSpeaking()) {
-            Talk.getInstance().startListening();
-        }else {
-            Talk.getInstance().stopListening();
-        }
-    }
-
-    @Override
-    public void onFaceTimedOut() {
-        Talk.getInstance().stopListening();
-        t1.stop();
-    }
-
-    @Override
-    public void onFaceDetectionNonRecoverableError() {
-        Log.e("Face Error", "Error face broke");
-    }
-
-    @Override
     public void onStartListening() {
         Toast.makeText(this, getResources().getString(R.string.listening), Toast.LENGTH_SHORT).show();
     }
@@ -126,77 +107,18 @@ public class About extends AppCompatActivity implements Woody.ActivityMonitorLis
         }
     }
 
-    private SpeechObject homeObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "home";
-        }
-    };
-
-    private SpeechObject playObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), FunHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "play";
-        }
-    };
-
-    private SpeechObject helpObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), Help.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "help";
-        }
-    };
-
-    private SpeechObject chatObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), ChatHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "chat";
-        }
-    };
-
     private SpeechObject dcvsObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            speech = "The Digital Community Visitors Service, is a new program that extends the CVS service to offer its benefits to Clients who are typically living in their own homes and particularly those who are socially or geographically isolated. ";
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            if(mOnAboutPage) {
+                speech = "The Digital Community Visitors Service, is a new program that extends the CVS service to offer its benefits to Clients who are typically living in their own homes and particularly those who are socially or geographically isolated. ";
+                t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            }
         }
 
         @Override
         public String getVoiceString() {
-            return "DCVS";
+            return "digital community visitors service";
         }
     };
 
@@ -239,17 +161,7 @@ public class About extends AppCompatActivity implements Woody.ActivityMonitorLis
         }
     };
 
-    private SpeechObject whatObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            speech = "You are on the About Screen, here you can find information about the DCVS, by saying DCVS, about NAC, by saying NAC, about NACTECH by saying Tech and finally about the app by saying Credit, you can also go back to Home by saying Home, open the Chat screen by saying Chat, open the Play screen by saying Play or the Help screen by saying help";
-                t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-                mSpeaking = true;
-        }
+    private void aboutnac(){
 
-        @Override
-        public String getVoiceString() {
-            return "what";
-        }
-    };
+    }
 }

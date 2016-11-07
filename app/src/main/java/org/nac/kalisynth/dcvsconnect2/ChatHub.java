@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorListener, Talk.Callback {
+public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
     //Butterknife BindViews
     @BindView(R.id.skypename) TextView skypetxv;
@@ -46,6 +47,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
     @BindView(R.id.skypebtn3) Button sb3;
     @BindView(R.id.skypebtn4) Button sb4;
     @BindView(R.id.openskypebtn) Button osb;
+    @BindView(R.id.gmailbtn) Button ogb;
     @BindView(R.id.cb1) Button cb1;
     @BindView(R.id.cb2) Button cb2;
 
@@ -91,9 +93,9 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         String mSkypeName = getName();
         String mSkypeNameIs = getResources().getString(R.string.skypenameis, mSkypeName);
         ButterKnife.bind(this);
-        Woody.onCreateMonitor(this);
         Talk.init(this, this);
-        Talk.getInstance().addSpeechObjects(homeObject, helpObject, playObject, officeObject, openSkypeObject);
+        Talk.getInstance().addSpeechObjects(homeObject, helpObject, playObject, officeObject, openSkypeObject
+        , goodbyeObject, openEmailObject, openGmailObject);
         if (mSkypeName != null) {
             skypetxv.setText(mSkypeNameIs);
         }
@@ -107,6 +109,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         osb.setTypeface(EasyFonts.robotoBlack(this));
         cb1.setTypeface(EasyFonts.robotoBlack(this));
         cb2.setTypeface(EasyFonts.robotoBlack(this));
+        ogb.setTypeface(EasyFonts.robotoBlack(this));
 
         //check if booleans are set to true or false, if false set cb1 to 'gone', if set to true
         //will set the button to visible, then change the text depending on what is set to true
@@ -152,11 +155,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         //add chat button back to overlay
         DCVSOverlayService.DCVSView.addView(DCVSOverlayService.chatButton);
         DCVSOverlayService.chatv = true;
-         Intent mSkypeIntent;
-          PackageManager mSkypeManager = getPackageManager();
-         mSkypeIntent = mSkypeManager.getLaunchIntentForPackage("com.skype.raider");
-         mSkypeIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        startActivity(mSkypeIntent);
+        openskype();
     }
 
     //Use skype to call a username based on method called
@@ -214,6 +213,12 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
     @OnClick(R.id.cb2)
     public void speeddialc2onclick(){
         SpeedDialC2();
+    }
+
+    //Gmail
+    @OnClick(R.id.gmailbtn)
+    public void gmailclick(){
+        opengmail();
     }
 
     private void SpeedDialOne() {
@@ -404,23 +409,6 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
     }
 
     @Override
-    public void onFaceDetected() {
-        Talk.getInstance().startListening();
-            Log.d("FACE", "FACE FOUND, LISTENING");
-    }
-
-    @Override
-    public void onFaceTimedOut() {
-        //Talk.getInstance().stopListening();
-        Log.d("FACE", "Face Lost");
-    }
-
-    @Override
-    public void onFaceDetectionNonRecoverableError() {
-        Log.e("Face Error", "Error face broke");
-    }
-
-    @Override
     public void onStartListening() {
         Toast.makeText(this, getResources().getString(R.string.listening), Toast.LENGTH_SHORT).show();
     }
@@ -432,7 +420,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(ChatHub.this, "Sorry I missed that, error " + errorCode + " please repeat",Toast.LENGTH_LONG).show();
+        Toast.makeText(ChatHub.this, "Sorry I missed that, please repeat",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -450,6 +438,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(homeIntent);
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -465,6 +454,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
             chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -480,6 +470,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
             chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -496,6 +487,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(homeIntent);
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -509,6 +501,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         public void onSpeechObjectIdentified() {
             skypedcvs1call(ChatHub.this, "skype:iuihdcvs?call&video=true");
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -522,6 +515,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         public void onSpeechObjectIdentified() {
             skypedcvs1call(ChatHub.this, "skype:danadcvs?call&video=true");
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -535,6 +529,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         public void onSpeechObjectIdentified() {
             skypedcvs1call(ChatHub.this, "skype:"+mCustom1Skype+"?call&video=true");
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -548,6 +543,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         public void onSpeechObjectIdentified() {
             skypedcvs1call(ChatHub.this, "skype:"+mCustom2Skype+"?call&video=true");
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -561,6 +557,7 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
         public void onSpeechObjectIdentified() {
             skypedcvs1call(ChatHub.this, "skype:volunteer1dcvs?call&video=true");
             Talk.getInstance().stopListening();
+            mListening = false;
         }
 
         @Override
@@ -611,13 +608,36 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
     private SpeechObject openSkypeObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            skypeonclick();
-            Talk.getInstance().stopListening();
+            openskype();
         }
 
         @Override
         public String getVoiceString() {
-            return "Open Skype";
+            return "Skype";
+        }
+    };
+
+    private SpeechObject openGmailObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            opengmail();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "Gmail";
+        }
+    };
+
+    private SpeechObject openEmailObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            opengmail();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "Email";
         }
     };
 
@@ -649,13 +669,48 @@ public class ChatHub extends AppCompatActivity implements Woody.ActivityMonitorL
     public void startspeaking(){
         if(!mListening) {
             Talk.getInstance().startListening();
-            mListening = true;
+            vyes();
             Log.d("TALK", "Is Listening");
         } else {
             Talk.getInstance().stopListening();
-            mListening = false;
+            vno();
             Log.d("TALK", "Is not listening");
         }
+    }
+
+    public void vyes(){
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
+    }
+
+    public void vno(){
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(250);
+    }
+
+    public void openskype(){
+        Talk.getInstance().stopListening();
+        Intent mSkypeIntent;
+        PackageManager mSkypeManager = getPackageManager();
+        mSkypeIntent = mSkypeManager.getLaunchIntentForPackage("com.skype.raider");
+        mSkypeIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        startActivity(mSkypeIntent);
+    }
+
+    public void opengmail(){
+        Talk.getInstance().stopListening();
+        Intent mIntent;
+        PackageManager mPackageManager = getPackageManager();
+        mIntent = mPackageManager.getLaunchIntentForPackage("com.google.android.gm");
+        mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        startActivity(mIntent);
+    }
+
+    @OnClick(R.id.listenbtn)
+    public void listenbtn(){
+        Talk.getInstance().startListening();
     }
 
     //Todo https://drive.google.com/file/d/0B4EdgIslSa6EYVlHOGgzekZCbkk/view?usp=sharing

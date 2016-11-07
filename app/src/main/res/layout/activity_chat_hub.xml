@@ -135,9 +135,26 @@
     </GridLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom">
+        android:layout_gravity="start|bottom">
+
+        <Button
+            android:text="@string/email"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/gmailbtn"
+            android:gravity="bottom|center"
+            android:textColor="#0e1f29"
+            android:textSize="20sp"
+            android:background="@drawable/greenpinkspiral" />
+
+        <Button
+            android:text="Listen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listenbtn"
+            android:layout_alignParentEnd="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,6 +165,7 @@
             android:textColor="#0e1f29"
             android:textSize="20sp"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
             android:text="" />
 
     </RelativeLayout>

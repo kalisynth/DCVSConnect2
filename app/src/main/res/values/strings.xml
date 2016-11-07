@@ -95,4 +95,6 @@
     <string name="errorlistening">Error Listening Failed</string>
     <string name="listeningfinished">Finished Listening</string>
 
+    <string name="email">Open Gmail</string>
+
 </resources>
