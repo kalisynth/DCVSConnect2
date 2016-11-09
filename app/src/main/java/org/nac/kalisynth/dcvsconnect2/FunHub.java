@@ -5,17 +5,19 @@ package org.nac.kalisynth.dcvsconnect2;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.blundell.woody.Woody;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.pddstudio.talking.Talk;
 import com.pddstudio.talking.model.SpeechObject;
 import com.vstechlab.easyfonts.EasyFonts;
@@ -26,25 +28,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorListener, Talk.Callback {
+import static org.nac.kalisynth.dcvsconnect2.DCVSOverlayService.funv;
+
+public class FunHub extends AppCompatActivity implements Talk.Callback {
 
     LinearLayout.LayoutParams params_radio;
+
+    //Butterknife Bindviews
     @BindView(R.id.radioBTN) Button rbtn;
     @BindView(R.id.funinternetbtn) Button ibtn;
     @BindView(R.id.livestreambtn) Button sbtn;
     @BindView(R.id.fungamesbtn) Button gbtn;
 
-    TextToSpeech t1;
-    String speech;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fun_hub);
-        ButterKnife.bind(this);
 
-        //layout variables for the Fun Screen
-        RelativeLayout funView = (RelativeLayout) findViewById(R.id.funlayout);
+        //Bindings
+        ButterKnife.bind(this);
+        Talk.init(this,this);
+        Talk.getInstance().addSpeechObjects(gamesObject, webObject, radioObject, internetObject);
 
         //Set Fonts for the Button text
         gbtn.setTypeface(EasyFonts.robotoBlack(this));
@@ -52,26 +56,21 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         ibtn.setTypeface(EasyFonts.robotoBlack(this));
         rbtn.setTypeface(EasyFonts.robotoBlack(this));
 
-        Woody.onCreateMonitor(this);
-        Talk.init(this,this);
-        Talk.getInstance().addSpeechObjects(whatObject,homeObject,chatObject, helpObject, gamesObject, webObject, radioObject, internetObject);
+        startTouchTypeDetection();
+    }
 
-        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.ENGLISH);
-                }
-            }
-        });
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        // Setup onTouchEvent for detecting type of touch gesture
+        Sensey.getInstance().setupDispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     //Opens the Games Hub
     @OnClick(R.id.fungamesbtn)
     public void gamesonclick() {
         buttonclicksound();
-        DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
-        DCVSOverlayService.funv = true;
+        addFunBtn();
         startActivity(new Intent(FunHub.this, GamesHub.class));
         finish();
     }
@@ -114,24 +113,10 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
 
     //adds back the fun button to get back to the fun hub rather then have to reopen everything
     private void addFunBtn(){
-        DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
-        DCVSOverlayService.funv = true;
-    }
-
-    @Override
-    public void onFaceDetected() {
-            Talk.getInstance().startListening();
-        Log.d("FACE", "FACE Detected, Listening");
-    }
-
-    @Override
-    public void onFaceTimedOut() {
-       Log.d("FACE", "Face Timed Out");
-    }
-
-    @Override
-    public void onFaceDetectionNonRecoverableError() {
-        Log.e("Face Error", "Error face broke");
+        if(!funv) {
+            DCVSOverlayService.DCVSView.addView(DCVSOverlayService.funButton);
+            funv = true;
+        }
     }
 
     @Override
@@ -156,57 +141,10 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         }
     }
 
-    private SpeechObject homeObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "home";
-        }
-    };
-
-    private SpeechObject chatObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), ChatHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "chat";
-        }
-    };
-
-    private SpeechObject helpObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), Help.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "help";
-        }
-    };
-
     private SpeechObject gamesObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
             Intent chatIntent = new Intent(getApplicationContext(), GamesHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
         }
@@ -221,7 +159,6 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         @Override
         public void onSpeechObjectIdentified() {
             Intent chatIntent = new Intent(getApplicationContext(), WebHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
         }
@@ -236,7 +173,6 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         @Override
         public void onSpeechObjectIdentified() {
             Intent chatIntent = new Intent(getApplicationContext(), WebHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
         }
@@ -252,7 +188,6 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         @Override
         public void onSpeechObjectIdentified() {
             Intent chatIntent = new Intent(getApplicationContext(), Radio.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(chatIntent);
             Talk.getInstance().stopListening();
         }
@@ -263,17 +198,63 @@ public class FunHub extends AppCompatActivity implements Woody.ActivityMonitorLi
         }
     };
 
-    private SpeechObject whatObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            speech = "You are on the Play screen, here you can access the Games screen by saying games, the Web screen by saying Web and the Radio by saying radio";
-            Talk.getInstance().stopListening();
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        }
+    private void startTouchTypeDetection() {
+        Sensey.getInstance().startTouchTypeDetection(new TouchTypeDetector.TouchTypListener() {
+            @Override
+            public void onTwoFingerSingleTap() {
 
-        @Override
-        public String getVoiceString() {
-            return "what";
-        }
-    };
+            }
+
+            @Override
+            public void onThreeFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onDoubleTap() {
+
+            }
+
+            @Override
+            public void onScroll(int i) {
+
+            }
+
+            @Override
+            public void onSingleTap() {
+
+            }
+
+            @Override
+            public void onSwipe(int i) {
+                switch (i) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Log.d("Gestures", "Swipe Up");
+                        DCVSOverlayService.startspeaking();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+                        Log.d("Gestures", "Swipe Down");
+                        startActivity(new Intent(FunHub.this, WebHub.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Log.d("Gestures","Swipe Left");
+                        startActivity(new Intent(FunHub.this, Home.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Log.d("Gestures", "Swipe Right");
+                        startActivity(new Intent(FunHub.this, Radio.class));
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onLongPress() {
+
+            }
+        });
+    }
 }

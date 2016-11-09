@@ -7,16 +7,17 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -26,7 +27,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.blundell.woody.Woody;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.pddstudio.talking.Talk;
 import com.pddstudio.talking.model.SpeechObject;
 
@@ -34,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindDrawable;
-import butterknife.ButterKnife;
 
 public class DCVSOverlayService extends Service implements Talk.Callback{
     //Main Layout View
@@ -69,6 +70,8 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
     private static Button homeButton;
     private static Button showButton;
     private static Button speakbutton;
+
+    String mCurrentScreen = null;
 
     String passtext = null;
     private static String bv;
@@ -216,14 +219,17 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
 
         //Talk enable
         Talk.init(this, this);
-        Talk.getInstance().addSpeechObjects(helloObject, chatObject, playObject, helpObject, goodbyeObject);
+        Talk.getInstance().addSpeechObjects(helloObject, homeObject, chatObject, playObject, helpObject, goodbyeObject);
 
+        mCurrentScreen = "home";
         speakbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 startspeaking();
             }
         });
+
+        startTouchTypeDetection();
     }
 
     @Override
@@ -246,6 +252,7 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
         DCVSView.removeView(helpButton);
         //Help Intent
         buttonclicksound();
+        mCurrentScreen = "help";
         Intent helpIntent = new Intent(getApplicationContext(), Help.class);
         helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(helpIntent);
@@ -256,6 +263,7 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
         bigbuttons();
         homev = false;
         DCVSView.removeView(homeButton);
+        mCurrentScreen = "home";
         //Home Intent
         homesound();
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
@@ -270,6 +278,7 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
         smallbuttons();
         funv = false;
         DCVSView.removeView(funButton);
+        mCurrentScreen = "fun";
         //Fun intent
         buttonclicksound2();
         Intent funIntent = new Intent(getApplicationContext(), FunHub.class);
@@ -282,6 +291,7 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
         buttoncheck();
         smallbuttons();
         DCVSView.removeView(chatButton);
+        mCurrentScreen = "chat";
         //removereminder();
         chatv = false;
         buttonclicksound3();
@@ -533,6 +543,19 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
         }
     };
 
+    private SpeechObject homeObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            goHome();
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "home";
+        }
+    };
+
     public static void startspeaking(){
         if(!mSpeaking) {
             Talk.getInstance().startListening();
@@ -541,6 +564,123 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
             Talk.getInstance().stopListening();
             mSpeaking = false;
         }
+    }
+
+    private void startTouchTypeDetection() {
+        Sensey.getInstance().startTouchTypeDetection(new TouchTypeDetector.TouchTypListener() {
+
+            @Override
+            public void onTwoFingerSingleTap() {
+                Log.d("Gesture", "Two Finger Single Tap");
+            }
+
+            @Override
+            public void onThreeFingerSingleTap() {
+                Log.d("Gesture", "Three Finger Single Tap");
+            }
+
+            @Override
+            public void onSingleTap() {
+                Log.d("Gesture", "Single Tap");
+            }
+
+            @Override
+            public void onScroll(int i) {
+                Log.d("Gesture", "Scroll " + i);
+            }
+
+            @Override
+            public void onDoubleTap() {
+                Log.d("Gesture", "Double Tap");
+            }
+
+            @Override
+            public void onLongPress() {
+                Log.d("Gesture", "Long press");
+            }
+
+            @Override
+            public void onSwipe(int i) {
+                switch (i) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Log.d("Gesture", "Swipe Up");
+                        startspeaking();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+                        Log.d("Gesture", "Swipe Down");
+                        sdown();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Log.d("Gesture", "Swipe Left");
+                        sleft();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Log.d("Gesture", "Swipe Right");
+                       sright();
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+
+            }
+        });
+    }
+
+    public void sdown(){
+        if(mCurrentScreen.equals("home")){
+            gohelp();
+        } else if(mCurrentScreen.equals("help")){
+            Uri marketUri = Uri.parse("market://details?id=com.skype.raider");
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(myIntent);
+            mCurrentScreen = "home";
+        } else if(mCurrentScreen.equals("fun")){
+            Intent chatIntent = new Intent(getApplicationContext(), Radio.class);
+            startActivity(chatIntent);
+            mCurrentScreen = "home";
+        } else if(mCurrentScreen.equals("chat")){
+            Intent mSkypeIntent;
+            PackageManager mSkypeManager = getPackageManager();
+            mSkypeIntent = mSkypeManager.getLaunchIntentForPackage("com.skype.raider");
+            mSkypeIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startActivity(mSkypeIntent);
+            mCurrentScreen = "home";
+        }
+    }
+
+    public void sleft(){
+        if(mCurrentScreen.equals("home")){
+            goChat();
+        } else {
+            goHome();
+        }
+    }
+
+    public void sright(){
+        if(mCurrentScreen.equals("home")){
+            goFun();
+        } else if(mCurrentScreen.equals("help")){
+            Intent gotointent;
+            PackageManager gotoManager = getPackageManager();
+            gotointent = gotoManager.getLaunchIntentForPackage("com.citrix.g2arscustomer");
+            gotointent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startActivity(gotointent);
+            mCurrentScreen = "home";
+        } else if(mCurrentScreen.equals("chat")){
+            Intent mIntent;
+            PackageManager mPackageManager = getPackageManager();
+            mIntent = mPackageManager.getLaunchIntentForPackage("com.google.android.gm");
+            mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startActivity(mIntent);
+            mCurrentScreen = "home";
+        } else if(mCurrentScreen.equals("fun")){
+            Intent chatIntent = new Intent(getApplicationContext(), WebHub.class);
+            startActivity(chatIntent);
+            mCurrentScreen = "home";
+        }
+
     }
 }
 

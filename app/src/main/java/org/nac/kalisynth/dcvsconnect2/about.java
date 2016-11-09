@@ -2,17 +2,20 @@
 
 package org.nac.kalisynth.dcvsconnect2;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.blundell.woody.Woody;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.pddstudio.talking.Talk;
 import com.pddstudio.talking.model.SpeechObject;
 
@@ -26,11 +29,11 @@ public class About extends AppCompatActivity implements Talk.Callback{
 
     @BindView(R.id.aboutwebview) WebView aWebView;
     String webdest = "http://www.digitalcvs.org/index.php/About/";
-    TextToSpeech t1;
-    String speech;
-    String utterid;
-    Boolean mSpeaking = false;
+    Boolean mListening = false;
     Boolean mOnAboutPage = true;
+
+    int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+    int short_gap = 200;    // Length of Gap Between dots/dashes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,14 @@ public class About extends AppCompatActivity implements Talk.Callback{
         aWebView.setWebViewClient(new AboutWebViewClient());
         Talk.init(this, this);
         Talk.getInstance().addSpeechObjects(dcvsObject, appcreditsObject, nactechObject, nacObject);
-        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.ENGLISH);
-                }
-            }
-        });
+        startTouchTypeDetection();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        // Setup onTouchEvent for detecting type of touch gesture
+        Sensey.getInstance().setupDispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     //Opens the DCVS about page
@@ -111,8 +114,7 @@ public class About extends AppCompatActivity implements Talk.Callback{
         @Override
         public void onSpeechObjectIdentified() {
             if(mOnAboutPage) {
-                speech = "The Digital Community Visitors Service, is a new program that extends the CVS service to offer its benefits to Clients who are typically living in their own homes and particularly those who are socially or geographically isolated. ";
-                t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                aboutdcvsclick();
             }
         }
 
@@ -125,8 +127,7 @@ public class About extends AppCompatActivity implements Talk.Callback{
     private SpeechObject appcreditsObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            speech = "Credits, Developers, Developer and Designer - Tim Hooper, Designer - Sarah Xu, Libraries Used, Radio Player Service, Butter knife, Easy Fonts, ConnectionBuddy, Sound Effects, Button Press - Marianne Gagnon";
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            aboutappclick();
         }
 
         @Override
@@ -138,8 +139,7 @@ public class About extends AppCompatActivity implements Talk.Callback{
     private SpeechObject nactechObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            speech = "NACtech is a division of NAC, the Nundah Activity Centre, and was started to support the DCVS as it grew. NACtech has now become a service in its own right.";
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            aboutnactechclick();
         }
 
         @Override
@@ -151,8 +151,7 @@ public class About extends AppCompatActivity implements Talk.Callback{
     private SpeechObject nacObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            speech = "Nundah Activity Centre is a Not-for-Profit Incorporated Community Organisation. It is dedicated to enriching the lives of everyone in the community by providing services and recreational needs that enhance and energise the lives of our members and clients with dignity, compassion and commitment. Nundah Activity Centre provides a range of services to assist their clients to remain active and independent in their home and community.";
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            aboutnacclick();
         }
 
         @Override
@@ -161,7 +160,85 @@ public class About extends AppCompatActivity implements Talk.Callback{
         }
     };
 
-    private void aboutnac(){
+    public void vyes(){
+        long[] pattern = {
+                0,  // Start immediately
+                dot, short_gap, dot, short_gap, dot, short_gap, dot};
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(pattern, -1);
+    }
 
+    public void vno(){
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
+    }
+
+    private void startTouchTypeDetection() {
+        Sensey.getInstance().startTouchTypeDetection(new TouchTypeDetector.TouchTypListener() {
+            @Override
+            public void onTwoFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onThreeFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onDoubleTap() {
+
+            }
+
+            @Override
+            public void onScroll(int i) {
+
+            }
+
+            @Override
+            public void onSingleTap() {
+
+            }
+
+            @Override
+            public void onSwipe(int i) {
+                switch (i) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Log.d("Gestures", "Swipe Up");
+                        if (mListening) {
+                            vyes();
+                            mListening = false;
+                        } else {
+                            vno();
+                            mListening = true;
+                        }
+                        DCVSOverlayService.startspeaking();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+                        Log.d("Gestures", "Swipe Down");
+                        aboutnacclick();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Log.d("Gestures", "Swipe Left");
+                        startActivity(new Intent(About.this, Help.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Log.d("Gestures", "Swipe Right");
+                        aboutappclick();
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onLongPress() {
+
+            }
+        });
     }
 }

@@ -1,44 +1,41 @@
 package org.nac.kalisynth.dcvsconnect2;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Random;
-
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Button;
+import android.view.MotionEvent;
 import android.widget.TextView;
 
-import com.blundell.woody.Woody;
-import com.pddstudio.talking.Talk;
-import com.pddstudio.talking.model.SpeechObject;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.zplesac.connectionbuddy.ConnectionBuddy;
 import com.zplesac.connectionbuddy.cache.ConnectionBuddyCache;
 import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
 import com.zplesac.connectionbuddy.models.ConnectivityEvent;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Random;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class Home extends AppCompatActivity implements ConnectivityChangeListener, Woody.ActivityMonitorListener{
-    @BindView(R.id.messageboxtext) TextView txvMessage;
+public class Home extends AppCompatActivity implements ConnectivityChangeListener {
+
+    //Butterknife
+    @BindView(R.id.messageboxtext)
+    TextView txvMessage;
+
+    //Variables
     int hournow = 0;
     Calendar c;
-    TextToSpeech t1;
     String newString;
     int randnumber = 0;
     String suggest = null;
@@ -49,64 +46,75 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //Inits and Bindings
         ButterKnife.bind(this);
+        Sensey.getInstance().init(Home.this);
+
+        //Custom Liberation Sans Font
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/libser.ttf");
         txvMessage.setTypeface(custom_font);
-        t1= new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener(){
-           @Override
-            public void onInit(int status){
-               if(status != TextToSpeech.ERROR) {
-                   t1.setLanguage(Locale.ENGLISH);
-               }
-           }
-        });
-        if(savedInstanceState == null){
+
+        //Checking for messages from Firebase / Setting the Greeting Message
+        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null){
+            if (extras == null) {
                 newString = null;
-            } else if(extras.containsKey("GREETINGS")){
+            } else if (extras.containsKey("GREETINGS")) {
                 newString = extras.getString("GREETINGS");
-            } else if(extras.containsKey("FCM_MESSAGE")){
+            } else if (extras.containsKey("FCM_MESSAGE")) {
                 newString = extras.getString("FCM_MESSAGE");
             }
         } else {
-            newString = (String)savedInstanceState.getSerializable("FCM_MESSAGE");
+            newString = (String) savedInstanceState.getSerializable("FCM_MESSAGE");
         }
 
+        //Clearing the last connection tests
         if (savedInstanceState != null) {
             ConnectionBuddyCache.clearLastNetworkState(this);
         }
 
+        //Set text box to new message
         txvMessage.setText(newString);
+
+        //set timer for message change
         Handler handler2 = new Handler();
-        Runnable runnable3 = new Runnable(){
+        Runnable runnable3 = new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 msgrem();
             }
         };
         handler2.postDelayed(runnable3, 600000);
 
-        Woody.onCreateMonitor(this);
+        startTouchTypeDetection();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        // Setup onTouchEvent for detecting type of touch gesture
+        Sensey.getInstance().setupDispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         handler.removeCallbacks(runnableCode);
+        Sensey.getInstance().stopTouchTypeDetection();
+        super.onDestroy();
     }
 
-    public void msgrem(){
+    public void msgrem() {
         runnableCode = new Runnable() {
-        @Override
-            public void run(){
-            c = Calendar.getInstance();
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("HH");
-            String formattedTime = df.format(c.getTime());
-            hournow = Integer.parseInt(formattedTime);
-            randnumber();
-            randSuggestion();
-            txvMessage.setText(suggest);
+            @Override
+            public void run() {
+                c = Calendar.getInstance();
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("HH");
+                String formattedTime = df.format(c.getTime());
+                hournow = Integer.parseInt(formattedTime);
+                randnumber();
+                randSuggestion();
+                txvMessage.setText(suggest);
             /*utterId = "suggestMsg";
             String toSpeak = txvMessage.getText().toString();
             if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
@@ -115,30 +123,32 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, utterId);
             }*/
-            handler.postDelayed(runnableCode, 600000);
-        }
+                handler.postDelayed(runnableCode, 600000);
+            }
         };
         handler.post(runnableCode);
-            }
+    }
 
-    private void randnumber(){
+    private void randnumber() {
         int min = 0;
-        int max = 5;
+        int max = 6;
         Random rand = new Random();
         randnumber = rand.nextInt(max - min + 1) + min;
     }
 
-    private void randSuggestion(){
-        if(randnumber == 0){
+    private void randSuggestion() {
+        if (randnumber == 0) {
             suggest = "Have you tried listening to the Radio?, to listen to the radio, Tap your finger on the Play button then on the screen that pops up tap your finger on the Radio button";
-        } else if (randnumber == 1){
+        } else if (randnumber == 1) {
             suggest = "Have you tried one of the games?, there is Backgammon, Solitare, Euchre and more, to find the games, tap your finger on the play button and then on the screen that pops up tap your finger on the games button";
-        } else if (randnumber == 2){
+        } else if (randnumber == 2) {
             suggest = "We broadcast from the NAC every thursday, watch the videos by tapping your finger on the Play button then on the NAC BROADCASTS button";
-        } else if (randnumber == 4){
+        } else if (randnumber == 4) {
             suggest = "I hope you are having a nice day";
-        } else if (randnumber == 5){
+        } else if (randnumber == 5) {
             suggest = "if you are having issues with the tablet, its possible that restarting the device could fix this issue, to restart hold down the power button located if you can see the word samsung on the tablet, the power button is on the edge of the top left of the tablet, hold it down till you see a window pop up and then select the power off or restart options";
+        } else if(randnumber == 6) {
+            suggest = "You can navigate this app by gesture and voice rather then by buttons for example swipe your finger across the screen away from the word SAMSUNG and you will open the chat window";
         }
     }
 
@@ -161,23 +171,68 @@ public class Home extends AppCompatActivity implements ConnectivityChangeListene
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.ic_stat_connected);
         mBuilder.setContentTitle("Connection");
-        mBuilder.setContentText("Connection Status " + event.getState() + " Type: "+ event.getType() + " Strength: " + event.getStrength());
+        mBuilder.setContentText("Connection Status " + event.getState() + " Type: " + event.getType() + " Strength: " + event.getStrength());
         NotificationManager mNotificationmanager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationmanager.notify(3, mBuilder.build());
     }
 
-    @Override
-    public void onFaceDetected() {
-        DCVSOverlayService.startspeaking();
-    }
+    private void startTouchTypeDetection() {
+        Sensey.getInstance().startTouchTypeDetection(new TouchTypeDetector.TouchTypListener() {
+            @Override
+            public void onTwoFingerSingleTap() {
 
-    @Override
-    public void onFaceTimedOut() {
-        DCVSOverlayService.startspeaking();
-    }
+            }
 
-    @Override
-    public void onFaceDetectionNonRecoverableError() {
-        Log.e("Face Error", "Error face broke");
+            @Override
+            public void onThreeFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onDoubleTap() {
+
+            }
+
+            @Override
+            public void onScroll(int i) {
+
+            }
+
+            @Override
+            public void onSingleTap() {
+
+            }
+
+            @Override
+            public void onSwipe(int i) {
+                switch (i) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Log.d("Gestures", "Swipe Up");
+                        DCVSOverlayService.startspeaking();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+                        Log.d("Gestures", "Swipe Down");
+                        startActivity(new Intent(Home.this, ChatHub.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Log.d("Gestures","Swipe Left");
+                        startActivity(new Intent(Home.this, Help.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Log.d("Gestures", "Swipe Right");
+                        startActivity(new Intent(Home.this, FunHub.class));
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onLongPress() {
+
+            }
+        });
     }
 }

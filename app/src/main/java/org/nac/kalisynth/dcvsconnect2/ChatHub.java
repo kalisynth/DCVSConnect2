@@ -15,21 +15,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blundell.woody.Woody;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.pddstudio.talking.Talk;
 import com.pddstudio.talking.model.SpeechObject;
 import com.vstechlab.easyfonts.EasyFonts;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +66,9 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
     Boolean mListening = false;
 
+    int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+    int short_gap = 200;    // Length of Gap Between dots/dashes
+
     //Check Skype is installed
     private boolean isSkypeClientInstalled(Context skypeCall) {
         PackageManager myPackageMgr = skypeCall.getPackageManager();
@@ -90,12 +92,19 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_hub);
+
+        //Skype name Variable
         String mSkypeName = getName();
         String mSkypeNameIs = getResources().getString(R.string.skypenameis, mSkypeName);
+
+        //Bindings and Inits
         ButterKnife.bind(this);
         Talk.init(this, this);
-        Talk.getInstance().addSpeechObjects(homeObject, helpObject, playObject, officeObject, openSkypeObject
-        , goodbyeObject, openEmailObject, openGmailObject);
+
+        //Voice Commands
+        Talk.getInstance().addSpeechObjects(officeObject, openSkypeObject, openEmailObject, openGmailObject, lyndaObject);
+
+        //Set Skype Name
         if (mSkypeName != null) {
             skypetxv.setText(mSkypeNameIs);
         }
@@ -147,6 +156,15 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
             cb2.setText(mCustom2Name);
             Talk.getInstance().addSpeechObjects(Custom2Object);
         }
+
+        startTouchTypeDetection();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        // Setup onTouchEvent for detecting type of touch gesture
+        Sensey.getInstance().setupDispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     //Open Skype
@@ -303,7 +321,6 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
                 .show();
     }
 
-    //If Setting up a tablet for IUIH then change Custom 1 to this and change the visibility for Speeddial 1,2 and 3 to 'gone' and change visibility for cb1 to 'visible'
     private void SpeedDialIUIH(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -430,72 +447,6 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
         }
     }
 
-    private SpeechObject homeObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
-            Talk.getInstance().stopListening();
-            mListening = false;
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "home";
-        }
-    };
-
-    private SpeechObject playObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), FunHub.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-            mListening = false;
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "play";
-        }
-    };
-
-    private SpeechObject helpObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent chatIntent = new Intent(getApplicationContext(), Help.class);
-            chatIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(chatIntent);
-            Talk.getInstance().stopListening();
-            mListening = false;
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "help";
-        }
-    };
-
-    private SpeechObject goodbyeObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
-            Talk.getInstance().stopListening();
-            mListening = false;
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "goodbye";
-        }
-    };
-
     private SpeechObject iuihObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
@@ -506,7 +457,7 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
         @Override
         public String getVoiceString() {
-            return "iuih";
+            return "Institute for Urban Indigenous Health";
         }
     };
 
@@ -601,7 +552,20 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
         @Override
         public String getVoiceString() {
-            return "Volunteer One";
+            return "office";
+        }
+    };
+
+    private SpeechObject lyndaObject = new SpeechObject(){
+        @Override
+        public void onSpeechObjectIdentified() {
+            skypedcvs1call(ChatHub.this, "skype:officedcvs?call&video=true");
+            Talk.getInstance().stopListening();
+        }
+
+        @Override
+        public String getVoiceString() {
+            return "lynda";
         }
     };
 
@@ -641,53 +605,19 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
         }
     };
 
-    /*private SpeechObject whatObject = new SpeechObject(){
-        @Override
-        public void onSpeechObjectIdentified() {
-            if(mIuih){
-                speech = "You are on the Chat screen of the DCVS Connect Application, on this screen you can access Skype by saying open skype, you can also call someone by saying call followed by the name of the person, the people you can call are IUIH or DCVS Office";
-            }else if(mDana){
-                speech = "You are on the Chat screen of the DCVS Connect Application, on this screen you can access Skype by saying open skype, you can also call someone by saying call followed by the name of the person, the people you can call are Dana or DCVS Office";
-            }else if(mCb1 && !mCb2){
-                speech = "You are on the Chat screen of the DCVS Connect Application, on this screen you can access Skype by saying open skype, you can also call someone by saying call followed by the name of the person, the people you can call are Volunteer One, Volunteer Two, Volunteer Three, DCVS Office, " + mCustom1Name + " " + mCustom2Name;
-            }else if(mCb1 && mCb2){
-                speech = "You are on the Chat screen of the DCVS Connect Application, on this screen you can access Skype by saying open skype, you can also call someone by saying call followed by the name of the person, the people you can call are Volunteer One, Volunteer Two, Volunteer Three, DCVS Office or " + mCustom1Name;
-            }else {
-                speech = "You are on the Chat screen of the DCVS Connect Application, on this screen you can access Skype by saying open skype, you can also call someone by saying call followed by the name of the person, the people you can call are Volunteer One, Volunteer Two, Volunteer Three or DCVS Office";
-            }
-            mSpeaking = true;
-            Talk.getInstance().stopListening();
-            t1.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        }
-
-        @Override
-        public String getVoiceString() {
-            return "what";
-        }
-    };*/
-
-    public void startspeaking(){
-        if(!mListening) {
-            Talk.getInstance().startListening();
-            vyes();
-            Log.d("TALK", "Is Listening");
-        } else {
-            Talk.getInstance().stopListening();
-            vno();
-            Log.d("TALK", "Is not listening");
-        }
-    }
-
     public void vyes(){
+        long[] pattern = {
+                0,  // Start immediately
+                dot, short_gap, dot, short_gap, dot, short_gap, dot};
         Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
-        v.vibrate(500);
+        v.vibrate(pattern, -1);
     }
 
     public void vno(){
         Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
-        v.vibrate(250);
+        v.vibrate(500);
     }
 
     public void openskype(){
@@ -708,10 +638,77 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
         startActivity(mIntent);
     }
 
-    @OnClick(R.id.listenbtn)
-    public void listenbtn(){
-        Talk.getInstance().startListening();
+    private void startTouchTypeDetection() {
+        Sensey.getInstance().startTouchTypeDetection(new TouchTypeDetector.TouchTypListener() {
+            @Override
+            public void onTwoFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onThreeFingerSingleTap() {
+
+            }
+
+            @Override
+            public void onDoubleTap() {
+
+            }
+
+            @Override
+            public void onScroll(int i) {
+
+            }
+
+            @Override
+            public void onSingleTap() {
+
+            }
+
+            @Override
+            public void onSwipe(int i) {
+                switch (i) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Log.d("Gestures", "Swipe Up");
+                        if(mListening){
+                            vyes();
+                            mListening = false;
+                        } else {
+                            vno();
+                            mListening = true;
+                        }
+                        DCVSOverlayService.startspeaking();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+                        Log.d("Gestures", "Swipe Down");
+                        openskype();
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Log.d("Gestures","Swipe Left");
+                        startActivity(new Intent(ChatHub.this, Home.class));
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Log.d("Gestures", "Swipe Right");
+                        opengmail();
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onLongPress() {
+
+            }
+        });
     }
 
-    //Todo https://drive.google.com/file/d/0B4EdgIslSa6EYVlHOGgzekZCbkk/view?usp=sharing
+
+    /*@OnClick(R.id.listenbtn)
+    public void listenbtn(){
+        Talk.getInstance().startListening();
+    }*/
+//Todo https://drive.google.com/file/d/0B4EdgIslSa6EYVlHOGgzekZCbkk/view?usp=sharing
 }
