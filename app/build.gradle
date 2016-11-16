@@ -16,7 +16,7 @@ android {
         applicationId "org.nac.kalisynth.dcvsconnect2"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 10
+        versionCode 11
         versionName "1.4"
     }
     buildTypes {

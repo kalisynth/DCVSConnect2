@@ -468,7 +468,7 @@ public class DCVSOverlayService extends Service implements Talk.Callback{
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(DCVSOverlayService.this, "Sorry I missed that, error " + errorCode + " please repeat",Toast.LENGTH_LONG).show();
+        Toast.makeText(DCVSOverlayService.this, "Sorry I missed that, please repeat",Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -100,7 +100,7 @@ public class About extends AppCompatActivity implements Talk.Callback{
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(About.this, "Sorry I missed that, error " + errorCode + " please repeat",Toast.LENGTH_LONG).show();
+        Toast.makeText(About.this, "Sorry I missed that, please try again",Toast.LENGTH_LONG).show();
     }
 
     @Override

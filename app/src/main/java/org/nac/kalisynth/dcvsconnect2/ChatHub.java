@@ -437,7 +437,7 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(ChatHub.this, "Sorry I missed that, please repeat",Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChatHub.this, "Sorry I missed that, please try again",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -457,7 +457,7 @@ public class ChatHub extends AppCompatActivity implements Talk.Callback {
 
         @Override
         public String getVoiceString() {
-            return "Institute for Urban Indigenous Health";
+            return "Institute";
         }
     };
 

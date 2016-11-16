@@ -238,7 +238,7 @@ public class Radio extends AppCompatActivity implements RadioListener, Talk.Call
     private SpeechObject pauseObject = new SpeechObject(){
         @Override
         public void onSpeechObjectIdentified() {
-            onClickPlay();
+            mRadioManager.stopRadio();
             Talk.getInstance().stopListening();
             mListening = false;
         }

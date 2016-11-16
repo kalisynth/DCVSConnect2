@@ -131,7 +131,7 @@ public class FunHub extends AppCompatActivity implements Talk.Callback {
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(FunHub.this, "Sorry I missed that, please repeat",Toast.LENGTH_LONG).show();
+        Toast.makeText(FunHub.this, "Sorry I missed that, please try again",Toast.LENGTH_LONG).show();
     }
 
     @Override

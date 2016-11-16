@@ -19,7 +19,7 @@
         <Button
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="@drawable/blue2"
+            android:background="@drawable/blueredspiral"
             android:contentDescription="@string/SkypeBTN"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
@@ -44,39 +44,7 @@
         <Button
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="@drawable/bluepink"
-            android:contentDescription="@string/SpeedDialThree"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:id="@+id/skypebtn3"
-            android:gravity="bottom|center"
-            android:paddingBottom="4dp"
-            android:textColor="#0e1f29"
-            android:textSize="16sp"
-            android:textStyle="normal|bold"
-            android:text="@string/SpeedDialThree" />
-
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/pink"
-            android:contentDescription="@string/SpeedDialOne"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:textColor="#0e1f29"
-            android:id="@+id/skypebtn1"
-            android:text="@string/SpeedDialOne"
-            android:gravity="bottom|center"
-            android:layout_marginEnd="250dp"
-            android:layout_marginBottom="50dp"
-            android:paddingBottom="4dp"
-            android:textSize="16sp"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/purplebtn"
+            android:background="@drawable/greenblue"
             android:contentDescription="@string/SpeedDialFour"
             android:layout_row="1"
             android:layout_column="3"
@@ -86,12 +54,12 @@
             android:paddingBottom="4dp"
             android:textSize="16sp"
             android:textStyle="normal|bold"
-            android:text="@string/SpeedDialFour" />
+            android:text="@string/SpeedDialFour"/>
 
         <Button
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="@drawable/greenpinkspiral"
+            android:background="@drawable/bluepink"
             android:contentDescription="@string/SpeedDialTwo"
             android:layout_row="0"
             android:layout_column="3"
@@ -101,7 +69,7 @@
             android:paddingBottom="4dp"
             android:textSize="16sp"
             android:textStyle="normal|bold"
-            android:text="@string/SpeedDialTwo" />
+            android:text="@string/SpeedDialTwo"/>
 
         <Button
             android:text=""
@@ -132,6 +100,38 @@
             android:layout_column="1"
             android:background="@drawable/bluegreenspiral"
             android:visibility="visible" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/green"
+            android:contentDescription="@string/SpeedDialThree"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:id="@+id/skypebtn3"
+            android:gravity="bottom|center"
+            android:paddingBottom="4dp"
+            android:textColor="#0e1f29"
+            android:textSize="16sp"
+            android:textStyle="normal|bold"
+            android:text="@string/SpeedDialThree"/>
+
+        <Button
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/blueredspiral"
+                android:contentDescription="@string/SpeedDialOne"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textColor="#0e1f29"
+                android:id="@+id/skypebtn1"
+                android:gravity="bottom|center"
+                android:layout_marginEnd="250dp"
+                android:layout_marginBottom="50dp"
+                android:paddingBottom="4dp"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"
+                android:text="@string/SpeedDialOne"/>
     </GridLayout>
 
     <RelativeLayout
@@ -140,14 +140,14 @@
         android:layout_gravity="start|bottom">
 
         <Button
-            android:text="@string/email"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/gmailbtn"
-            android:gravity="bottom|center"
-            android:textColor="#0e1f29"
-            android:textSize="20sp"
-            android:background="@drawable/greenpinkspiral" />
+                android:layout_width="200dp"
+                android:id="@+id/gmailbtn"
+                android:gravity="bottom|center"
+                android:textColor="#0e1f29"
+                android:textSize="20sp"
+                android:background="@drawable/greenpinkspiral"
+                android:layout_height="200dp"
+                android:text="@string/email"/>
 
         <Button
                 android:text="Listen"

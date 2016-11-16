@@ -188,7 +188,7 @@ public class Help extends ConnectionBuddyActivity implements Talk.Callback {
 
     @Override
     public void onFailedListening(int errorCode) {
-        Toast.makeText(Help.this, "Sorry I missed that, please repeat",Toast.LENGTH_LONG).show();
+        Toast.makeText(Help.this, "Sorry I missed that, please retry",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -231,7 +231,7 @@ public class Help extends ConnectionBuddyActivity implements Talk.Callback {
 
         @Override
         public String getVoiceString() {
-            return "Connection Test";
+            return "Test connection";
         }
     };
 
